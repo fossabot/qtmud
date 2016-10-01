@@ -1,6 +1,21 @@
+# Compiled Python modules
 *.pyc
+
+# Editor swap/temp files
 .*.sw*
 *~
+
+# Logs
 debug.log
-./.idea/
-./data/
+.cache/
+
+# Local configs
+.idea/
+
+
+# PyPi distribution
+/dist/
+/build/
+
+# Python egg data
+/*.egg-info
