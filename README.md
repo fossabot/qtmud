@@ -12,7 +12,7 @@ Dimensions.
 Complete documentation is available locally at 
 [ReadTheDocs](http://qtmud.readthedocs.io/en/latest/).
 
-* [Purpose](Purpose)
+
 * [Installation](#Installation)
 * [Usage](#Usage)
 
