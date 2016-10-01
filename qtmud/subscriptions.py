@@ -3,7 +3,7 @@ of :class:`things <qtmud.Thing>`.
 
 Every method in this module is added to :attr:`qtmud.subscribers` when
 :func:`qtmud.start`. Calls to these methods which have been :func:`scheduled
-<qtmud.schedule>` as :attr:`events qtmud.events>` will be called when
+<qtmud.schedule>` as :attr:`events <qtmud.events>` will be called when
 :func:`qtmud.tick` is called.
 """
 
@@ -11,7 +11,7 @@ import qtmud
 
 
 def broadcast(channel, speaker, message):
-    # TODO: emotes
+    """ Send a message from speaker to everyone on the channel. """
     if not message:
         qtmud.schedule('send', recipient=speaker,
                        text='syntax: {} <message>'.format(channel))
@@ -28,8 +28,12 @@ def broadcast(channel, speaker, message):
 
 
 def client_disconnect(client):
+    """ Handle removing a client from qtMUD
+
+        .. warning:: This is likely buggy and going to change
+    """
     mudsocket = qtmud.active_services['mudsocket']
-    qtmud.log.debug('disconnecting {} from qtmud.'.format(client.name))
+    qtmud.log.debug('disconnecting %s from qtmud.', client.name)
     for other in qtmud.connected_clients:
         qtmud.schedule('send',
                        recipient=other,
@@ -40,7 +44,8 @@ def client_disconnect(client):
         pass
     socket = mudsocket.get_socket_by_thing(client)
     if socket:
-        mudsocket.clients.pop(mudsocket)
+        mudsocket.clients.pop(socket)
+        mudsocket.connections.remove(socket)
     return True
 
 
@@ -110,17 +115,20 @@ def client_login_parser(client, line):
 
 
 def shutdown():
+    """ Handles qtMUD shutting down. """
     qtmud.log.debug('shutdown() occurring')
     for client in qtmud.connected_clients:
         qtmud.schedule('client_disconnect', client=client)
     for service in qtmud.active_services:
+        qtmud.log.debug('shutdown()ing %s', service)
         try:
             service.shutdown()
-        except:
-            pass
+            qtmud.log.debug('shutdown() %s successfully', service)
+        except Exception as err:
+            qtmud.log.warning('%s failed to shutdown: %s', service, err)
     while True:
         if qtmud.events:
-            qtmud.log.debug('processing final events: {}'.format(qtmud.events))
+            qtmud.log.debug('processing final events %s', qtmud.events)
             qtmud.tick()
         else:
             exit()
@@ -150,14 +158,15 @@ def client_command_parser(client, line):
             qtmud.schedule('send',
                            recipient=client,
                            text=('{} is not a valid command; check '
-                                 '"commands" for your commands.'.format(
-                                   command)))
+                                 '"commands" for your commands.'
+                                 ''.format(command)))
     return True
+
 
 def send(recipient, text):
     """ Prepares text to be sent to the recipient
 
-    :param recipient: expected to be a :class:`thing <qtmud.Thing>,
+    :param recipient: expected to be a :class:`thing <qtmud.Thing>`,
                       specifically one with a send_buffer. (In qtmud, this
                       is only clients, though mudlibs may have more things
                       with send_buffers.
@@ -168,5 +177,3 @@ def send(recipient, text):
         recipient.send_buffer += '{}\n'.format(text)
         return True
     return False
-
-

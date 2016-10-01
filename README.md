@@ -1,19 +1,22 @@
 # qtMUD
 
 [![Join the chat at https://gitter.im/qtmud/Lobby](https://badges.gitter.im/qtmud/Lobby.svg)](https://gitter.im/qtmud/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+[![PyPI version](https://badge.fury.io/py/qtmud.svg)](https://badge.fury.io/py/qtmud)
+[![Documentation Status](https://readthedocs.org/projects/qtmud/badge/?version=latest)](http://qtmud.readthedocs.io/en/latest/?badge=latest)
+
 [![Code Climate](https://codeclimate.com/github/emsenn/qtmud/badges/gpa.svg)](https://codeclimate.com/github/emsenn/qtmud)
 [![Build Status](https://travis-ci.org/emsenn/qtmud.svg?branch=master)](https://travis-ci.org/emsenn/qtmud)
-[![Documentation Status](https://readthedocs.org/projects/qtmud/badge/?version=latest)](http://qtmud.readthedocs.io/en/latest/?badge=latest)
+
 [![Requirements Status](https://requires.io/github/emsenn/qtmud/requirements.svg?branch=master)](https://requires.io/github/emsenn/qtmud/requirements/?branch=master)
+
+------
 
 qtMUD is a Python3 package for developing and hosting MUDs, Multi-User 
 Dimensions.
 
 Complete documentation is available at 
 [ReadTheDocs](http://qtmud.readthedocs.io/en/latest/).
-
-* [Installation](#Installation)
-* [Usage](#Usage)
 
 
 ## Installation

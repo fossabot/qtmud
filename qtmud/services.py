@@ -19,16 +19,16 @@ class MUDSocket(object):
     def get_socket_by_thing(self, thing):
         _socket = None
         for s in self.clients:
-                if self.clients[s] == thing:
-                    self.clients[s]
+            if self.clients[s] == thing:
+                _socket = s
         return _socket
 
     def start(self, ip4_address=None, ip6_address=None):
         qtmud.log.info('start()ing MUDSocket')
         if not ip4_address and hasattr(qtmud, 'IP4_ADDRESS'):
-                ip4_address = qtmud.IP4_ADDRESS
+            ip4_address = (qtmud.IPv4_HOSTNAME, qtmud.IPv4_MUDPORT)
         if not ip6_address and hasattr(qtmud, 'IP6_ADDRESS'):
-                ip6_address = qtmud.IP6_ADDRESS
+            ip6_address = (qtmud.IPv6_HOSTNAME, qtmud.IPv6_MUDPORT)
         if not ip4_address and not ip6_address:
             qtmud.log.error('No address set, make sure either IP6_ADDRESS '
                             'or IP4_ADDRESS is not None.')
@@ -99,7 +99,6 @@ class MUDSocket(object):
                 else:
                     data = conn.recv(1024)
                     if data == b'':
-                        self.connections.remove(conn)
                         qtmud.log.debug('lost connection from %s',
                                         format(self.clients[conn].addr))
                         qtmud.schedule('client_disconnect',client=self.clients[

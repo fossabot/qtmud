@@ -24,7 +24,8 @@ if __name__ == '__main__':
                        help='show only warning & more severe messages',
                        action="store_true")
     parser.add_argument("--conf",
-                        help='config file to use')
+                        help=('config file to use, example: '
+                             'qtmud_run --conf fireside.conf'))
 
     args = parser.parse_args()
     print('qtmud_run preparing to start {qtmud.NAME} {qtmud.VERSION}'

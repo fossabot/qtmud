@@ -35,7 +35,7 @@ IP6_ADDRESS = ('localhost', 5788, 0, 0)
 """ Your IPv6 address is expected to be a four-element tuple, where the first
 element is your IPv6 address, the second is qtmud's bound IPv6 port,
 and I don't know what the last two elements do, to be quite honest."""
-IP4_ADDRESS = ('0.0.0.0', 5787)
+IP4_ADDRESS = ('localhost', 5787)
 """ Your IPv4 address is expected to be a tuple of ('address', port), where
 address is a string and port is an integer. Set your address to 'localhost'
 for testing and development, and '0.0.0.0' for production/gameplay."""
@@ -69,8 +69,7 @@ logging.basicConfig(filename='debug.log', filemode='w',
                     level=logging.DEBUG)
 console = logging.StreamHandler()
 console.setLevel(logging.INFO)
-console.setFormatter(
-    logging.Formatter('%(name)-12s %(levelname)-8s %(message)s'))
+console.setFormatter(logging.Formatter('%(levelname)-8s %(message)s'))
 log = logging.getLogger(NAME)
 """ An instance of :class:`logging.Logger`, intended to be used as the main
 logger for qtmud and the mudlib, called through `qtmud.log`."""
@@ -117,11 +116,10 @@ def load():
     log.info('qtmud.load() called')
     log.info('adding qtmud.subscriptions to qtmud.subscribers')
     subscribers = {s[1].__name__: [s[1]] for
-                    s in getmembers(subscriptions) if isfunction(s[1])}
+                   s in getmembers(subscriptions) if isfunction(s[1])}
     log.info('adding qtmud.services to qtmud.active_services')
     active_services = {t[1].__name__.lower(): t[1]() for
-                        t in getmembers(services) if isclass(t[1])}
-    log.info('qtmud.load()ed')
+                       t in getmembers(services) if isclass(t[1])}
     #####
     #
     # load client accounts
@@ -130,8 +128,7 @@ def load():
     if load_client_accounts():
         log.debug('qtmud.client_accounts populated from '
                   'qtmud.load_client_accounts()')
-    log.debug('qtmud.load() finished, subscribers and active_services to '
-              'follow.')
+    log.info('qtmud.load()ed')
     log.debug('subscribers are: %s', ', '.join(subscribers))
     log.debug('active_services are: %s',
               ', '.join([s for s in active_services]))
@@ -156,7 +153,7 @@ def load_client_accounts(file=CLIENT_ACCOUNTS_PICKLE):
 def new_client_account(name, password, birthtime=None):
     """ Create a new client account in :attr:`client_accounts`"""
     client_accounts[name.lower()] = {'name': name,
-                            'password': password}
+                                     'password': password}
     if birthtime:
         client_accounts[name]['birthtime'] = birthtime
     log.debug('made the new client %s', name)
@@ -179,6 +176,7 @@ def new_thing(**kwargs):
     thing.update(kwargs)
     return thing
 
+
 def run():
     """ main loop """
     log.info('qtmud.run()ning')
@@ -197,7 +195,7 @@ def save_client_accounts(file=CLIENT_ACCOUNTS_PICKLE):
     try:
         pickle.dump(client_accounts, open(file, 'wb'))
         return True
-    except Exception as err:
+    except Exception:
         log.debug('failed to save client_accounts')
         return False
 
@@ -207,7 +205,7 @@ def schedule(sub, **payload):
     """
     if not subscribers.get(sub, []):
         log.warning('Tried to schedule a %s event, no subscribers '
-                          'listen to it though.', sub)
+                    'listen to it though.', sub)
         return False
     for method in subscribers.get(sub, []):
         if method not in events:
@@ -229,12 +227,14 @@ def search_client_accounts_by_name(name):
 def start():
     log.info('start()ing active_services')
     for service in active_services:
+        log.info('%s start()ing', service)
         if active_services[service].start():
             log.info('%s start()ed', service)
             pass
         else:
             log.warning('%s failed to start()', service)
     return True
+
 
 def tick():
     global events
