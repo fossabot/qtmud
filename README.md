@@ -1,7 +1,7 @@
 # qtMUD
 
 [![codecov](https://codecov.io/gh/emsenn/qtmud/branch/master/graph/badge.svg)](https://codecov.io/gh/emsenn/qtmud)
-[![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg)](https://codeclimate.com/github/codeclimate/codeclimate)
+[![Code Climate](https://codeclimate.com/github/emsenn/qtmud/badges/gpa.svg)](https://codeclimate.com/github/emsenn/qtmud)
 [![Documentation Status](https://readthedocs.org/projects/qtmud/badge/?version=latest)](http://qtmud.readthedocs.io/en/latest/?badge=latest)
 [![Requirements Status](https://requires.io/github/emsenn/qtmud/requirements.svg?branch=master)](https://requires.io/github/emsenn/qtmud/requirements/?branch=master)
 
