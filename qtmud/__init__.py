@@ -130,7 +130,6 @@ def load():
     if load_client_accounts():
         log.debug('qtmud.client_accounts populated from '
                   'qtmud.load_client_accounts()')
-        pass
     log.debug('qtmud.load() finished, subscribers and active_services to '
               'follow.')
     log.debug('subscribers are: %s', ', '.join(subscribers))
@@ -143,7 +142,7 @@ def load_client_accounts(file=CLIENT_ACCOUNTS_PICKLE):
     """ Populates :attr:`qtmud.client_accounts` with the pickle file
     specified. """
     global client_accounts
-    log.debug('filling qtmud.client_accounts from %s', file)
+    log.info('filling qtmud.client_accounts from %s', file)
     try:
         client_accounts = pickle.load(open(file, 'rb'))
         log.debug('qtmud.client_accounts filled from %s', file)

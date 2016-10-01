@@ -9,9 +9,8 @@
 qtMUD is a Python3 package for developing and hosting MUDs, Multi-User 
 Dimensions.
 
-Complete documentation is available locally at 
+Complete documentation is available at 
 [ReadTheDocs](http://qtmud.readthedocs.io/en/latest/).
-
 
 * [Installation](#Installation)
 * [Usage](#Usage)
@@ -25,26 +24,32 @@ $ pip install qtmud
 
 ## Usage
 
-The qtMUD package provides methods for running qtMUD as a socket server 
-clients can connect to:
+The qtMUD package comes with `qtmud_run`, which runs a socket server.
 
-```python
->>> import qtmud
->>> qtmud.load()
+
+```bash
+$ qtmud_run -h
+usage: qtmud_run [-h] [-v | -q] [--conf CONF]
+
+optional arguments:
+  -h, --help     show this help message and exit
+  -v, --verbose  show all logging messages
+  -q, --quiet    show only warning & more severe messages
+  --conf CONF    config file to use
+
+$ qtmud_run
+qtmud_run preparing to start qtmud 0.0.5
 qtmud        INFO     qtmud.load() called
 qtmud        INFO     adding qtmud.subscriptions to qtmud.subscribers
 qtmud        INFO     adding qtmud.services to qtmud.active_services
 qtmud        INFO     qtmud.load()ed
-True
->>> qtmud.start()
+qtmud        INFO     filling qtmud.client_accounts from ./qtmud_client_accounts.p
 qtmud        INFO     start()ing active_services
+qtmud        INFO     talker start()ed
 qtmud        INFO     start()ing MUDSocket
-qtmud        INFO     MUDSocket successfully bound to ('localhost', 5787)
+qtmud        INFO     MUDSocket successfully bound to ('0.0.0.0', 5787)
 qtmud        INFO     MUDSocket successfully bound to ('localhost', 5788, 0, 0)
 qtmud        INFO     mudsocket start()ed
-qtmud        INFO     talker start()ed
-True
->>> qtmud.run()
 qtmud        INFO     qtmud.run()ning
 ```
 `KeyboardInterrupt` to end the `run()`ning process.
