@@ -3,6 +3,9 @@ python:
   - "3.5"
 sudo: required
 cache: pip
+addons:
+    code_climate:
+        repo_token: 5cf701bc8ba43556acf172f4b5d187abba7c8ae3e822949a6484d2bb81a44e90
 install:
   - pip install -r requirements.txt
 script:
