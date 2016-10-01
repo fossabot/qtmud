@@ -5,34 +5,33 @@
 #
 import logging
 import pickle
+import types
 import uuid
 from inspect import getmembers, isfunction, isclass
 
 
-from qtmud import services, subscriptions, txt
-
-# Pick which MUDLIB you wanna load
-from mudlib import fireside
-# from mudlib import starhopper
-# from mudlib import yeolderpg
+from qtmud import cmds, services, subscriptions, txt
 
 
 # GLOBAL REFERENCES
 NAME = 'qtmud'
 """ Name of the MUD engine. """
-VERSION = '0.0.4'
+VERSION = '0.0.5'
 """ MUD engine version """
 
-# MUDLIB
-MUDLIB = fireside # choices: starhopper, yeolderpg,
-""" The module representing the :term:`mudlib` you want to load. Expected to
-have a load() method for loading itself into qtmud. """
 
-CLIENT_ACCOUNT_FILE = './data/client_accounts.p'
+CLIENT_ACCOUNTS_PICKLE = './qtmud_client_accounts.p'
 """ The file where pickled client accounts should be stored. """
 
+
+IPv4_HOSTNAME = 'localhost'
+IPv4_MUDPORT = 5787
+IPv6_HOSTNAME = 'localhost'
+IPv6_MUDPORT = 5788
+
+
 # ADDRESS INFORMATION
-IP6_ADDRESS = ('2606:a000:4701:b900:5604:830e:39f3:12f8', 5788, 0, 0)
+IP6_ADDRESS = ('localhost', 5788, 0, 0)
 """ Your IPv6 address is expected to be a four-element tuple, where the first
 element is your IPv6 address, the second is qtmud's bound IPv6 port,
 and I don't know what the last two elements do, to be quite honest."""
@@ -62,6 +61,7 @@ active_services = dict()
 the classes in :mod:`qtmud.services` referenced by class name. """
 connected_clients = list()
 
+
 logging.basicConfig(filename='debug.log', filemode='w',
                     format='%(asctime)s %(name)-12s %(levelname)-8s '
                            '%(message)s',
@@ -75,6 +75,23 @@ log = logging.getLogger(NAME)
 """ An instance of :class:`logging.Logger`, intended to be used as the main
 logger for qtmud and the mudlib, called through `qtmud.log`."""
 log.addHandler(console)
+
+
+def build_client(thing=None):
+    if not thing:
+        client = new_thing()
+    else:
+        client = thing
+    connected_clients.append(client)
+    client.commands = dict()
+    for command, function in [m for m in getmembers(cmds) if isfunction(m[1])]:
+        client.commands[command] = types.MethodType(function, client)
+    client.input_parser = 'client_command_parser'
+    client.addr = tuple()
+    client.send_buffer = str()
+    client.recv_buffer = str()
+    client.channels = list()
+    return client
 
 
 def load():
@@ -122,7 +139,7 @@ def load():
     return True
 
 
-def load_client_accounts(file=CLIENT_ACCOUNT_FILE):
+def load_client_accounts(file=CLIENT_ACCOUNTS_PICKLE):
     """ Populates :attr:`qtmud.client_accounts` with the pickle file
     specified. """
     global client_accounts
@@ -163,7 +180,6 @@ def new_thing(**kwargs):
     thing.update(kwargs)
     return thing
 
-
 def run():
     """ main loop """
     log.info('qtmud.run()ning')
@@ -176,9 +192,9 @@ def run():
         tick()
 
 
-def save_client_accounts(file=CLIENT_ACCOUNT_FILE):
+def save_client_accounts(file=CLIENT_ACCOUNTS_PICKLE):
     global client_accounts
-    log.debug('saving client_accounts')
+    log.debug('saving client_accounts to {}'.format(file))
     try:
         pickle.dump(client_accounts, open(file, 'wb'))
         return True

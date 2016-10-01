@@ -1,1 +1,0 @@
-This is where save files go.

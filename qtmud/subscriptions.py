@@ -8,15 +8,13 @@ Every method in this module is added to :attr:`qtmud.subscribers` when
 """
 
 import qtmud
-from qtmud import builders
-from qtmud.services import MUDSocket
 
 
 def broadcast(channel, speaker, message):
     # TODO: emotes
     if not message:
         qtmud.schedule('send', recipient=speaker,
-                       text= 'syntax: {} <message>'.format(channel))
+                       text='syntax: {} <message>'.format(channel))
     else:
         for listener in qtmud.active_services['talker'].channels[channel]:
             qtmud.schedule('send',
@@ -104,13 +102,11 @@ def client_login_parser(client, line):
             output = ('That\'s not the right password for that account - '
                       'type your [desired] client name and press <enter>.')
     elif client.login_stage == 9:
-        client = qtmud.MUDLIB.build_client(client)
         client.input_parser = 'client_command_parser'
         qtmud.active_services['talker'].tune_in(channel='one', client=client)
     if output:
         qtmud.schedule('send', recipient=client, text=output)
     return True
-
 
 
 def shutdown():

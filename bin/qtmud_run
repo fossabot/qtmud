@@ -1,0 +1,50 @@
+#!/usr/bin/python3
+""" qtmud startup script
+"""
+
+import argparse
+import configparser
+
+
+import logging
+import qtmud
+
+if __name__ == '__main__':
+    conf_locations = ['./qtmud.conf', './.qtmud.conf', '~/qtmud.conf',
+                      '~/.qtmud.conf']
+    count = 0
+    config = configparser.ConfigParser()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-v','--verbose',
+                        help='increase console log verbosity',
+                        action="store_true")
+    args = parser.parse_args()
+    print('qtmud_run preparing to start {qtmud.NAME} {qtmud.VERSION}'
+          ''.format(**locals()))
+    if args.verbose:
+        qtmud.console.setLevel(logging.DEBUG)
+    while not config.sections():
+        try:
+            config.read(conf_locations[count])
+        except IndexError:
+            break
+        count += 1
+    if not config.sections():
+        qtmud.log.warning('No valid config found, using default values')
+    else:
+        for section in config.sections():
+            for key in config[section]:
+                qtmud.__dict__[key] = config[section][key]
+                qtmud.log.debug('{} set to {} from config file'
+                                ''.format(key, config[section][key]))
+    if qtmud.load():
+        if qtmud.start():
+            qtmud.run()
+        else:
+            qtmud.log.warning('qtmud failed to start()')
+            qtmud.log.critical('exit()ing')
+            exit()
+    else:
+        qtmud.log.warning('qtmud failed to load()')
+        qtmud.log.critical('exit()ing')
+        exit()

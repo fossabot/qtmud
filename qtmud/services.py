@@ -2,8 +2,6 @@ import select
 import socket
 
 import qtmud
-from qtmud import txt
-from qtmud.builders import build_client
 
 
 
@@ -62,13 +60,19 @@ class MUDSocket(object):
             return False
         return True
 
+
+    def close(self):
+        self.ip4_socket.close()
+        self.ip6_socket.close()
+        return True
+
+
     def shutdown(self):
         qtmud.log.debug('shutdown() and close() MUDSocket.ip4_socket & '
                         'MUDSocket.ip6_socket')
         self.ip4_socket.shutdown(socket.SHUT_RDWR)
-        self.ip4_socket.close()
         self.ip6_socket.shutdown(socket.SHUT_RDWR)
-        self.ip6_socket.close()
+        return True
 
     def tick(self):
         read, write, error = select.select(self.connections,
@@ -82,7 +86,7 @@ class MUDSocket(object):
                 if conn is self.ip4_socket or conn is self.ip6_socket:
                     new_conn, addr = conn.accept()
                     qtmud.log.debug('new connection accepted from %s', format(addr))
-                    client = build_client()
+                    client = qtmud.build_client()
                     client.update({'addr': addr,
                                    'send_buffer': '',
                                    'recv_buffer': ''})

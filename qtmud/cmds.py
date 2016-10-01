@@ -47,7 +47,6 @@ def help(client, query=''):
     if len(query.split(' ')) > 1:
         domain = query.split(' ')[0]
         query = ' '.join(query.split(' ')[1:])
-        print(query)
         if domain in ['commands', 'command', 'cmds']:
             domain = 'cmds'
         if domain in ['subscriptions', 'subscription', 'subscribers']:
@@ -83,8 +82,6 @@ def help(client, query=''):
     #
     #####
     if matches:
-        for match in matches:
-            print(match)
         if len(matches) == 1:
             output = matches[0].__doc__
         elif len(matches) > 1:
@@ -103,6 +100,7 @@ def help(client, query=''):
 
 
 def whoami(client, line):
+    """ Says your name back at you """
     qtmud.schedule('send', recipient=client,
                    text='You are {}'.format(client.name))
     return True
