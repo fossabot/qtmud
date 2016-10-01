@@ -8,9 +8,6 @@ class MUDSocketTest(unittest.TestCase):
     def setUp(self):
         self.mudsocket = MUDSocket()
 
-    def tearDown(self):
-        self.mudsocket.shutdown()
-
     def test_start(self):
         self.assertTrue(self.mudsocket.start())
 
