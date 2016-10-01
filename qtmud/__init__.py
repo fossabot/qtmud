@@ -16,7 +16,7 @@ from qtmud import cmds, services, subscriptions, txt
 # GLOBAL REFERENCES
 NAME = 'qtmud'
 """ Name of the MUD engine. """
-VERSION = '0.0.6'
+VERSION = '0.0.7'
 """ MUD engine version """
 
 
