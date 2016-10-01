@@ -19,15 +19,9 @@ Complete documentation is available at
 [ReadTheDocs](http://qtmud.readthedocs.io/en/latest/).
 
 
-## Installation
-
-```bash
-$ pip install qtmud
-```
-
 ## Usage
 
-The qtMUD package comes with `qtmud_run`, which runs a socket server.
+The qtMUD package comes with `./bin/qtmud_run`, which runs a socket server.
 
 
 ```bash

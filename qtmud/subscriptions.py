@@ -119,19 +119,24 @@ def shutdown():
     qtmud.log.debug('shutdown() occurring')
     for client in qtmud.connected_clients:
         qtmud.schedule('client_disconnect', client=client)
-    for service in qtmud.active_services:
-        qtmud.log.debug('shutdown()ing %s', service)
-        try:
-            service.shutdown()
-            qtmud.log.debug('shutdown() %s successfully', service)
-        except Exception as err:
-            qtmud.log.warning('%s failed to shutdown: %s', service, err)
     while True:
         if qtmud.events:
             qtmud.log.debug('processing final events %s', qtmud.events)
             qtmud.tick()
         else:
-            exit()
+            break
+    for service in qtmud.active_services:
+        service = qtmud.active_services[service]
+        qtmud.log.debug('shutdown()ing %s', service.__class__.__name__)
+        try:
+            service.shutdown()
+            qtmud.log.debug('shutdown() %s successfully',
+                            service.__class__.__name__)
+        except Exception as err:
+            qtmud.log.warning('%s failed to shutdown: %s',
+                              service.__class__.__name__, err)
+    qtmud.log.info('shutdown() finished, raising SystemExit')
+    raise SystemExit
 
 
 def client_input_parser(client, line):
@@ -142,13 +147,15 @@ def client_input_parser(client, line):
 
 
 def client_command_parser(client, line):
-    """ The default qtmud command parser, what client input is run through
-    once they've logged in.
+    """ Once a client has logged in, this method handles parsing their input.
     """
     if line:
         command = line.split(' ')[0]
         if command in client.commands:
-            client.commands[command](' '.join(line.split(' ')[1:]))
+            try:
+                client.commands[command](' '.join(line.split(' ')[1:]))
+            except AttributeError as err:
+                qtmud.log.warning('%s command failed: %s', command, err)
         elif command in client.channels:
             message = ' '.join(line.split(' ')[1:])
             qtmud.schedule('broadcast', channel=command,

@@ -16,20 +16,21 @@ from qtmud import cmds, services, subscriptions, txt
 # GLOBAL REFERENCES
 NAME = 'qtmud'
 """ Name of the MUD engine. """
-VERSION = '0.0.7'
+__version__ = '0.0.7'
 """ MUD engine version """
+__url__ = 'https://qtmud.readthedocs.io/en/latest/'
 
 
-CLIENT_ACCOUNTS_PICKLE = './qtmud_client_accounts.p'
-""" The file where pickled client accounts should be stored. """
 
 
 IPv4_HOSTNAME = 'localhost'
 IPv4_MUDPORT = 5787
 IPv6_HOSTNAME = 'localhost'
 IPv6_MUDPORT = 5788
+DATA_DIR = './data/'
+LOG_DIR = './logs/'
 
-
+""" The file where pickled client accounts should be stored. """
 # ADDRESS INFORMATION
 IP6_ADDRESS = ('localhost', 5788, 0, 0)
 """ Your IPv6 address is expected to be a four-element tuple, where the first
@@ -61,12 +62,20 @@ active_services = dict()
 the classes in :mod:`qtmud.services` referenced by class name. """
 connected_clients = list()
 
-
-logging.basicConfig(filename='debug.log', filemode='w',
+try:
+    logging.basicConfig(filename=LOG_DIR+'debug.log', filemode='w',
                     format='%(asctime)s %(name)-12s %(levelname)-8s '
                            '%(message)s',
                     datefmt='%m-%d %H:%M',
                     level=logging.DEBUG)
+except FileNotFoundError as err:
+    print('tried to start the logger but got: %s, so the logs are going into '
+          'your current working directory.', err)
+    logging.basicConfig(filename='debug.log', filemode='w',
+                        format='%(asctime)s %(name)-12s %(levelname)-8s '
+                               '%(message)s',
+                        datefmt='%m-%d %H:%M',
+                        level=logging.DEBUG)
 console = logging.StreamHandler()
 console.setLevel(logging.INFO)
 console.setFormatter(logging.Formatter('%(levelname)-8s %(message)s'))
@@ -118,7 +127,7 @@ def load():
     return True
 
 
-def load_client_accounts(file=CLIENT_ACCOUNTS_PICKLE):
+def load_client_accounts(file=(DATA_DIR + 'qtmud_client_accounts.p')):
     """ Populates :attr:`qtmud.client_accounts` with the pickle file
     specified. """
     global client_accounts
@@ -129,7 +138,7 @@ def load_client_accounts(file=CLIENT_ACCOUNTS_PICKLE):
         return True
     except FileNotFoundError:
         log.debug('no save file found, making one at %s', file)
-        pickle.dump({}, open(file, 'wb'))
+        save_client_accounts()
         return False
 
 
@@ -172,15 +181,14 @@ def run():
         tick()
 
 
-def save_client_accounts(file=CLIENT_ACCOUNTS_PICKLE):
+def save_client_accounts(file=(DATA_DIR + 'qtmud_client_accounts.p')):
     global client_accounts
     log.debug('saving client_accounts to {}'.format(file))
     try:
         pickle.dump(client_accounts, open(file, 'wb'))
         return True
-    except Exception:
-        log.debug('failed to save client_accounts')
-        return False
+    except FileNotFoundError as err:
+        log.warning('failed to save client_accounts: %s', err)
 
 
 def schedule(sub, **payload):
@@ -235,8 +243,6 @@ def tick():
 
 class Thing(object):
     """ Most objects clients interact with are Things
-
-        :param identity: a UUID as created by :func:`uuid.uuid4()`
 
         Created with :func:`new_thing`, things are objects with a few
         attributes added on, mostly for enabling in-game reference of the

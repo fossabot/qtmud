@@ -24,9 +24,6 @@ def commands(client, line):
     return True
 
 def foo(client, line):
-    mudsocket = qtmud.active_services['mudsocket']
-    output = mudsocket.connections
-    qtmud.schedule('send', recipient=client, text='{}'.format(output))
     return True
 
 
