@@ -1,5 +1,6 @@
 # qtMUD
 
+[![Join the chat at https://gitter.im/qtmud/Lobby](https://badges.gitter.im/qtmud/Lobby.svg)](https://gitter.im/qtmud/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Code Climate](https://codeclimate.com/github/emsenn/qtmud/badges/gpa.svg)](https://codeclimate.com/github/emsenn/qtmud)
 [![Build Status](https://travis-ci.org/emsenn/qtmud.svg?branch=master)](https://travis-ci.org/emsenn/qtmud)
 [![Documentation Status](https://readthedocs.org/projects/qtmud/badge/?version=latest)](http://qtmud.readthedocs.io/en/latest/?badge=latest)
