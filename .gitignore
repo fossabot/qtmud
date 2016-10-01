@@ -5,6 +5,9 @@
 .*.sw*
 *~
 
+# Documentation Builds
+docs/.build/
+
 # Logs
 debug.log
 .cache/

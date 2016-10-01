@@ -1,3 +1,5 @@
+""" Long strings used by qtMUD """
+
 SPLASH = """
 {NAME:<20}{VERSION}
 

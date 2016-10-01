@@ -89,8 +89,7 @@ def help(client, query=''):
                       'domain is one of: {}'
                       ''.format(query,
                                 ', '.join([m.__module__.split('.')[-1]
-                                                for m in
-                                           matches])))
+                                           for m in matches])))
         elif len(matches) == 0:
             output = ('Couldn\'t find help on that topic.')
     if not output:
@@ -109,6 +108,12 @@ def whoami(client, line):
 
 
 def talker(client, line):
+    """ Command for working with the in-game
+    :class:`Talker <qtmud.services.Talker>`.
+
+        in-game syntaxes: talker
+                          talker history
+    """
     output = ''
     if not line:
         output = 'you\'re listening to {}'.format([c for c in client.channels])
@@ -121,10 +126,9 @@ def talker(client, line):
             if channel in client.channels:
                 output = '{}'.format('\n'.join(m for m in
                                                qtmud.active_services[
-                                                   'talker'].history[
-                                                   channel]))
+                                                   'talker'].history[channel]))
     if not output:
-        output = ('Invalid syntax, check "help talker" for more.')
+        output = 'Invalid syntax, check "help cmds talker" for more.'
     qtmud.schedule('send', recipient=client, text=output)
 
 
@@ -139,5 +143,5 @@ def who(client, line):
                    text='The following clients are currently connected:\n'
                         '{}'.format('\n'.join([c.name
                                                for c in
-                                    qtmud.connected_clients])))
+                                               qtmud.connected_clients])))
     return True
