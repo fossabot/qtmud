@@ -1,6 +1,7 @@
 # qtMUD
 
 [![Code Climate](https://codeclimate.com/github/emsenn/qtmud/badges/gpa.svg)](https://codeclimate.com/github/emsenn/qtmud)
+[![Build Status](https://travis-ci.org/emsenn/qtmud.svg?branch=master)](https://travis-ci.org/emsenn/qtmud)
 [![Documentation Status](https://readthedocs.org/projects/qtmud/badge/?version=latest)](http://qtmud.readthedocs.io/en/latest/?badge=latest)
 [![Requirements Status](https://requires.io/github/emsenn/qtmud/requirements.svg?branch=master)](https://requires.io/github/emsenn/qtmud/requirements/?branch=master)
 
