@@ -76,23 +76,6 @@ logger for qtmud and the mudlib, called through `qtmud.log`."""
 log.addHandler(console)
 
 
-def build_client(thing=None):
-    if not thing:
-        client = new_thing()
-    else:
-        client = thing
-    connected_clients.append(client)
-    client.commands = dict()
-    for command, function in [m for m in getmembers(cmds) if isfunction(m[1])]:
-        client.commands[command] = types.MethodType(function, client)
-    client.input_parser = 'client_command_parser'
-    client.addr = tuple()
-    client.send_buffer = str()
-    client.recv_buffer = str()
-    client.channels = list()
-    return client
-
-
 def load():
     """ Most importantly, puts every function from
     :mod:`qtmud.subscriptions` and every class from :mod:`qtmud.services`
@@ -259,15 +242,19 @@ class Thing(object):
         attributes added on, mostly for enabling in-game reference of the
         objects.
     """
-    def __init__(self, identity):
+    def __init__(self):
         self._name = str()
-        self.identity = identity
+        while True:
+            self.identity = uuid.uuid4()
+            if self.identity not in things.keys():
+                break
+        things[self.identity] = self
         """ Passed by :func:`new_thing`, `identity` is stored as a UUID """
         self.nouns = {'thing'}
         """ `nouns` represent lower-case nouns which may be used to reference
             the thing.
         """
-        self.name = str(identity)
+        self.name = str(self.identity)
         self.adjectives = set()
         self.qualities = []
         return
@@ -322,3 +309,17 @@ class Thing(object):
         for attribute, value in attributes.items():
             self.__dict__[attribute] = value
         return True
+
+class Client(Thing):
+    def __init__(self):
+        super(Client, self).__init__()
+        connected_clients.append(self)
+        self.commands = dict()
+        for command, function in [m for m in getmembers(cmds) if
+                                  isfunction(m[1])]:
+            self.commands[command] = types.MethodType(function, self)
+        self.input_parser = 'client_command_parser'
+        self.addr = tuple()
+        self.send_buffer = str()
+        self.recv_buffer = str()
+        self.channels = list()

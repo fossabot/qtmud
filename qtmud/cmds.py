@@ -8,11 +8,18 @@ def finger(fingerer, line):
     return True
 
 
-def commands(commander, line):
+def commands(client, line):
+    """ Sends a list of the client's commands to the client.
+
+        in-game syntax: commands
+
+        Uses :func:`send <qtmud.subscriptions.send>` to send the client's
+        :attr:`qtmud.Client.commands` to themselves.
+    """
     output = ('Your commands are: {}'
-              ''.format(', '.join([c for c in commander.commands.keys()])))
+              ''.format(', '.join([c for c in client.commands.keys()])))
     qtmud.schedule('send',
-                   recipient=commander,
+                   recipient=client,
                    text=output)
     return True
 
@@ -98,15 +105,6 @@ def help(client, query=''):
     return True
 
 
-def whoami(client, line):
-    """ Says your name back at you """
-    qtmud.schedule('send', recipient=client,
-                   text='You are {}'.format(client.name))
-    return True
-
-
-
-
 def talker(client, line):
     """ Command for working with the in-game
     :class:`Talker <qtmud.services.Talker>`.
@@ -115,26 +113,37 @@ def talker(client, line):
                           talker history
     """
     output = ''
+    success = False
     if not line:
         output = 'you\'re listening to {}'.format([c for c in client.channels])
+        success = True
     else:
         line = line.split(' ')
         if line[0] in ['history']:
             channel = ' '.join(line[1:])
             if not channel:
                 output = 'syntax: talker history <channel>'
-            if channel in client.channels:
+                success = True
+            elif channel in client.channels:
                 output = '{}'.format('\n'.join(m for m in
                                                qtmud.active_services[
                                                    'talker'].history[channel]))
+
+                success = True
+            else:
+                output = ('{} a channel you\'re listening to.'
+                          ''.format(channel))
+                success = False
     if not output:
         output = 'Invalid syntax, check "help cmds talker" for more.'
     qtmud.schedule('send', recipient=client, text=output)
+    return success
 
 
 def quit(client, line):
     qtmud.schedule('send', recipient=client, text='you quit goodbye')
     qtmud.schedule('client_disconnect', client=client)
+    return True
 
 
 def who(client, line):
@@ -145,3 +154,10 @@ def who(client, line):
                                                for c in
                                                qtmud.connected_clients])))
     return True
+
+
+def whoami(client, line):
+    """ Says your name back at you """
+    qtmud.schedule('send', recipient=client,
+                   text='You are {}'.format(client.name))
+    return client.name
