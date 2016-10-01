@@ -9,6 +9,3 @@ script:
   - python tests.py
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-addons:
-    code_climate:
-        repo_token: 5cf701bc8ba43556acf172f4b5d187abba7c8ae3e822949a6484d2bb81a44e90
