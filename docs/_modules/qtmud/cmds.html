@@ -145,6 +145,13 @@
                    <span class="n">text</span><span class="o">=</span><span class="n">output</span><span class="p">)</span>
     <span class="k">return</span> <span class="kc">True</span></div>
 
+<div class="viewcode-block" id="foo"><a class="viewcode-back" href="../../qtmud.html#qtmud.cmds.foo">[docs]</a><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+    <span class="n">mudsocket</span> <span class="o">=</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">active_services</span><span class="p">[</span><span class="s1">&#39;mudsocket&#39;</span><span class="p">]</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">mudsocket</span><span class="o">.</span><span class="n">connections</span>
+    <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">,</span> <span class="n">recipient</span><span class="o">=</span><span class="n">client</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">output</span><span class="p">))</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
 <div class="viewcode-block" id="help"><a class="viewcode-back" href="../../qtmud.html#qtmud.cmds.help">[docs]</a><span class="k">def</span> <span class="nf">help</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; Sends the docstring for a command to helpee.</span>
 
@@ -169,7 +176,6 @@
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">domain</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">query</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:])</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">domain</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;commands&#39;</span><span class="p">,</span> <span class="s1">&#39;command&#39;</span><span class="p">,</span> <span class="s1">&#39;cmds&#39;</span><span class="p">]:</span>
             <span class="n">domain</span> <span class="o">=</span> <span class="s1">&#39;cmds&#39;</span>
         <span class="k">if</span> <span class="n">domain</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;subscriptions&#39;</span><span class="p">,</span> <span class="s1">&#39;subscription&#39;</span><span class="p">,</span> <span class="s1">&#39;subscribers&#39;</span><span class="p">]:</span>
@@ -205,8 +211,6 @@
     <span class="c1">#</span>
     <span class="c1">#####</span>
     <span class="k">if</span> <span class="n">matches</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">matches</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">match</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">output</span> <span class="o">=</span> <span class="n">matches</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">__doc__</span>
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -225,6 +229,7 @@
 
 
 <div class="viewcode-block" id="whoami"><a class="viewcode-back" href="../../qtmud.html#qtmud.cmds.whoami">[docs]</a><span class="k">def</span> <span class="nf">whoami</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Says your name back at you &quot;&quot;&quot;</span>
     <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">,</span> <span class="n">recipient</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
                    <span class="n">text</span><span class="o">=</span><span class="s1">&#39;You are </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
     <span class="k">return</span> <span class="kc">True</span></div>
@@ -252,14 +257,18 @@
     <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">,</span> <span class="n">recipient</span><span class="o">=</span><span class="n">client</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">output</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="quit"><a class="viewcode-back" href="../../qtmud.html#qtmud.cmds.quit">[docs]</a><span class="k">def</span> <span class="nf">quit</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+    <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">,</span> <span class="n">recipient</span><span class="o">=</span><span class="n">client</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;you quit goodbye&#39;</span><span class="p">)</span>
+    <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;client_disconnect&#39;</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="who"><a class="viewcode-back" href="../../qtmud.html#qtmud.cmds.who">[docs]</a><span class="k">def</span> <span class="nf">who</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
     <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">,</span>
                    <span class="n">recipient</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
                    <span class="n">text</span><span class="o">=</span><span class="s1">&#39;The following clients are currently connected:</span><span class="se">\n</span><span class="s1">&#39;</span>
-                        <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">qtmud</span><span class="o">.</span><span class="n">active_services</span><span class="p">[</span>
-                                        <span class="s1">&#39;mudsocket&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clients</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span>
-                                    <span class="n">qtmud</span><span class="o">.</span><span class="n">active_services</span><span class="p">[</span>
-                                        <span class="s1">&#39;mudsocket&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clients</span><span class="p">])))</span>
+                        <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">c</span><span class="o">.</span><span class="n">name</span>
+                                               <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span>
+                                    <span class="n">qtmud</span><span class="o">.</span><span class="n">connected_clients</span><span class="p">])))</span>
     <span class="k">return</span> <span class="kc">True</span></div>
 </pre></div>
 
