@@ -14,27 +14,23 @@ def _test_generic_bad_args(tester, cmd, client):
     tester.assertRaises(TypeError, cmd, client, z=True)
     tester.assertRaises(TypeError, cmd, client, fake='bad')
 
+def _test_nonargued_cmd(tester, cmd,):
+    client = qtmud.Client()
+    qtmud.subscribers['send'] = [qtmud.subscriptions.send]
+    _test_helps(tester, cmd, client)
+    _test_generic_bad_args(tester, cmd, client)
+    tester.assertTrue(cmd(client))
+    tester.assertRaises(TypeError, cmd, client, ['womble'])
+
 
 class TestCommands(TestCase):
     def test_commands(self):
-        cmd = cmds.commands
-        client = qtmud.Client()
-        qtmud.subscribers['send'] = [qtmud.subscriptions.send]
-        _test_helps(self, cmd, client)
-        _test_generic_bad_args(self, cmd, client)
-        self.assertTrue(cmd(client))
-        self.assertRaises(TypeError, cmd, client, ['womble'])
+        _test_nonargued_cmd(self, cmds.commands)
 
 
 class TestFoo(TestCase):
     def test_foo(self):
-        cmd = cmds.foo
-        client = qtmud.Client()
-        qtmud.subscribers['send'] = [qtmud.subscriptions.send]
-        _test_helps(self, cmd, client)
-        _test_generic_bad_args(self, cmd, client)
-        self.assertTrue(cmd(client))
-        self.assertRaises(TypeError, cmd, client, ['womble'])
+        _test_nonargued_cmd(self, cmds.foo)
 
 
 class TestHelp(TestCase):
@@ -54,14 +50,7 @@ class TestHelp(TestCase):
 
 class TestQuit(TestCase):
     def test_quit(self):
-        cmd = cmds.quit
-        client = qtmud.Client()
-        qtmud.subscribers['send'] = [qtmud.subscriptions.send]
-        qtmud.subscribers['client_disconnect'] = \
-            [qtmud.subscriptions.client_disconnect]
-        _test_helps(self, cmd, client)
-        _test_generic_bad_args(self, cmd, client)
-        self.assertTrue(cmd(client))
+        _test_nonargued_cmd(self, cmds.quit)
 
 
 class TestTalker(TestCase):
@@ -81,18 +70,9 @@ class TestTalker(TestCase):
 
 class TestWho(TestCase):
     def test_who(self):
-        cmd = cmds.who
-        client = qtmud.Client()
-        qtmud.subscribers['send'] = [qtmud.subscriptions.send]
-        _test_helps(self, cmd, client)
-        _test_generic_bad_args(self, cmd, client)
-        self.assertTrue(cmd(client))
+        _test_nonargued_cmd(self, cmds.who)
 
 
 class TestWhoami(TestCase):
     def test_whoami(self):
-        cmd = cmds.whoami
-        client = qtmud.Client()
-        qtmud.subscribers['send'] = [qtmud.subscriptions.send]
-        _test_helps(self, cmd, client)
-        _test_generic_bad_args(self, cmd, client)
+        _test_nonargued_cmd(self, cmds.who)
