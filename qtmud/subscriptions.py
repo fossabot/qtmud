@@ -107,7 +107,10 @@ def client_login_parser(client, line):
             output = ('That\'s not the right password for that account - '
                       'type your [desired] client name and press <enter>.')
     elif client.login_stage == 9:
-        client.input_parser = 'client_command_parser'
+        if qtmud.MUDLIB:
+            client.input_parser = 'client_mudlib_login_parser'
+        else:
+            client.input_parser = 'client_command_parser'
         qtmud.active_services['talker'].tune_in(channel='one', client=client)
     if output:
         qtmud.schedule('send', recipient=client, text=output)

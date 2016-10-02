@@ -41,6 +41,8 @@ IP4_ADDRESS = ('localhost', 5787)
 address is a string and port is an integer. Set your address to 'localhost'
 for testing and development, and '0.0.0.0' for production/gameplay."""
 
+MUDLIB = None
+
 SPLASH = txt.SPLASH.format(**locals())
 """ The text new connections see. """
 
@@ -63,7 +65,7 @@ the classes in :mod:`qtmud.services` referenced by class name. """
 connected_clients = list()
 
 try:
-    logging.basicConfig(filename=LOG_DIR+'debug.logs', filemode='w',
+    logging.basicConfig(filename=LOG_DIR+'debug.log', filemode='w',
                         format=('%(asctime)s %(name)-12s %(levelname)-8s '
                                 '%(message)s'),
                         datefmt='%m-%d %H:%M',
@@ -71,7 +73,7 @@ try:
 except FileNotFoundError as err:
     print('tried to start the logger but got: %s, so the logs are going into '
           'your current working directory.', err)
-    logging.basicConfig(filename='debug.logs', filemode='w',
+    logging.basicConfig(filename='debug.log', filemode='w',
                         format='%(asctime)s %(name)-12s %(levelname)-8s '
                                '%(message)s',
                         datefmt='%m-%d %H:%M',
