@@ -1,5 +1,6 @@
 import qtmud
 
+# pylint: disable=invalid-name
 
 def commands(client, *, H=False, h=False):
     """ Sends a list of the client's commands to the client.
@@ -26,6 +27,7 @@ def commands(client, *, H=False, h=False):
         return True
 
 
+# pylint: disable=blacklisted-name
 def foo(client, *, h=False, H=False):
     """ The dedicated test command
 
@@ -49,6 +51,7 @@ def foo(client, *, h=False, H=False):
     if output:
         qtmud.schedule('send', recipient=client, text=output)
     return True
+# pylint: enable=blacklisted-name
 
 
 def help(client, topic='', *, H=False, h=False, domain=''):
@@ -74,8 +77,8 @@ def help(client, topic='', *, H=False, h=False, domain=''):
     """
     output = ''
     brief = ('help [-hH] [--domain=$domain] [topic]\n\n'
-              'Search for help for topic. Use --domain= to limit where you '
-              'search to cmds, subscribers, or services.')
+             'Search for help for topic. Use --domain= to limit where you '
+             'search to cmds, subscribers, or services.')
     matches = []
     help_locations = {'cmds' : [client.commands],
                       'subscribers': [qtmud.subscribers],
@@ -132,7 +135,8 @@ def talker(client, channel=None, *, h=False, H=False, l=False):
         output = brief
     else:
         if not channel:
-            output += 'you\'re listening to {}'.format([c for c in client.channels])
+            output += ('you\'re listening to {}'
+                      ''.format([c for c in client.channels]))
         else:
             if channel in client.channels:
                 if l:
@@ -140,8 +144,8 @@ def talker(client, channel=None, *, h=False, H=False, l=False):
                                ''.format(channel,
                                          '\n'.join(m for m in
                                                    qtmud.active_services[
-                                                    'talker'].history[
-                                                       channel])))
+                                                       'talker'].history[
+                                                           channel])))
                 else:
                     output += 'Info about the channel goes here.'
     if output:
