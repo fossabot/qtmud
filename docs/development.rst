@@ -6,8 +6,6 @@ qtMUD is meant to be used as a framework for developing your own MUD. This
 document contains an explanation of how qtMUD works, and some tutorials for
 using it to create your own MUD.
 
-
-
 Getting Started
 ###############
 
@@ -222,44 +220,12 @@ Making & Using Subscriptions
 Making & Using Services
 #######################
 
+Changelog
+#########
+
 .. todo:: Coming by version 0.1.0!
 
-Local Customs
-#############
+.. toctree::
+    :maxdepth: 3
 
-These are all the rules that I try and follow. If you plan on
-`submitting a pull request <https://github.com/emsenn/qtmud/pulls>`_ you should
-try to follow these rules, where applicable. (A few sections are relevant
-only to me, and are there so I don't forget how to do things..)
-
-Flow
-====
-
-::
-
-    git flow feature start <feature-name>
-
-.. warning:: This section is incomplete.
-
-Commit Messages
-===============
-
-.. versionadded:: 0.0.8
-
-Our commit messages follow the format used by
-`gitchangelog <https://github.com/vaab/gitchangelog>`_, since that's what is
-used to create the changelog.
-
-That format is::
-
-    action: [audience:] Summary of Commit [!tag]
-
-
-Release
--------
-
-bump version in:
-
-* docs/conf.py
-* qtmud/__init__.py
-* setup.py
+    changelog
