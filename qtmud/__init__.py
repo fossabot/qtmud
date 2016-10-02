@@ -14,7 +14,7 @@ from qtmud import cmds, services, subscriptions, txt
 
 
 # GLOBAL REFERENCES
-NAME = 'qtmud'
+NAME = 'qtMUD'
 """ Name of the MUD engine. """
 __version__ = '0.0.8'
 """ MUD engine version """
@@ -64,10 +64,10 @@ connected_clients = list()
 
 try:
     logging.basicConfig(filename=LOG_DIR+'debug.logs', filemode='w',
-                    format='%(asctime)s %(name)-12s %(levelname)-8s '
-                           '%(message)s',
-                    datefmt='%m-%d %H:%M',
-                    level=logging.DEBUG)
+                        format=('%(asctime)s %(name)-12s %(levelname)-8s '
+                                '%(message)s'),
+                        datefmt='%m-%d %H:%M',
+                        level=logging.DEBUG)
 except FileNotFoundError as err:
     print('tried to start the logger but got: %s, so the logs are going into '
           'your current working directory.', err)
@@ -96,9 +96,6 @@ def load():
     :func:`load_client_accounts`.
     """
     global active_services
-    global client_accounts
-    global console
-    global log
     global subscribers
     #####
     #
@@ -153,22 +150,6 @@ def new_client_account(name, password, birthtime=None):
     return client_accounts[name]
 
 
-def new_thing(**kwargs):
-    """ Creates a new thing with an identity from :func:`uuid.uuid4()`, and
-    adds its identity as a key to :attr:`qtmud.things` with the thing itself
-    as the value.
-    """
-    # TODO allow arguments and call thing.update(arguments)
-    while True:
-        identity = uuid.uuid4()
-        if identity not in things.keys():
-            break
-    thing = Thing(identity)
-    things[identity] = thing
-    thing.update(kwargs)
-    return thing
-
-
 def run():
     """ main loop """
     log.info('qtmud.run()ning')
@@ -182,8 +163,8 @@ def run():
 
 
 def save_client_accounts(file=(DATA_DIR + 'qtmud_client_accounts.p')):
-    global client_accounts
-    log.debug('saving client_accounts to {}'.format(file))
+    """ Saves a pickle of the current :attr:`client_accounts`."""
+    log.debug('saving client_accounts to %s', file)
     try:
         pickle.dump(client_accounts, open(file, 'wb'))
         return True
@@ -206,16 +187,33 @@ def schedule(sub, **payload):
 
 
 def search_connected_clients_by_name(name):
+    """ Searches through :attr:`connected_clients` for one with a matching
+    name. *(Ignores case)*
+
+        :param name:        The name of the client you're looking for.
+        :return list:       A list of connected clients with that name.
+                            (Should probably just have one element.)
+    """
     return [connected_clients[connected_clients.index(c)] for c in
             connected_clients
             if hasattr(c, 'name') and c.name.lower() == name.lower()]
 
 
 def search_client_accounts_by_name(name):
+    """ Searches through the :attr:`client_accounts` for a client with a
+    matching name. *(For convenience, ignores case)*
+
+        :param name:        The name of the client you're looking for
+        :return list:       A list of the clients with that name. (Should
+                            probably just have one element.)
+    """
     return [c for c in client_accounts.keys() if c.lower() == name.lower()]
 
 
 def start():
+    """ Calls the start() function in every service in
+    :attr:`active_services`.
+    """
     log.info('start()ing active_services')
     for service in active_services:
         log.info('%s start()ing', service)
@@ -228,6 +226,11 @@ def start():
 
 
 def tick():
+    """ Processes the events in :attr:`current_events`, sending them out to
+    the :attr:`subscribers` who are listening for them.
+
+        Also calls tick() in every service in :attr:`active_services`
+    """
     global events
     if events:
         current_events = events
@@ -316,16 +319,33 @@ class Thing(object):
             self.__dict__[attribute] = value
         return True
 
+
 class Client(Thing):
+    """ The thing which represents a client within qtmud.
+    """
     def __init__(self):
         super(Client, self).__init__()
         connected_clients.append(self)
-        self.commands = dict()
+        self.addr = tuple()
+        """ The client's address, represented by IP and port.
+            .. warning:: Probably broken if you try and connect through IPv6
+        """
+        self.commands = {}
+        """ A dict where keys will be the names of methods in :mod:`qtmud.cmds`
+        and the value will be a pointer to that method.
+        """
         for command, function in [m for m in getmembers(cmds) if
                                   isfunction(m[1])]:
             self.commands[command] = types.MethodType(function, self)
         self.input_parser = 'client_command_parser'
-        self.addr = tuple()
+        """ The subscription which will be called when this client inputs a
+        command. If you wish to overwrite the client's default command
+        parser, you'll need to overwrite this."""
         self.send_buffer = str()
+        """ The string representing data the client has received. Usually
+        emptied each :func:`tick <qtmud.tick>` by
+        :class:`MUDSocket <qtmud.services.MUDSocket>`"""
         self.recv_buffer = str()
         self.channels = list()
+        """ All the :class:`Talker <qtmud.services.Talker>` channels the
+        client is listening to. """
