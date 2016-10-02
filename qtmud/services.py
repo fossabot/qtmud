@@ -25,14 +25,14 @@ class MUDSocket(object):
 
     def start(self, ip4_address=None, ip6_address=None):
         qtmud.log.info('start()ing MUDSocket')
-        if not ip4_address and hasattr(qtmud, 'IP4_ADDRESS'):
+        if not ip4_address and hasattr(qtmud, 'IPv4_ADDRESS'):
             ip4_address = (qtmud.IPv4_HOSTNAME, qtmud.IPv4_MUDPORT)
-        if not ip6_address and hasattr(qtmud, 'IP6_ADDRESS'):
+        if not ip6_address and hasattr(qtmud, 'IPv6_ADDRESS'):
             ip6_address = (qtmud.IPv6_HOSTNAME, qtmud.IPv6_MUDPORT)
         if not ip4_address and not ip6_address:
-            qtmud.log.error('No address set, make sure either IP6_ADDRESS '
-                            'or IP4_ADDRESS is not None.')
-            return False
+            raise RuntimeWarning('qtmud.services.MUDSocket() didn\'t manage '
+                                 'to set an address. Is your configuration '
+                                 'file missing?')
         if ip4_address:
             qtmud.log.debug('trying to bind() MUDSocket to address %s',
                             ip4_address)

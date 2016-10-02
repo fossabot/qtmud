@@ -8,10 +8,13 @@
 # Documentation Builds
 docs/.build/
 
+# qtMUD Pickles
+data/*.p
+
 # Logs
 debug.log
 .cache/
-/logs/*.logs
+logs/*.logs
 
 # Local configs
 .idea/
