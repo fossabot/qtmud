@@ -14,7 +14,7 @@ if __name__ == '__main__':
     count = 0
     conf_file = None
     config = configparser.ConfigParser()
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description='https://qtmud.rtfd.io')
     group = parser.add_mutually_exclusive_group()
     group.add_argument('-v', '--verbose',
                        help='show all logging messages',
@@ -47,7 +47,7 @@ if __name__ == '__main__':
             import qtmud
         except Exception as err:
             print('qtMUD not installed as local Python package, if you have '
-                  'got this from Github try "qtmud --source ../qtmud"')
+                  'got this from Github try "qtmud --sourcedir ../qtmud"')
             raise SystemExit
     print('qtmud_run preparing to start {qtmud.NAME} {qtmud.__version__}'
           ''.format(**locals()))

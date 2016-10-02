@@ -50,7 +50,7 @@ def client_disconnect(client):
 
 
 def client_login_parser(client, line):
-    """ Handle log-in for arriving players - right now, just a basic check
+    """ Handle logs-in for arriving players - right now, just a basic check
     against qtmud.client_accounts to see if the client is there already.
     """
     output = ''
@@ -150,14 +150,37 @@ def client_command_parser(client, line):
     """ Once a client has logged in, this method handles parsing their input.
     """
     if line:
-        command = line.split(' ')[0]
+        spl = line.split(' ')
+        command = spl[0]
         if command in client.commands:
+            if len(spl) > 1:
+                targs = spl[1:]
+            else:
+                targs = []
+            kwargs = {}
+            args = []
+            for arg in targs:
+                if arg.startswith('--'):
+                    if '=' in arg:
+                        targ = arg[2:].split('=', 1)
+                        if len(targ) == 2:
+                            kwargs[targ[0]] = targ[1]
+                elif arg.startswith('-'):
+                    for char in arg[1:]:
+                        kwargs[char] = True
+                else:
+                    args.append(arg)
             try:
-                client.commands[command](' '.join(line.split(' ')[1:]))
-            except AttributeError as err:
-                qtmud.log.warning('%s command failed: %s', command, err)
+                client.commands[command](*args, **kwargs)
+            except (SyntaxWarning, SyntaxError, TypeError) as err:
+                qtmud.schedule('send', recipient=client,
+                               text='{} command failed: {}'
+                                    ''.format(command, err))
+                client.commands[command](h=True)
+                qtmud.log.warning('%s\'s %s command failed: %s',
+                                  client.name, command, err)
         elif command in client.channels:
-            message = ' '.join(line.split(' ')[1:])
+            message = ' '.join(spl[1:])
             qtmud.schedule('broadcast', channel=command,
                            speaker=client,
                            message=message)

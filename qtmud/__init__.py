@@ -63,7 +63,7 @@ the classes in :mod:`qtmud.services` referenced by class name. """
 connected_clients = list()
 
 try:
-    logging.basicConfig(filename=LOG_DIR+'debug.log', filemode='w',
+    logging.basicConfig(filename=LOG_DIR+'debug.logs', filemode='w',
                     format='%(asctime)s %(name)-12s %(levelname)-8s '
                            '%(message)s',
                     datefmt='%m-%d %H:%M',
@@ -71,7 +71,7 @@ try:
 except FileNotFoundError as err:
     print('tried to start the logger but got: %s, so the logs are going into '
           'your current working directory.', err)
-    logging.basicConfig(filename='debug.log', filemode='w',
+    logging.basicConfig(filename='debug.logs', filemode='w',
                         format='%(asctime)s %(name)-12s %(levelname)-8s '
                                '%(message)s',
                         datefmt='%m-%d %H:%M',
@@ -81,7 +81,7 @@ console.setLevel(logging.INFO)
 console.setFormatter(logging.Formatter('%(levelname)-8s %(message)s'))
 log = logging.getLogger(NAME)
 """ An instance of :class:`logging.Logger`, intended to be used as the main
-logger for qtmud and the mudlib, called through `qtmud.log`."""
+logger for qtmud and the mudlib, called through `qtmud.logs`."""
 log.addHandler(console)
 
 

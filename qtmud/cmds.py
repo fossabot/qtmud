@@ -1,160 +1,231 @@
 import qtmud
 
-def finger(fingerer, line):
-    """ Command for fingering a client. """
-    qtmud.schedule('finger',
-                   fingerer=fingerer,
-                   fingeree=line)
-    return True
 
-
-def commands(client, line):
+def commands(client, *, H=False, h=False):
     """ Sends a list of the client's commands to the client.
 
-        in-game syntax: commands
+        Parameters:
+            client (object):    The client issuing the foo command. (That'd be
+                                you.) **This isn't part of the command you
+                                enter.**
+            h (bool):           Shows the client a brief help.
+            H (bool):           Shows the client this docstring.
 
         Uses :func:`send <qtmud.subscriptions.send>` to send the client's
         :attr:`qtmud.Client.commands` to themselves.
     """
-    output = ('Your commands are: {}'
-              ''.format(', '.join([c for c in client.commands.keys()])))
-    qtmud.schedule('send',
-                   recipient=client,
-                   text=output)
-    return True
-
-def foo(client, line):
-    return True
-
-
-def help(client, query=''):
-    """ Sends the docstring for a command to helpee.
-
-        in-game syntax: help [domain] <command|subscriber|service>
-
-        :param client: the client who is asking for help
-        :param query: the topic being queried for help.
-
-
-     """
     output = ''
-    domain = None
-    matches = []
-    if not query:
-        output = ('syntax: help [domain] <command|subscriber|service>. '
-                  '"commands" to see all your commands.')
-    #####
-    #
-    #
-    #
-    #####
-    if len(query.split(' ')) > 1:
-        domain = query.split(' ')[0]
-        query = ' '.join(query.split(' ')[1:])
-        if domain in ['commands', 'command', 'cmds']:
-            domain = 'cmds'
-        if domain in ['subscriptions', 'subscription', 'subscribers']:
-            domain = 'subscribers'
-        if domain in ['services', 'service']:
-            domain = 'active_services'
-        else:
-            output = ('{} is not a valid domain.'.format(domain))
-    #####
-    #
-    #
-    #
-    #####
-    if domain == 'cmds' or not domain:
-        if query in client.commands:
-            matches.append(client.commands[query])
-        elif domain:
-            output = 'Can\'t find help for {} in commands'.format(query)
-    if domain == 'subscribers' or not domain:
-        if query in qtmud.subscribers:
-            for subscriber in qtmud.subscribers[query]:
-                matches.append(subscriber)
-        elif domain:
-            output = 'Can\'t find help for {} in subscribers'.format(query)
-    if domain == 'active_services' or not domain:
-        if query in qtmud.active_services:
-            matches.append(qtmud.active_services[query])
-        elif domain:
-            output = 'Can\'t find help for {} in active_services'.format(query)
-    #####
-    #
-    #
-    #
-    #####
-    if matches:
-        if len(matches) == 1:
-            output = matches[0].__doc__
-        elif len(matches) > 1:
-            output = ('Multiple matches found; try "help [domain] {}" where '
-                      'domain is one of: {}'
-                      ''.format(query,
-                                ', '.join([m.__module__.split('.')[-1]
-                                           for m in matches])))
-        elif len(matches) == 0:
-            output = ('Couldn\'t find help on that topic.')
-    if not output:
-        output = 'Couldn\'t find help for {}'.format(query)
-    qtmud.schedule('send', recipient=client, text=output)
-    return True
+    brief = ('commands [-hH]\n\n'
+             'If entered without argument, lists all your valid commands.')
+    if H:
+        output += commands.__doc__
+    elif h:
+        output += brief
+    else:
+        output += ('Your commands are: {}'
+                   ''.format(', '.join([c for c in client.commands.keys()])))
+    if output:
+        qtmud.schedule('send', recipient=client, text=output)
+        return True
 
 
-def talker(client, line):
-    """ Command for working with the in-game
-    :class:`Talker <qtmud.services.Talker>`.
+def foo(client, *, h=False, H=False):
+    """ The dedicated test command
 
-        in-game syntaxes: talker
-                          talker history
+        Parameters:
+            client (object):    The client issuing the foo command. (That'd be
+                                you.) **This isn't part of the command you
+                                enter.**
+            h (bool):           Shows the client a brief help.
+            H (bool):           Shows the client this docstring.
+
+        This is a testing command, so you should check the source itself for
+        information on what it actually does.
     """
     output = ''
-    success = False
-    if not line:
-        output = 'you\'re listening to {}'.format([c for c in client.channels])
-        success = True
+    brief = ('syntax: foo [-hH]\n\n'
+             'Check source for real information, this is a testing command.')
+    if H:
+        output += foo.__doc__
+    elif h:
+        output = brief
     else:
-        line = line.split(' ')
-        if line[0] in ['history']:
-            channel = ' '.join(line[1:])
-            if not channel:
-                output = 'syntax: talker history <channel>'
-                success = True
-            elif channel in client.channels:
-                output = '{}'.format('\n'.join(m for m in
-                                               qtmud.active_services[
-                                                   'talker'].history[channel]))
+        output = 'You foo, to no effect.'
+    if output:
+        qtmud.schedule('send', recipient=client, text=output)
+    return True
 
-                success = True
+
+def help(client, topic=None, *, H=False, h=False, domain=None):
+    """ The command for receiving in-game help. Searches through commands,
+    subscribers, and active_services and returns either a list of available
+    matching helpfiles, or the docstring of the single match.
+
+        Parameters:
+            client (object):    The client issuing the foo command. (That'd be
+                                you.) **This isn't part of the command you
+                                enter.**
+            h (bool):           Shows the client a brief help.
+            H (bool):           Shows the client this docstring.
+            topic (str):        None by default, otherwise the name of the
+                                command/service/subscriber you're looking to
+                                get help with.
+            domain (str):       Optionally limit where you're looking for help
+                                to either cmds, subscribers, or active_services.
+
+        For example, you might enter ``help talker`` to learn more about qtMUD's
+        talker system. You would be prompted to enter either
+        ``help --domain=cmds talker`` to learn about the in-game talker
+        command or ``help --domain=services talker`` to learn about the
+        Talker service`.
+    """
+    output = ''
+    brief = ('help [-hH] [--domain=$domain] [topic]\n\n'
+              'Search for help for topic. Use --domain= to limit where you '
+              'search to cmds, subscribers, or services.')
+    matches = []
+    help_locations = {'cmds' : [client.commands],
+                      'subscribers': [qtmud.subscribers],
+                      'services:': [qtmud.active_services]}
+    if H:
+        output += commands.__doc__
+    elif h:
+        output += brief
+    elif topic:
+        topic = topic.lower()
+        for _domain, locations in help_locations.items():
+            if domain == _domain or not domain:
+                for location in locations:
+                    if topic in location:
+                        matches.append(location[topic])
+        if matches:
+            if len(matches) == 1:
+                output += matches[0].__doc__
             else:
-                output = ('{} a channel you\'re listening to.'
-                          ''.format(channel))
-                success = False
-    if not output:
-        output = 'Invalid syntax, check "help cmds talker" for more.'
+                output += ('Multiple matches found, try "help '
+                           '--domain=$domain {}" where $domain is one of : {}'
+                           ''.format(topic,
+                                     ', '.join(m.__module__.split('.')[-1]
+                                               for m in matches)))
+    else:
+        output += help.__doc__
+    if output:
+        qtmud.schedule('send', recipient=client, text=output)
+        return True
+    else:
+        output = 'No help found. Try looking at https://qtmud.rtfd.io'
+        qtmud.schedule('send', recipient=client, text=output)
+        return False
+
+
+def talker(client, channel=None, *, h=False, H=False, l=False):
+    """ Command for interacting with the Talker service.
+
+        Parameters:
+            client (object):    The client issuing the foo command. (That'd be
+                                you.) **This isn't part of the command you
+                                enter.**
+            h (bool):           Shows the client a brief help.
+            H (bool):           Shows the client this docstring.
+            channel (str):      The channel you're getting information on.
+            l (bool):           Show the channel's history.
+
+        .. todo:: --depth argument to look further back in history.
+    """
+    output = ''
+    brief = ('syntax: foo [-hH]\n\n'
+             'Check source for real information, this is a testing command.')
+    if H:
+        output += foo.__doc__
+    elif h:
+        output = brief
+    else:
+        if not channel:
+            output += 'you\'re listening to {}'.format([c for c in client.channels])
+        else:
+            if channel in client.channels:
+                if l:
+                    output += ('({}) channel log:\n{}'
+                               ''.format(channel,
+                                         '\n'.join(m for m in
+                                                   qtmud.active_services[
+                                                    'talker'].history[
+                                                       channel])))
+                else:
+                    output += 'Info about the channel goes here.'
+    if output:
+        qtmud.schedule('send', recipient=client, text=output)
+        return True
+
+
+def quit(client, *, H=False, h=False):
+    """ Command to quit qtMUD
+
+        Parameters:
+            client (object):    The client issuing the foo command. (That'd be
+                                you.) **This isn't part of the command you
+                                enter.**
+            h (bool):           Shows the client a brief help.
+            H (bool):           Shows the client this docstring.
+    """
+    output = ''
+    brief = ('syntax: help [-hH]\n\n'
+             'Check source for real information, this is a testing command.')
+    if H:
+        output += foo.__doc__
+    elif h:
+        output = brief
+    else:
+        qtmud.schedule('send', recipient=client, text='you quit goodbye')
+        qtmud.schedule('client_disconnect', client=client)
+    if output:
+        qtmud.schedule('send', recipient=client, text=output)
+    return True
+
+
+def who(client, *, H=False, h=False):
+    """ Command to quit qtMUD
+
+        Parameters:
+            client (object):    The client issuing the foo command. (That'd be
+                                you.) **This isn't part of the command you
+                                enter.**
+            h (bool):           Shows the client a brief help.
+            H (bool):           Shows the client this docstring.
+    """
+    output = ''
+    brief = ('syntax: who [-hH]\n\n'
+             'Shows a list of the currently connected clients.')
+    if H:
+        output += foo.__doc__
+    elif h:
+        output = brief
+    else:
+        output = ('The following clients are currently connected:\n'
+                  '{}'.format('\n'.join([c.name for c in
+                                         qtmud.connected_clients])))
     qtmud.schedule('send', recipient=client, text=output)
-    return success
-
-
-def quit(client, line):
-    qtmud.schedule('send', recipient=client, text='you quit goodbye')
-    qtmud.schedule('client_disconnect', client=client)
     return True
 
 
-def who(client, line):
-    qtmud.schedule('send',
-                   recipient=client,
-                   text='The following clients are currently connected:\n'
-                        '{}'.format('\n'.join([c.name
-                                               for c in
-                                               qtmud.connected_clients])))
+def whoami(client, *, H=False, h=False):
+    """ Command to quit qtMUD
+
+        Parameters:
+            client (object):    The client issuing the foo command. (That'd be
+                                you.) **This isn't part of the command you
+                                enter.**
+            h (bool):           Shows the client a brief help.
+            H (bool):           Shows the client this docstring.
+    """
+    output = ''
+    brief = ('syntax: who [-hH]\n\n'
+             'Shows a list of the currently connected clients.')
+    if H:
+        output += foo.__doc__
+    elif h:
+        output = brief
+    else:
+        output = ('You are {}'.format(client.name))
+    qtmud.schedule('send', recipient=client, text=output)
     return True
-
-
-def whoami(client, line):
-    """ Says your name back at you """
-    qtmud.schedule('send', recipient=client,
-                   text='You are {}'.format(client.name))
-    return client.name
