@@ -85,6 +85,22 @@ Flow
 
 .. todo:: Coming by version 0.1.0!
 
+Commit Messages
+---------------
+
+.. versionadded:: 0.0.8
+
+Our commit messages follow the format used by
+`gitchangelog <https://github.com/vaab/gitchangelog>`_, since that's what is
+used to create the changelog.
+
+That format is::
+
+    action: [audience:] Summary of Commit [!tag]
+
+
+
+
 Release
 -------
 

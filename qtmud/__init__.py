@@ -16,20 +16,21 @@ from qtmud import cmds, services, subscriptions, txt
 # GLOBAL REFERENCES
 NAME = 'qtmud'
 """ Name of the MUD engine. """
-VERSION = '0.0.7'
+__version__ = '0.0.7'
 """ MUD engine version """
+__url__ = 'https://qtmud.readthedocs.io/en/latest/'
 
 
-CLIENT_ACCOUNTS_PICKLE = './qtmud_client_accounts.p'
-""" The file where pickled client accounts should be stored. """
 
 
 IPv4_HOSTNAME = 'localhost'
 IPv4_MUDPORT = 5787
 IPv6_HOSTNAME = 'localhost'
 IPv6_MUDPORT = 5788
+DATA_DIR = './data/'
+LOG_DIR = './logs/'
 
-
+""" The file where pickled client accounts should be stored. """
 # ADDRESS INFORMATION
 IP6_ADDRESS = ('localhost', 5788, 0, 0)
 """ Your IPv6 address is expected to be a four-element tuple, where the first
@@ -61,36 +62,27 @@ active_services = dict()
 the classes in :mod:`qtmud.services` referenced by class name. """
 connected_clients = list()
 
-
-logging.basicConfig(filename='debug.log', filemode='w',
+try:
+    logging.basicConfig(filename=LOG_DIR+'debug.logs', filemode='w',
                     format='%(asctime)s %(name)-12s %(levelname)-8s '
                            '%(message)s',
                     datefmt='%m-%d %H:%M',
                     level=logging.DEBUG)
+except FileNotFoundError as err:
+    print('tried to start the logger but got: %s, so the logs are going into '
+          'your current working directory.', err)
+    logging.basicConfig(filename='debug.logs', filemode='w',
+                        format='%(asctime)s %(name)-12s %(levelname)-8s '
+                               '%(message)s',
+                        datefmt='%m-%d %H:%M',
+                        level=logging.DEBUG)
 console = logging.StreamHandler()
 console.setLevel(logging.INFO)
 console.setFormatter(logging.Formatter('%(levelname)-8s %(message)s'))
 log = logging.getLogger(NAME)
 """ An instance of :class:`logging.Logger`, intended to be used as the main
-logger for qtmud and the mudlib, called through `qtmud.log`."""
+logger for qtmud and the mudlib, called through `qtmud.logs`."""
 log.addHandler(console)
-
-
-def build_client(thing=None):
-    if not thing:
-        client = new_thing()
-    else:
-        client = thing
-    connected_clients.append(client)
-    client.commands = dict()
-    for command, function in [m for m in getmembers(cmds) if isfunction(m[1])]:
-        client.commands[command] = types.MethodType(function, client)
-    client.input_parser = 'client_command_parser'
-    client.addr = tuple()
-    client.send_buffer = str()
-    client.recv_buffer = str()
-    client.channels = list()
-    return client
 
 
 def load():
@@ -135,7 +127,7 @@ def load():
     return True
 
 
-def load_client_accounts(file=CLIENT_ACCOUNTS_PICKLE):
+def load_client_accounts(file=(DATA_DIR + 'qtmud_client_accounts.p')):
     """ Populates :attr:`qtmud.client_accounts` with the pickle file
     specified. """
     global client_accounts
@@ -146,7 +138,7 @@ def load_client_accounts(file=CLIENT_ACCOUNTS_PICKLE):
         return True
     except FileNotFoundError:
         log.debug('no save file found, making one at %s', file)
-        pickle.dump({}, open(file, 'wb'))
+        save_client_accounts()
         return False
 
 
@@ -189,15 +181,14 @@ def run():
         tick()
 
 
-def save_client_accounts(file=CLIENT_ACCOUNTS_PICKLE):
+def save_client_accounts(file=(DATA_DIR + 'qtmud_client_accounts.p')):
     global client_accounts
     log.debug('saving client_accounts to {}'.format(file))
     try:
         pickle.dump(client_accounts, open(file, 'wb'))
         return True
-    except Exception:
-        log.debug('failed to save client_accounts')
-        return False
+    except FileNotFoundError as err:
+        log.warning('failed to save client_accounts: %s', err)
 
 
 def schedule(sub, **payload):
@@ -253,21 +244,23 @@ def tick():
 class Thing(object):
     """ Most objects clients interact with are Things
 
-        :param identity: a UUID as created by :func:`uuid.uuid4()`
-
         Created with :func:`new_thing`, things are objects with a few
         attributes added on, mostly for enabling in-game reference of the
         objects.
     """
-    def __init__(self, identity):
+    def __init__(self):
         self._name = str()
-        self.identity = identity
+        while True:
+            self.identity = uuid.uuid4()
+            if self.identity not in things.keys():
+                break
+        things[self.identity] = self
         """ Passed by :func:`new_thing`, `identity` is stored as a UUID """
         self.nouns = {'thing'}
         """ `nouns` represent lower-case nouns which may be used to reference
             the thing.
         """
-        self.name = str(identity)
+        self.name = str(self.identity)
         self.adjectives = set()
         self.qualities = []
         return
@@ -322,3 +315,17 @@ class Thing(object):
         for attribute, value in attributes.items():
             self.__dict__[attribute] = value
         return True
+
+class Client(Thing):
+    def __init__(self):
+        super(Client, self).__init__()
+        connected_clients.append(self)
+        self.commands = dict()
+        for command, function in [m for m in getmembers(cmds) if
+                                  isfunction(m[1])]:
+            self.commands[command] = types.MethodType(function, self)
+        self.input_parser = 'client_command_parser'
+        self.addr = tuple()
+        self.send_buffer = str()
+        self.recv_buffer = str()
+        self.channels = list()

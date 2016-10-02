@@ -11,6 +11,7 @@ docs/.build/
 # Logs
 debug.log
 .cache/
+/logs/*.logs
 
 # Local configs
 .idea/

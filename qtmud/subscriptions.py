@@ -50,7 +50,7 @@ def client_disconnect(client):
 
 
 def client_login_parser(client, line):
-    """ Handle log-in for arriving players - right now, just a basic check
+    """ Handle logs-in for arriving players - right now, just a basic check
     against qtmud.client_accounts to see if the client is there already.
     """
     output = ''
@@ -119,19 +119,24 @@ def shutdown():
     qtmud.log.debug('shutdown() occurring')
     for client in qtmud.connected_clients:
         qtmud.schedule('client_disconnect', client=client)
-    for service in qtmud.active_services:
-        qtmud.log.debug('shutdown()ing %s', service)
-        try:
-            service.shutdown()
-            qtmud.log.debug('shutdown() %s successfully', service)
-        except Exception as err:
-            qtmud.log.warning('%s failed to shutdown: %s', service, err)
     while True:
         if qtmud.events:
             qtmud.log.debug('processing final events %s', qtmud.events)
             qtmud.tick()
         else:
-            exit()
+            break
+    for service in qtmud.active_services:
+        service = qtmud.active_services[service]
+        qtmud.log.debug('shutdown()ing %s', service.__class__.__name__)
+        try:
+            service.shutdown()
+            qtmud.log.debug('shutdown() %s successfully',
+                            service.__class__.__name__)
+        except Exception as err:
+            qtmud.log.warning('%s failed to shutdown: %s',
+                              service.__class__.__name__, err)
+    qtmud.log.info('shutdown() finished, raising SystemExit')
+    raise SystemExit
 
 
 def client_input_parser(client, line):
@@ -142,15 +147,40 @@ def client_input_parser(client, line):
 
 
 def client_command_parser(client, line):
-    """ The default qtmud command parser, what client input is run through
-    once they've logged in.
+    """ Once a client has logged in, this method handles parsing their input.
     """
     if line:
-        command = line.split(' ')[0]
+        spl = line.split(' ')
+        command = spl[0]
         if command in client.commands:
-            client.commands[command](' '.join(line.split(' ')[1:]))
+            if len(spl) > 1:
+                targs = spl[1:]
+            else:
+                targs = []
+            kwargs = {}
+            args = []
+            for arg in targs:
+                if arg.startswith('--'):
+                    if '=' in arg:
+                        targ = arg[2:].split('=', 1)
+                        if len(targ) == 2:
+                            kwargs[targ[0]] = targ[1]
+                elif arg.startswith('-'):
+                    for char in arg[1:]:
+                        kwargs[char] = True
+                else:
+                    args.append(arg)
+            try:
+                client.commands[command](*args, **kwargs)
+            except (SyntaxWarning, SyntaxError, TypeError) as err:
+                qtmud.schedule('send', recipient=client,
+                               text='{} command failed: {}'
+                                    ''.format(command, err))
+                client.commands[command](h=True)
+                qtmud.log.warning('%s\'s %s command failed: %s',
+                                  client.name, command, err)
         elif command in client.channels:
-            message = ' '.join(line.split(' ')[1:])
+            message = ' '.join(spl[1:])
             qtmud.schedule('broadcast', channel=command,
                            speaker=client,
                            message=message)

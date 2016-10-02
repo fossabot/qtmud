@@ -35,7 +35,7 @@ class MUDSocket(object):
             return False
         if ip4_address:
             qtmud.log.debug('trying to bind() MUDSocket to address %s',
-                           ip4_address)
+                            ip4_address)
             try:
                 self.ip4_socket.bind(ip4_address)
                 self.ip4_socket.listen(5)
@@ -86,7 +86,7 @@ class MUDSocket(object):
                 if conn is self.ip4_socket or conn is self.ip6_socket:
                     new_conn, addr = conn.accept()
                     qtmud.log.debug('new connection accepted from %s', format(addr))
-                    client = qtmud.build_client()
+                    client = qtmud.Client()
                     client.update({'addr': addr,
                                    'send_buffer': '',
                                    'recv_buffer': ''})
@@ -101,8 +101,8 @@ class MUDSocket(object):
                     if data == b'':
                         qtmud.log.debug('lost connection from %s',
                                         format(self.clients[conn].addr))
-                        qtmud.schedule('client_disconnect',client=self.clients[
-                            conn])
+                        qtmud.schedule('client_disconnect',
+                                       client=self.clients[conn])
                     else:
                         client = self.clients[conn]
                         client.recv_buffer += data.decode('utf8', 'ignore')
@@ -138,6 +138,9 @@ class Talker(object):
         return True
 
     def start(self):
+        return True
+
+    def shutdown(self):
         return True
 
     def tick(self):
