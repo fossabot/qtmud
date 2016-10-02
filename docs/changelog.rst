@@ -4,6 +4,11 @@ Changelog
 %%version%% (unreleased)
 ------------------------
 
+- Merge branch 'release/0.0.8' into develop. [emsenn]
+
+0.0.8 (2016-10-02)
+------------------
+
 Changes
 ~~~~~~~
 
