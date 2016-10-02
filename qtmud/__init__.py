@@ -8,6 +8,7 @@ import pickle
 import types
 import uuid
 from inspect import getmembers, isfunction, isclass
+from clint.textui import colored
 
 
 from qtmud import cmds, services, subscriptions, txt
@@ -30,16 +31,7 @@ IPv6_MUDPORT = 5788
 DATA_DIR = './data/'
 LOG_DIR = './logs/'
 
-""" The file where pickled client accounts should be stored. """
-# ADDRESS INFORMATION
-IP6_ADDRESS = ('localhost', 5788, 0, 0)
-""" Your IPv6 address is expected to be a four-element tuple, where the first
-element is your IPv6 address, the second is qtmud's bound IPv6 port,
-and I don't know what the last two elements do, to be quite honest."""
-IP4_ADDRESS = ('localhost', 5787)
-""" Your IPv4 address is expected to be a tuple of ('address', port), where
-address is a string and port is an integer. Set your address to 'localhost'
-for testing and development, and '0.0.0.0' for production/gameplay."""
+
 
 MUDLIB = None
 
@@ -152,6 +144,54 @@ def new_client_account(name, password, birthtime=None):
     return client_accounts[name]
 
 
+def pinkfish_parse(text, requester=None, ):
+    colors = {'BLACK': colored.black,
+              'RED': colored.red,
+              'GREEN': colored.green,
+              'YELLOW': colored.yellow,
+              'BLUE': colored.blue,
+              'MAGENTA': colored.magenta,
+              'CYAN': colored.cyan,
+              'WHITE': colored.white}
+    delimiter = '%^'
+    working_text = ''
+    depth = []
+    bold = False
+    text = text.split('*')
+    for word in text[1::2]:
+        if word:
+            text[text.index(word)] = '%^B_WHITE%^' + word + '%^'
+    text = ''.join(text)
+    split_text = [c for c in text.split(delimiter) if c != '']
+    if len(split_text) <= 1:
+        return text
+    chunk_position = 0
+    while chunk_position < len(split_text):
+        chunk = split_text[chunk_position]
+        try:
+            if ''.join([chunk[0], chunk[1]]) == 'B_':
+                if chunk.split('_')[1] in colors:
+                    chunk = chunk.split('_')[1]
+                    bold = True
+        except IndexError:
+            pass
+        if chunk in colors:
+            working_text += colors[chunk](split_text[chunk_position + 1],
+                                          bold=bold)
+            chunk_position += 2
+            depth.append(chunk)
+            if len(depth) > 1:
+                depth.pop(-1)
+        elif depth:
+            color = depth.pop(-1)
+            working_text += colors[color](chunk)
+            chunk_position += 1
+        else:
+            working_text += chunk
+            chunk_position += 1
+    return working_text
+
+
 def run():
     """ main loop """
     log.info('qtmud.run()ning')
@@ -219,11 +259,11 @@ def start():
     log.info('start()ing active_services')
     for service in active_services:
         log.info('%s start()ing', service)
-        if active_services[service].start():
+        try:
+            active_services[service].start()
             log.info('%s start()ed', service)
-            pass
-        else:
-            log.warning('%s failed to start()', service)
+        except RuntimeWarning as warning:
+            log.warning('%s failed to start: %s', service, warning)
     return True
 
 

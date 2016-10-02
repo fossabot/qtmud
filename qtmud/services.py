@@ -1,3 +1,4 @@
+from clint.textui import colored, puts
 import select
 import socket
 
@@ -16,6 +17,11 @@ class MUDSocket(object):
         self.ip6_socket = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
         self.ip6_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
+    def close(self):
+        self.ip4_socket.close()
+        self.ip6_socket.close()
+        return True
+
     def get_socket_by_thing(self, thing):
         _socket = None
         for s in self.clients:
@@ -25,9 +31,9 @@ class MUDSocket(object):
 
     def start(self, ip4_address=None, ip6_address=None):
         qtmud.log.info('start()ing MUDSocket')
-        if not ip4_address and hasattr(qtmud, 'IPv4_ADDRESS'):
+        if not ip4_address:
             ip4_address = (qtmud.IPv4_HOSTNAME, qtmud.IPv4_MUDPORT)
-        if not ip6_address and hasattr(qtmud, 'IPv6_ADDRESS'):
+        if not ip6_address:
             ip6_address = (qtmud.IPv6_HOSTNAME, qtmud.IPv6_MUDPORT)
         if not ip4_address and not ip6_address:
             raise RuntimeWarning('qtmud.services.MUDSocket() didn\'t manage '
@@ -59,13 +65,6 @@ class MUDSocket(object):
         if len(self.connections) == 0:
             return False
         return True
-
-
-    def close(self):
-        self.ip4_socket.close()
-        self.ip6_socket.close()
-        return True
-
 
     def shutdown(self):
         qtmud.log.debug('shutdown() and close() MUDSocket.ip4_socket & '

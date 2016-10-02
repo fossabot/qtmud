@@ -7,6 +7,8 @@ Every method in this module is added to :attr:`qtmud.subscribers` when
 :func:`qtmud.tick` is called.
 """
 
+import clint.textui
+
 import qtmud
 
 
@@ -207,6 +209,4 @@ def send(recipient, text):
     :return: True if text is added to recipient's send_buffer, otherwise False.
     """
     if hasattr(recipient, 'send_buffer'):
-        recipient.send_buffer += '{}\n'.format(text)
-        return True
-    return False
+        recipient.send_buffer += qtmud.pinkfish_parse(('{}\n'.format(text)))
