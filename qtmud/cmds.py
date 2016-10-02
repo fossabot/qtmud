@@ -7,13 +7,13 @@ def commands(client, *, H=False, h=False):
 
         :param client:      The client issuing the command command. (That'd be
                             you.) This isn't part of the command you enter.
-        :param h:           Shows the client a brief help.
         :param H:           Shows the client this docstring.
+        :param h:           Shows the client a brief help.
 
         Creates a ``send`` event to tell the client a list of their commands.
     """
     output = ''
-    brief = ('commands [-hH]\n\n'
+    brief = ('commands [-Hh]\n\n'
              'If entered without argument, lists all your valid commands.')
     if H:
         output += commands.__doc__
@@ -28,19 +28,19 @@ def commands(client, *, H=False, h=False):
 
 
 # pylint: disable=blacklisted-name
-def foo(client, *, h=False, H=False):
+def foo(client, *, H=False, h=False):
     """ The dedicated test command
 
         :param client:      The client issuing the foo command. (That'd be
                             you.) **This isn't part of the command you enter.**
-        :param h:           Shows the client a brief help.
         :param H:           Shows the client this docstring.
+        :param h:           Shows the client a brief help.
 
         This is a testing command, so you should check the source itself for
         information on what it actually does.
     """
     output = ''
-    brief = ('syntax: foo [-hH]\n\n'
+    brief = ('syntax: foo [-Hh]\n\n'
              'Check source for real information, this is a testing command.')
     if H:
         output += foo.__doc__
@@ -61,8 +61,8 @@ def help(client, topic='', *, H=False, h=False, domain=''):
 
         :param client:      The client issuing the help command. (That'd be
                             you.) **This isn't part of the command you enter.**
-        :param h:           Shows the client a brief help.
         :param H:           Shows the client this docstring.
+        :param h:           Shows the client a brief help.
         :param topic:       None by default, otherwise the name of the
                             command/service/subscriber you're looking to get
                             help with.
@@ -76,15 +76,15 @@ def help(client, topic='', *, H=False, h=False, domain=''):
         Talker service`.
     """
     output = ''
-    brief = ('help [-hH] [--domain=$domain] [topic]\n\n'
+    brief = ('help [-Hh] [--domain=$domain] [topic]\n\n'
              'Search for help for topic. Use --domain= to limit where you '
              'search to cmds, subscribers, or services.')
     matches = []
-    help_locations = {'cmds' : [client.commands],
+    help_locations = {'cmds': [client.commands],
                       'subscribers': [qtmud.subscribers],
                       'services:': [qtmud.active_services]}
     if H:
-        output += commands.__doc__
+        output += help.__doc__
     elif h:
         output += brief
     elif topic:
@@ -114,23 +114,25 @@ def help(client, topic='', *, H=False, h=False, domain=''):
         return False
 
 
-def talker(client, channel=None, *, h=False, H=False, l=False):
+def talker(client, channel=None, *, H=False, h=False, l=False):
     """ Command for interacting with the Talker service.
 
         :param client:      The client issuing the talker command. (That'd be
                             you.) **This isn't part of the command you enter.**
-        :param h:           Shows the client a brief help.
         :param H:           Shows the client this docstring.
+        :param h:           Shows the client a brief help.
         :param channel:     The channel you're getting information on.
         :param l:           Show the channel's history.
 
         .. todo:: --depth argument to specify how much history to show
     """
     output = ''
-    brief = ('syntax: foo [-hH]\n\n'
-             'Check source for real information, this is a testing command.')
+    brief = ('syntax: talker [-Hhl] [channel]\n\n'
+             'If entered without argument, lists the channels you\'re tuned '
+             'into. If a channel is given, shows information about that '
+             'channel. If the -l flag is given, shows that channel\'s logs.')
     if H:
-        output += foo.__doc__
+        output += talker.__doc__
     elif h:
         output = brief
     else:
@@ -158,14 +160,14 @@ def quit(client, *, H=False, h=False):
 
         :param client:      The client issuing the quit command. (That'd be
                             you.) **This isn't part of the command you enter.**
-        :param h:           Shows the client a brief help.
         :param H:           Shows the client this docstring.
+        :param h:           Shows the client a brief help.
     """
     output = ''
-    brief = ('syntax: help [-hH]\n\n'
-             'Check source for real information, this is a testing command.')
+    brief = ('syntax: help [-Hh]\n\n'
+             'Causes the client to leave the game.')
     if H:
-        output += foo.__doc__
+        output += quit.__doc__
     elif h:
         output = brief
     else:
@@ -177,18 +179,18 @@ def quit(client, *, H=False, h=False):
 
 
 def who(client, *, H=False, h=False):
-    """ Command to quit qtMUD
+    """ Command to check your name
 
         :param client:      The client issuing the who command. (That'd be
                             you.) **This isn't part of the command you enter.**
-        :param h:           Shows the client a brief help.
         :param H:           Shows the client this docstring.
+        :param h:           Shows the client a brief help.
     """
     output = ''
-    brief = ('syntax: who [-hH]\n\n'
+    brief = ('syntax: who [-Hh]\n\n'
              'Shows a list of the currently connected clients.')
     if H:
-        output += foo.__doc__
+        output += who.__doc__
     elif h:
         output = brief
     else:
@@ -204,14 +206,14 @@ def whoami(client, *, H=False, h=False):
 
         :param client:      The client issuing the whoami command. (That'd be
                             you.) **This isn't part of the command you enter.**
-        :param h:           Shows the client a brief help.
         :param H:           Shows the client this docstring.
+        :param h:           Shows the client a brief help.
     """
     output = ''
-    brief = ('syntax: who [-hH]\n\n'
-             'Shows a list of the currently connected clients.')
+    brief = ('syntax: whoami [-Hh]\n\n'
+             'Shows your own name.')
     if H:
-        output += foo.__doc__
+        output += whoami.__doc__
     elif h:
         output = brief
     else:
