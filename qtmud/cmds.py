@@ -5,7 +5,7 @@ import qtmud
 def commands(client, *, H=False, h=False):
     """ Sends a list of the client's commands to the client.
 
-        :param client:      The client issuing the foo command. (That'd be
+        :param client:      The client issuing the command command. (That'd be
                             you.) This isn't part of the command you enter.
         :param h:           Shows the client a brief help.
         :param H:           Shows the client this docstring.
@@ -59,7 +59,7 @@ def help(client, topic='', *, H=False, h=False, domain=''):
     subscribers, and active_services and returns either a list of available
     matching helpfiles, or the docstring of the single match.
 
-        :param client:      The client issuing the foo command. (That'd be
+        :param client:      The client issuing the help command. (That'd be
                             you.) **This isn't part of the command you enter.**
         :param h:           Shows the client a brief help.
         :param H:           Shows the client this docstring.
@@ -117,7 +117,7 @@ def help(client, topic='', *, H=False, h=False, domain=''):
 def talker(client, channel=None, *, h=False, H=False, l=False):
     """ Command for interacting with the Talker service.
 
-        :param client:      The client issuing the foo command. (That'd be
+        :param client:      The client issuing the talker command. (That'd be
                             you.) **This isn't part of the command you enter.**
         :param h:           Shows the client a brief help.
         :param H:           Shows the client this docstring.
@@ -156,7 +156,7 @@ def talker(client, channel=None, *, h=False, H=False, l=False):
 def quit(client, *, H=False, h=False):
     """ Command to quit qtMUD
 
-        :param client:      The client issuing the foo command. (That'd be
+        :param client:      The client issuing the quit command. (That'd be
                             you.) **This isn't part of the command you enter.**
         :param h:           Shows the client a brief help.
         :param H:           Shows the client this docstring.
@@ -179,7 +179,7 @@ def quit(client, *, H=False, h=False):
 def who(client, *, H=False, h=False):
     """ Command to quit qtMUD
 
-        :param client:      The client issuing the foo command. (That'd be
+        :param client:      The client issuing the who command. (That'd be
                             you.) **This isn't part of the command you enter.**
         :param h:           Shows the client a brief help.
         :param H:           Shows the client this docstring.
@@ -202,7 +202,7 @@ def who(client, *, H=False, h=False):
 def whoami(client, *, H=False, h=False):
     """ Command to quit qtMUD
 
-        :param client:      The client issuing the foo command. (That'd be
+        :param client:      The client issuing the whoami command. (That'd be
                             you.) **This isn't part of the command you enter.**
         :param h:           Shows the client a brief help.
         :param H:           Shows the client this docstring.
