@@ -8,11 +8,10 @@ import pickle
 import types
 import uuid
 from inspect import getmembers, isfunction, isclass
+
 from clint.textui import colored
 
-
 from qtmud import cmds, services, subscriptions, txt
-
 
 # GLOBAL REFERENCES
 NAME = 'qtMUD'
@@ -56,6 +55,9 @@ active_services = dict()
 the classes in :mod:`qtmud.services` referenced by class name. """
 connected_clients = list()
 
+console = logging.StreamHandler()
+console.setLevel(logging.INFO)
+console.setFormatter(logging.Formatter('%(levelname)-8s %(message)s'))
 try:
     logging.basicConfig(filename=LOG_DIR+'debug.log', filemode='w',
                         format=('%(asctime)s %(name)-12s %(levelname)-8s '
@@ -63,16 +65,12 @@ try:
                         datefmt='%m-%d %H:%M',
                         level=logging.DEBUG)
 except FileNotFoundError as err:
-    print('tried to start the logger but got: %s, so the logs are going into '
-          'your current working directory.', err)
+    print('%s so all logs will go to terminal', err)
     logging.basicConfig(filename='debug.log', filemode='w',
                         format='%(asctime)s %(name)-12s %(levelname)-8s '
                                '%(message)s',
                         datefmt='%m-%d %H:%M',
                         level=logging.DEBUG)
-console = logging.StreamHandler()
-console.setLevel(logging.INFO)
-console.setFormatter(logging.Formatter('%(levelname)-8s %(message)s'))
 log = logging.getLogger(NAME)
 """ An instance of :class:`logging.Logger`, intended to be used as the main
 logger for qtmud and the mudlib, called through `qtmud.logs`."""
@@ -193,50 +191,6 @@ def pinkfish_parse(text, requester=None):
             position += 1
     return working_text+'\033[0;0m'
 
-
-"""
-    if len(split_text) <= 1:
-        return text
-    chunk_position = 0
-    while chunk_position < len(split_text):
-        chunk = split_text[chunk_position]
-        try:
-            if ''.join([chunk[0], chunk[1]]) == 'B_':
-                if chunk.split('_')[1] in colors:
-                    chunk = chunk.split('_')[1]
-                    bold = True
-        except IndexError:
-            pass
-        if chunk in colors:
-            working_text += colors[chunk](split_text[chunk_position + 1],
-                                          bold=bold)
-            chunk_position += 2
-            if bold:
-                chunk = 'B_'+chunk
-            depth.append(chunk)
-        elif depth:
-            print(chunk)
-            depth.pop(-1)
-            if len(depth) > 1:
-                try:
-                    color = depth.pop(-1)
-                except:
-                    color = None
-            if color:
-                if ''.join([color[0], color[1]]) == 'B_':
-                    color = color.split('_')[1]
-                    bold = True
-
-                working_text += colors[color](chunk, bold=bold)
-            else:
-                working_text += chunk
-            chunk_position += 1
-        else:
-            working_text += chunk
-            chunk_position += 1
-        bold = False
-    return working_text
-"""
 
 def run():
     """ main loop """
@@ -395,7 +349,7 @@ class Thing(object):
         """ Update multiple attributes of Thing at once.
 
             Example:
-                >>> foo = new_thing()
+                >>> foo = Thing()
                 >>> foo.update({'name': 'eric'})
                 >>> foo.name
                 eric

@@ -7,8 +7,6 @@ Every method in this module is added to :attr:`qtmud.subscribers` when
 :func:`qtmud.tick` is called.
 """
 
-import clint.textui
-
 import qtmud
 
 
@@ -20,14 +18,14 @@ def broadcast(channel, speaker, message):
                             'Sends `message` to everyone tuned into `{0}`'
                             ''.format(channel))
     else:
-        for listener in qtmud.active_services['talker'].channels[channel]:
+        talker = qtmud.active_services['talker']
+        for listener in talker.channels[channel]:
             qtmud.schedule('send',
                            recipient=listener,
-                           text='({}) {}: {}'.format(channel,
-                                                     speaker.name,
-                                                     message))
-            qtmud.active_services['talker'].history[
-                channel].append('{}: {}'.format(speaker.name, message))
+                           text='`(`{}`)` {}: {}'.format(channel,
+                                                         speaker.name,
+                                                         message))
+        talker.history[channel].append('{}: {}'.format(speaker.name, message))
     return True
 
 
@@ -118,7 +116,7 @@ def client_login_parser(client, line):
         qtmud.active_services['talker'].tune_in(channel='one', client=client)
         for c in qtmud.connected_clients:
             qtmud.schedule('send', recipient=c,
-                           text='`{}` has connected'.format(c.name))
+                           text='`{}` has connected'.format(client.name))
     if output:
         qtmud.schedule('send', recipient=client, text=output)
     return True

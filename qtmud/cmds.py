@@ -98,11 +98,11 @@ def help(client, topic='', *, H=False, h=False, domain=''):
     elif topic:
         topic = topic.lower()
         for _domain, locations in help_locations.items():
-            print(domain)
-            print(_domain)
             if domain == _domain or not domain:
                 for location in locations:
                     if topic in location:
+                        # TODO Warning Expected type 'Union[Integral,
+                        # slice]', got 'str' instead
                         matches.append(location[topic])
         if matches:
             if len(matches) == 1:
@@ -115,13 +115,10 @@ def help(client, topic='', *, H=False, h=False, domain=''):
                                                for m in matches)))
     else:
         output += help.__doc__
-    if output:
-        qtmud.schedule('send', recipient=client, text=output)
-        return True
-    else:
+    if not output:
         output = 'No help found. Try looking at https://qtmud.rtfd.io'
-        qtmud.schedule('send', recipient=client, text=output)
-        return False
+    qtmud.schedule('send', recipient=client, text=output)
+    return output
 
 
 def talker(client, channel=None, *, H=False, h=False, l=False):
@@ -159,6 +156,7 @@ def talker(client, channel=None, *, H=False, h=False, l=False):
                                                        'talker'].history[
                                                            channel])))
                 else:
+                    # TODO actual stuff here
                     output += 'Info about the channel goes here.'
     if output:
         qtmud.schedule('send', recipient=client, text=output)
@@ -185,9 +183,9 @@ def tell(client, recipient='', message='', H=False, h=False):
         if len(recipients) == 1:
             recipient = recipients[0]
             if client == recipient:
-                output += 'You tell yourself: {}'.format(message)
+                output += 'You tell `yourself`: {}'.format(message)
             else:
-                output += 'You tell {}: {}'.format(recipient.name, message)
+                output += 'You tell `{}`: {}'.format(recipient.name, message)
                 qtmud.schedule('send',
                                recipient=recipient,
                                text='`{}` tells you: {}'.format(client.name,

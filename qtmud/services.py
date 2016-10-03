@@ -1,9 +1,7 @@
-from clint.textui import colored, puts
 import select
 import socket
 
 import qtmud
-
 
 
 class MUDSocket(object):
@@ -132,9 +130,9 @@ class Talker(object):
         return True
 
     def tune_in(self, client, channel):
-        self.channels[channel].append(client)
-        client.channels.append(channel)
-        return True
+        if client not in self.channels[channel]:
+            self.channels[channel].append(client)
+            client.channels.append(channel)
 
     def start(self):
         return True
