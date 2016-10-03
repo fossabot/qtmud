@@ -24,7 +24,7 @@ __url__ = 'https://qtmud.readthedocs.io/en/latest/'
 
 
 
-IPv4_HOSTNAME = 'localhost'
+IPv4_HOSTNAME = '0.0.0.0'
 IPv4_MUDPORT = 5787
 IPv6_HOSTNAME = 'localhost'
 IPv6_MUDPORT = 5788
@@ -167,7 +167,7 @@ def pinkfish_parse(text, requester=None):
     layers = []
     bold = False
     delimiter = '%^'
-    split_text = [c for c in embolden(text).split(delimiter) if c != '']
+    split_text = [c for c in embolden(text).split(delimiter)]
     if len(split_text) <= 1:
         return text
     position = 0
@@ -189,10 +189,9 @@ def pinkfish_parse(text, requester=None):
                                                              colors]:
                     layers.pop(-1)
         else:
-            debug += ('This text is not in any layer')
             working_text += chunk
             position += 1
-    return working_text+''
+    return working_text+'\033[0;0m'
 
 
 """
