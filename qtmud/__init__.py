@@ -143,8 +143,17 @@ def new_client_account(name, password, birthtime=None):
     save_client_accounts()
     return client_accounts[name]
 
+def embolden(text):
+    for marker in ['**', '*', '``', '`']:
+        text = text.split(marker)
+        for word in text[1::2]:
+            if word:
+                text[text.index(word)] = '%^B_WHITE%^' + word + '%^'
+        text = ''.join(text)
+    return text
 
-def pinkfish_parse(text, requester=None, ):
+
+def pinkfish_parse(text, requester=None):
     colors = {'BLACK': colored.black,
               'RED': colored.red,
               'GREEN': colored.green,
@@ -153,16 +162,48 @@ def pinkfish_parse(text, requester=None, ):
               'MAGENTA': colored.magenta,
               'CYAN': colored.cyan,
               'WHITE': colored.white}
-    delimiter = '%^'
+    debug = ''
     working_text = ''
-    depth = []
+    layers = []
     bold = False
-    text = text.split('*')
-    for word in text[1::2]:
-        if word:
-            text[text.index(word)] = '%^B_WHITE%^' + word + '%^'
-    text = ''.join(text)
-    split_text = [c for c in text.split(delimiter) if c != '']
+    delimiter = '%^'
+    split_text = [c for c in embolden(text).split(delimiter) if c != '']
+    debug += ('AFTER EMBOLDENING AND SPLITTING BY DELIMITER:\n'
+              'split_text: {}\n\n'.format(' :: '.join(split_text)))
+    if len(split_text) <= 1:
+        return text
+    position = 0
+    while position < len(split_text):
+        debug += ('Starting through the while statement, what we have so far '
+                  'is :: {} ::\n\n'.format(working_text))
+        chunk = split_text[position]
+        debug += ('Working through this chunk :: {} ::\n\n'.format(chunk))
+        if chunk in ['B_'+c for c in colors]:
+            bold=True
+            chunk = ''.join(chunk.split('_')[1:])
+            debug += ('bold set to True, color changed to :: {}\n\n'
+                      ''.format(chunk))
+        if chunk in colors:
+            layers.append((chunk, bold))
+            position += 1
+        elif layers:
+            debug += 'current layer sare {}\n\n'.format(layers)
+            layer = layers[-1]
+            working_text += colors[layer[0]](chunk, bold=layer[1])
+            position += 1
+            if position < len(split_text):
+                if split_text[position] not in colors and \
+                                split_text[position] not in ['B_' + c for c in
+                                                             colors]:
+                    layers.pop(-1)
+        else:
+            debug += ('This text is not in any layer')
+            working_text += chunk
+            position += 1
+    return debug+'\n\n* * * * * * * * * \nfinal result:\n\n{}'.format(working_text)
+
+
+"""
     if len(split_text) <= 1:
         return text
     chunk_position = 0
@@ -179,18 +220,32 @@ def pinkfish_parse(text, requester=None, ):
             working_text += colors[chunk](split_text[chunk_position + 1],
                                           bold=bold)
             chunk_position += 2
+            if bold:
+                chunk = 'B_'+chunk
             depth.append(chunk)
-            if len(depth) > 1:
-                depth.pop(-1)
         elif depth:
-            color = depth.pop(-1)
-            working_text += colors[color](chunk)
+            print(chunk)
+            depth.pop(-1)
+            if len(depth) > 1:
+                try:
+                    color = depth.pop(-1)
+                except:
+                    color = None
+            if color:
+                if ''.join([color[0], color[1]]) == 'B_':
+                    color = color.split('_')[1]
+                    bold = True
+
+                working_text += colors[color](chunk, bold=bold)
+            else:
+                working_text += chunk
             chunk_position += 1
         else:
             working_text += chunk
             chunk_position += 1
+        bold = False
     return working_text
-
+"""
 
 def run():
     """ main loop """

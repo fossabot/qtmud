@@ -28,7 +28,7 @@ def commands(client, *, H=False, h=False):
 
 
 # pylint: disable=blacklisted-name
-def foo(client, *, H=False, h=False):
+def foo(client, *, H=False, h=False, p=False):
     """ The dedicated test command
 
         :param client:      The client issuing the foo command. (That'd be
@@ -46,6 +46,14 @@ def foo(client, *, H=False, h=False):
         output += foo.__doc__
     elif h:
         output = brief
+    elif p:
+        line = ('You can also use %^RED%^nesting %^GREEN%^Pinkfish-style '
+                '%^B_YELLOW%^markup tags%^, though they%^ become less%^ '
+                'readable.')
+        output += ('You test the pinkfish_parser with the following line:\n\n'
+                   '{}\n\nIt returns: {}'.format(line,
+                                                 qtmud.pinkfish_parse(
+            line)))
     else:
         output = 'You foo, to no effect.'
     if output:
@@ -77,12 +85,12 @@ def help(client, topic='', *, H=False, h=False, domain=''):
     """
     output = ''
     brief = ('help [-Hh] [--domain=$domain] [topic]\n\n'
-             'Search for help for topic. Use --domain= to limit where you '
+             'Search for help for *topic*. Use *--domain=* to limit where you '
              'search to cmds, subscribers, or services.')
     matches = []
     help_locations = {'cmds': [client.commands],
                       'subscribers': [qtmud.subscribers],
-                      'services:': [qtmud.active_services]}
+                      'services': [qtmud.active_services]}
     if H:
         output += help.__doc__
     elif h:
@@ -90,6 +98,8 @@ def help(client, topic='', *, H=False, h=False, domain=''):
     elif topic:
         topic = topic.lower()
         for _domain, locations in help_locations.items():
+            print(domain)
+            print(_domain)
             if domain == _domain or not domain:
                 for location in locations:
                     if topic in location:
@@ -99,7 +109,7 @@ def help(client, topic='', *, H=False, h=False, domain=''):
                 output += matches[0].__doc__
             else:
                 output += ('Multiple matches found, try "help '
-                           '--domain=$domain {}" where $domain is one of : {}'
+                           '--domain=*domain* {}" where *domain* is one of : {}'
                            ''.format(topic,
                                      ', '.join(m.__module__.split('.')[-1]
                                                for m in matches)))
