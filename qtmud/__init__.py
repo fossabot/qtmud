@@ -8,6 +8,7 @@ import pickle
 import types
 import uuid
 from inspect import getmembers, isfunction, isclass
+from clint.textui import colored
 
 
 from qtmud import cmds, services, subscriptions, txt
@@ -23,23 +24,16 @@ __url__ = 'https://qtmud.readthedocs.io/en/latest/'
 
 
 
-IPv4_HOSTNAME = 'localhost'
+IPv4_HOSTNAME = '0.0.0.0'
 IPv4_MUDPORT = 5787
 IPv6_HOSTNAME = 'localhost'
 IPv6_MUDPORT = 5788
 DATA_DIR = './data/'
 LOG_DIR = './logs/'
 
-""" The file where pickled client accounts should be stored. """
-# ADDRESS INFORMATION
-IP6_ADDRESS = ('localhost', 5788, 0, 0)
-""" Your IPv6 address is expected to be a four-element tuple, where the first
-element is your IPv6 address, the second is qtmud's bound IPv6 port,
-and I don't know what the last two elements do, to be quite honest."""
-IP4_ADDRESS = ('localhost', 5787)
-""" Your IPv4 address is expected to be a tuple of ('address', port), where
-address is a string and port is an integer. Set your address to 'localhost'
-for testing and development, and '0.0.0.0' for production/gameplay."""
+
+
+MUDLIB = None
 
 SPLASH = txt.SPLASH.format(**locals())
 """ The text new connections see. """
@@ -63,7 +57,7 @@ the classes in :mod:`qtmud.services` referenced by class name. """
 connected_clients = list()
 
 try:
-    logging.basicConfig(filename=LOG_DIR+'debug.logs', filemode='w',
+    logging.basicConfig(filename=LOG_DIR+'debug.log', filemode='w',
                         format=('%(asctime)s %(name)-12s %(levelname)-8s '
                                 '%(message)s'),
                         datefmt='%m-%d %H:%M',
@@ -71,7 +65,7 @@ try:
 except FileNotFoundError as err:
     print('tried to start the logger but got: %s, so the logs are going into '
           'your current working directory.', err)
-    logging.basicConfig(filename='debug.logs', filemode='w',
+    logging.basicConfig(filename='debug.log', filemode='w',
                         format='%(asctime)s %(name)-12s %(levelname)-8s '
                                '%(message)s',
                         datefmt='%m-%d %H:%M',
@@ -149,6 +143,100 @@ def new_client_account(name, password, birthtime=None):
     save_client_accounts()
     return client_accounts[name]
 
+def embolden(text):
+    for marker in ['**', '*', '``', '`']:
+        text = text.split(marker)
+        for word in text[1::2]:
+            if word:
+                text[text.index(word)] = '%^B_WHITE%^' + word + '%^'
+        text = ''.join(text)
+    return text
+
+
+def pinkfish_parse(text, requester=None):
+    colors = {'BLACK': colored.black,
+              'RED': colored.red,
+              'GREEN': colored.green,
+              'YELLOW': colored.yellow,
+              'BLUE': colored.blue,
+              'MAGENTA': colored.magenta,
+              'CYAN': colored.cyan,
+              'WHITE': colored.white}
+    debug = ''
+    working_text = ''
+    layers = []
+    bold = False
+    delimiter = '%^'
+    split_text = [c for c in embolden(text).split(delimiter)]
+    if len(split_text) <= 1:
+        return text
+    position = 0
+    while position < len(split_text):
+        chunk = split_text[position]
+        if chunk in ['B_'+c for c in colors]:
+            bold=True
+            chunk = ''.join(chunk.split('_')[1:])
+        if chunk in colors:
+            layers.append((chunk, bold))
+            position += 1
+        elif layers:
+            layer = layers[-1]
+            working_text += colors[layer[0]](chunk, bold=layer[1])+'\033[0;0m'
+            position += 1
+            if position < len(split_text):
+                if split_text[position] not in colors and \
+                                split_text[position] not in ['B_' + c for c in
+                                                             colors]:
+                    layers.pop(-1)
+        else:
+            working_text += chunk
+            position += 1
+    return working_text+'\033[0;0m'
+
+
+"""
+    if len(split_text) <= 1:
+        return text
+    chunk_position = 0
+    while chunk_position < len(split_text):
+        chunk = split_text[chunk_position]
+        try:
+            if ''.join([chunk[0], chunk[1]]) == 'B_':
+                if chunk.split('_')[1] in colors:
+                    chunk = chunk.split('_')[1]
+                    bold = True
+        except IndexError:
+            pass
+        if chunk in colors:
+            working_text += colors[chunk](split_text[chunk_position + 1],
+                                          bold=bold)
+            chunk_position += 2
+            if bold:
+                chunk = 'B_'+chunk
+            depth.append(chunk)
+        elif depth:
+            print(chunk)
+            depth.pop(-1)
+            if len(depth) > 1:
+                try:
+                    color = depth.pop(-1)
+                except:
+                    color = None
+            if color:
+                if ''.join([color[0], color[1]]) == 'B_':
+                    color = color.split('_')[1]
+                    bold = True
+
+                working_text += colors[color](chunk, bold=bold)
+            else:
+                working_text += chunk
+            chunk_position += 1
+        else:
+            working_text += chunk
+            chunk_position += 1
+        bold = False
+    return working_text
+"""
 
 def run():
     """ main loop """
@@ -217,11 +305,11 @@ def start():
     log.info('start()ing active_services')
     for service in active_services:
         log.info('%s start()ing', service)
-        if active_services[service].start():
+        try:
+            active_services[service].start()
             log.info('%s start()ed', service)
-            pass
-        else:
-            log.warning('%s failed to start()', service)
+        except RuntimeWarning as warning:
+            log.warning('%s failed to start: %s', service, warning)
     return True
 
 

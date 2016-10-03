@@ -7,6 +7,8 @@ Every method in this module is added to :attr:`qtmud.subscribers` when
 :func:`qtmud.tick` is called.
 """
 
+import clint.textui
+
 import qtmud
 
 
@@ -14,7 +16,9 @@ def broadcast(channel, speaker, message):
     """ Send a message from speaker to everyone on the channel. """
     if not message:
         qtmud.schedule('send', recipient=speaker,
-                       text='syntax: {} <message>'.format(channel))
+                       text='syntax: {0} <message>\n'
+                            'Sends `message` to everyone tuned into `{0}`'
+                            ''.format(channel))
     else:
         for listener in qtmud.active_services['talker'].channels[channel]:
             qtmud.schedule('send',
@@ -107,8 +111,14 @@ def client_login_parser(client, line):
             output = ('That\'s not the right password for that account - '
                       'type your [desired] client name and press <enter>.')
     elif client.login_stage == 9:
-        client.input_parser = 'client_command_parser'
+        if qtmud.MUDLIB:
+            client.input_parser = 'client_mudlib_login_parser'
+        else:
+            client.input_parser = 'client_command_parser'
         qtmud.active_services['talker'].tune_in(channel='one', client=client)
+        for c in qtmud.connected_clients:
+            qtmud.schedule('send', recipient=c,
+                           text='`{}` has connected'.format(c.name))
     if output:
         qtmud.schedule('send', recipient=client, text=output)
     return True
@@ -204,6 +214,4 @@ def send(recipient, text):
     :return: True if text is added to recipient's send_buffer, otherwise False.
     """
     if hasattr(recipient, 'send_buffer'):
-        recipient.send_buffer += '{}\n'.format(text)
-        return True
-    return False
+        recipient.send_buffer += qtmud.pinkfish_parse(('{}\n'.format(text)))
