@@ -228,8 +228,6 @@ Making & Using Services
 Changelog
 #########
 
-.. todo:: Coming by version 0.1.0!
-
 .. toctree::
     :maxdepth: 3
 

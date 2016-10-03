@@ -168,28 +168,20 @@ def pinkfish_parse(text, requester=None):
     bold = False
     delimiter = '%^'
     split_text = [c for c in embolden(text).split(delimiter) if c != '']
-    debug += ('AFTER EMBOLDENING AND SPLITTING BY DELIMITER:\n'
-              'split_text: {}\n\n'.format(' :: '.join(split_text)))
     if len(split_text) <= 1:
         return text
     position = 0
     while position < len(split_text):
-        debug += ('Starting through the while statement, what we have so far '
-                  'is :: {} ::\n\n'.format(working_text))
         chunk = split_text[position]
-        debug += ('Working through this chunk :: {} ::\n\n'.format(chunk))
         if chunk in ['B_'+c for c in colors]:
             bold=True
             chunk = ''.join(chunk.split('_')[1:])
-            debug += ('bold set to True, color changed to :: {}\n\n'
-                      ''.format(chunk))
         if chunk in colors:
             layers.append((chunk, bold))
             position += 1
         elif layers:
-            debug += 'current layer sare {}\n\n'.format(layers)
             layer = layers[-1]
-            working_text += colors[layer[0]](chunk, bold=layer[1])
+            working_text += colors[layer[0]](chunk, bold=layer[1])+'\033[0;0m'
             position += 1
             if position < len(split_text):
                 if split_text[position] not in colors and \
@@ -200,7 +192,7 @@ def pinkfish_parse(text, requester=None):
             debug += ('This text is not in any layer')
             working_text += chunk
             position += 1
-    return debug+'\n\n* * * * * * * * * \nfinal result:\n\n{}'.format(working_text)
+    return working_text+''
 
 
 """

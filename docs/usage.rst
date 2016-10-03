@@ -77,4 +77,12 @@ Client Features
 .. todo:: explanation of what clients can do, and how they're represented on
           the backend.
 
-Check 'help' command as a client.
+Pinkfish Parser
+===============
+
+    .. versionadded:: 0.0.10
+
+Players (and developers) can use Pinkfish-style tags to make up their text.
+Not too much to explain here. Enjoy abusing it on the talker.
+
+    .. image:: .static/pinkfish_example.png
