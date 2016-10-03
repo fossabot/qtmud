@@ -163,8 +163,8 @@ def talker(client, channel=None, *, H=False, h=False, l=False):
         return True
 
 
-def tell(client, recipient='', message='', H=False, h=False):
-    """ Command for interacting with the Talker service.
+def tell(client, *payload, H=False, h=False):
+    """ Command for private messaging other players.
 
         :param client:      The client issuing the command. (That'd be you.)
                             **This isn't part of the command you enter.**
@@ -175,29 +175,33 @@ def tell(client, recipient='', message='', H=False, h=False):
     brief = ('syntax: tell [-Hh] <recipient> <message>\n\n'
              'Sends `message` to `recipient`.')
     if H:
-        output += talker.__doc__
+        output += tell.__doc__
     elif h:
-        output = brief
-    else:
-        recipients = qtmud.search_connected_clients_by_name(recipient)
-        if len(recipients) == 1:
-            recipient = recipients[0]
-            if client == recipient:
-                output += 'You tell `yourself`: {}'.format(message)
+        output += brief
+    elif payload:
+        payload = [w for w in payload]
+        if len(payload) > 1:
+            recipients = qtmud.search_connected_clients_by_name(payload.pop(0))
+            if len(recipients) == 1:
+                recipient = recipients[0]
+                message = ' '.join(payload)
+                if client == recipient:
+                    output += 'You tell `yourself`: {}'.format(message)
+                else:
+                    output += 'You tell `{}`: {}'.format(recipient.name,
+                                                         message)
+                    qtmud.schedule('send',
+                                   recipient=recipient,
+                                   text='`{}` tells you: {}'.format(client.name,
+                                                                    message))
+            elif len(recipients) > 1:
+                output += ('More than one match: {}'
+                           ''.format(', '.join([r.name for r in recipients])))
             else:
-                output += 'You tell `{}`: {}'.format(recipient.name, message)
-                qtmud.schedule('send',
-                               recipient=recipient,
-                               text='`{}` tells you: {}'.format(client.name,
-                                                                message))
-        elif len(recipients) > 1:
-            output += ('More than one match: {}'
-                       ''.format(', '.join([r.name for r in recipients])))
-        else:
-            output += ('Couldn\'t find a player with the name `{}`'
-                       ''.format(recipient))
-    if output:
-        qtmud.schedule('send', recipient=client, text=output)
+                output += 'Couldn\'t find that client.'
+    if not output:
+        output += brief
+    qtmud.schedule('send', recipient=client, text=output)
 
 def quit(client, *, H=False, h=False):
     """ Command to quit qtMUD
