@@ -367,7 +367,6 @@ class Client(Thing):
     """
     def __init__(self):
         super(Client, self).__init__()
-        connected_clients.append(self)
         self.addr = tuple()
         """ The client's address, represented by IP and port.
             .. warning:: Probably broken if you try and connect through IPv6

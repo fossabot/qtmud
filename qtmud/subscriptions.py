@@ -114,6 +114,7 @@ def client_login_parser(client, line):
         else:
             client.input_parser = 'client_command_parser'
         qtmud.active_services['talker'].tune_in(channel='one', client=client)
+        qtmud.connected_clients.append(client)
         for c in qtmud.connected_clients:
             qtmud.schedule('send', recipient=c,
                            text='`{}` has connected'.format(client.name))
