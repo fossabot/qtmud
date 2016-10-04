@@ -66,11 +66,6 @@ try:
                         level=logging.DEBUG)
 except FileNotFoundError as err:
     print('%s so all logs will go to terminal', err)
-    logging.basicConfig(filename='debug.log', filemode='w',
-                        format='%(asctime)s %(name)-12s %(levelname)-8s '
-                               '%(message)s',
-                        datefmt='%m-%d %H:%M',
-                        level=logging.DEBUG)
 log = logging.getLogger(NAME)
 """ An instance of :class:`logging.Logger`, intended to be used as the main
 logger for qtmud and the mudlib, called through `qtmud.logs`."""
@@ -279,8 +274,10 @@ def tick():
         events = dict()
         for event in current_events:
             for call in current_events[event]:
-                log.debug('%s event: %s', event.__name__, call)
-                event(**call)
+                try:
+                    event(**call)
+                except Exception as err:
+                    print(err)
     for service in active_services:
         active_services[service].tick()
     return True
@@ -293,7 +290,8 @@ class Thing(object):
         attributes added on, mostly for enabling in-game reference of the
         objects.
     """
-    def __init__(self):
+
+    def __init__(self, **kwargs):
         self._name = str()
         while True:
             self.identity = uuid.uuid4()
@@ -308,6 +306,7 @@ class Thing(object):
         self.name = str(self.identity)
         self.adjectives = set()
         self.qualities = []
+        self.update(kwargs)
         return
 
     @property
@@ -358,15 +357,17 @@ class Thing(object):
         """
         # todo account for custom setters
         for attribute, value in attributes.items():
-            self.__dict__[attribute] = value
+            if hasattr(self, attribute):
+                self.__dict__[attribute] = value
         return True
 
 
 class Client(Thing):
     """ The thing which represents a client within qtmud.
     """
-    def __init__(self):
-        super(Client, self).__init__()
+
+    def __init__(self, **kwargs):
+        super(Client, self).__init__(**kwargs)
         self.addr = tuple()
         """ The client's address, represented by IP and port.
             .. warning:: Probably broken if you try and connect through IPv6
