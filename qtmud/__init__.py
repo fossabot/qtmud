@@ -84,11 +84,6 @@ def load():
     """
     global active_services
     global subscribers
-    #####
-    #
-    # load qtmud subscriptions and start() services
-    #
-    #####
     log.info('qtmud.load() called')
     log.info('adding qtmud.subscriptions to qtmud.subscribers')
     subscribers = {s[1].__name__: [s[1]] for
@@ -96,11 +91,6 @@ def load():
     log.info('adding qtmud.services to qtmud.active_services')
     active_services = {t[1].__name__.lower(): t[1]() for
                        t in getmembers(services) if isclass(t[1])}
-    #####
-    #
-    # load client accounts
-    #
-    #####
     if load_client_accounts():
         log.debug('qtmud.client_accounts populated from '
                   'qtmud.load_client_accounts()')
@@ -257,6 +247,8 @@ def start():
         try:
             active_services[service].start()
             log.info('%s start()ed', service)
+        except AttributeError:
+            pass
         except RuntimeWarning as warning:
             log.warning('%s failed to start: %s', service, warning)
     return True
@@ -279,7 +271,10 @@ def tick():
                 except Exception as err:
                     print(err)
     for service in active_services:
-        active_services[service].tick()
+        try:
+            active_services[service].tick()
+        except AttributeError:
+            pass
     return True
 
 

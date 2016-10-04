@@ -59,7 +59,7 @@ class TestTalker(TestCase):
         client = qtmud.Client()
         talker = qtmud.active_services['talker'] = qtmud.services.Talker()
         qtmud.subscribers['send'] = [qtmud.subscriptions.send]
-        talker.tune_in(client, 'one')
+        talker.tune_channel(client, 'one')
         _test_helps(self, cmd, client)
         _test_generic_bad_args(self, cmd, client)
         self.assertTrue(cmd(client))

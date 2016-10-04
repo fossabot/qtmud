@@ -18,14 +18,9 @@ def broadcast(channel, speaker, message):
                             'Sends `message` to everyone tuned into `{0}`'
                             ''.format(channel))
     else:
-        talker = qtmud.active_services['talker']
-        for listener in talker.channels[channel]:
-            qtmud.schedule('send',
-                           recipient=listener,
-                           text='`(`{}`)` {}: {}'.format(channel,
-                                                         speaker.name,
-                                                         message))
-        talker.history[channel].append('{}: {}'.format(speaker.name, message))
+        qtmud.active_services['talker'].broadcast(channel=channel,
+                                                  speaker=speaker,
+                                                  message=message)
     return True
 
 
@@ -113,8 +108,8 @@ def client_login_parser(client, line):
             client.input_parser = 'client_mudlib_login_parser'
         else:
             client.input_parser = 'client_command_parser'
-        qtmud.active_services['talker'].tune_in(client=client,
-                                                channel='one')
+        qtmud.active_services['talker'].tune_channel(client=client,
+                                                     channel='one')
         qtmud.connected_clients.append(client)
         for c in qtmud.connected_clients:
             qtmud.schedule('send', recipient=c,

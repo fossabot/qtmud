@@ -126,24 +126,37 @@ class MUDSocket(object):
 class Talker(object):
     """ The Talker service handles the global chat channels. """
     def __init__(self):
-        self.channels = {'one': list()}
-        self.history = {'one': list()}
+        self.channels = dict()
+        self.history = dict()
+        for channel in ['one', 'debug', 'info', 'warning', 'error', 'critical']:
+            self.channels[channel] = list()
+            self.history[channel] = list()
+
+    def broadcast(self, channel, speaker, message):
+        for listener in self.channels[channel]:
+            qtmud.schedule('send',
+                           recipient=listener,
+                           text='`(`{}`)` {}: {}'.format(channel,
+                                                         speaker.name,
+                                                         message))
+        self.history[channel].append('{}: {}'.format(speaker.name, message))
 
     def new_channel(self, channel):
         self.channels[channel] = list()
         self.history[channel] = list()
         return True
 
-    def tune_in(self, client, channel):
+    def tune_channel(self, client, channel):
         if client not in self.channels[channel]:
             self.channels[channel].append(client)
             client.channels.append(channel)
 
-    def start(self):
-        return True
-
-    def shutdown(self):
-        return True
-
-    def tick(self):
-        return
+    def drop_channel(self, client, channel):
+        try:
+            self.channels[channel].remove(client)
+        except Exception as err:
+            qtmud.log.warning('Talker.tune_out() failed: %s', err)
+        try:
+            client.channels.remove(channel)
+        except Exception as err:
+            qtmud.log.warning('Talker.tune_out() failed: %s', err)

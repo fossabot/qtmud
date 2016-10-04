@@ -53,7 +53,7 @@ def foo(client, *, H=False, h=False, p=False):
         output += ('You test the pinkfish_parser with the following line:\n\n'
                    '{}\n\nIt returns: {}'.format(line,
                                                  qtmud.pinkfish_parse(
-            line)))
+                                                     line)))
     else:
         output = 'You foo, to no effect.'
     if output:
@@ -121,7 +121,8 @@ def help(client, topic='', *, H=False, h=False, domain=''):
     return output
 
 
-def talker(client, channel=None, *, H=False, h=False, l=False):
+def talker(client, channel=None, *, H=False, h=False, l=False, t=False,
+           d=False):
     """ Command for interacting with the Talker service.
 
         :param client:      The client issuing the talker command. (That'd be
@@ -130,14 +131,17 @@ def talker(client, channel=None, *, H=False, h=False, l=False):
         :param h:           Shows the client a brief help.
         :param channel:     The channel you're getting information on.
         :param l:           Show the channel's history.
+        :param t:           Tune into a channel
+        :param d:           Drop a channel
 
         .. todo:: --depth argument to specify how much history to show
     """
     output = ''
-    brief = ('syntax: talker [-Hhl] [channel]\n\n'
+    brief = ('syntax: talker [-Hhltd] [channel]\n\n'
              'If entered without argument, lists the channels you\'re tuned '
              'into. If a channel is given, shows information about that '
              'channel. If the -l flag is given, shows that channel\'s logs.')
+    talker_service = qtmud.active_services['talker']
     if H:
         output += talker.__doc__
     elif h:
@@ -145,10 +149,12 @@ def talker(client, channel=None, *, H=False, h=False, l=False):
     else:
         if not channel:
             output += ('you\'re listening to {}'
-                      ''.format([c for c in client.channels]))
+                       ''.format([c for c in client.channels]))
         else:
             if channel in client.channels:
-                if l:
+                if d:
+                    talker_service.drop_channel(client, channel)
+                elif l:
                     output += ('({}) channel log:\n{}'
                                ''.format(channel,
                                          '\n'.join(m for m in
@@ -156,8 +162,15 @@ def talker(client, channel=None, *, H=False, h=False, l=False):
                                                        'talker'].history[
                                                            channel])))
                 else:
-                    # TODO actual stuff here
-                    output += 'Info about the channel goes here.'
+                    # TODO output += talker_service.summarize(channel)
+                    output += 'This will show you output about that channel ' \
+                              'and its listeners, in the future.'
+            elif channel in talker_service.channels:
+                if t:
+                    talker_service.tune_channel(client=client, channel=channel)
+                else:
+                    output += 'This will show you output about that channel.'
+
     if output:
         qtmud.schedule('send', recipient=client, text=output)
         return True
