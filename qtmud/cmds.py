@@ -2,6 +2,7 @@ import qtmud
 
 # pylint: disable=invalid-name
 
+
 def commands(client, *, H=False, h=False):
     """ Sends a list of the client's commands to the client.
 

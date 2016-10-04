@@ -16,7 +16,7 @@ from qtmud import cmds, services, subscriptions, txt
 # GLOBAL REFERENCES
 NAME = 'qtMUD'
 """ Name of the MUD engine. """
-__version__ = '0.0.9'
+__version__ = '0.0.11'
 """ MUD engine version """
 __url__ = 'https://qtmud.readthedocs.io/en/latest/'
 

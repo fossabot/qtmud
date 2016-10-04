@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='qtMUD',
-      version='9',
+      version='0.0.10',
       description='framework for building and running MUDs',
       long_description='qtMUD is a framework for developing and hosting MUDs, '
                        'or Multi-User Dungeons; text-based MMORPGs.',
@@ -25,4 +25,5 @@ setup(name='qtMUD',
       include_package_data=True,
       zip_safe=False,
       test_suite='tests',
-      scripts=['bin/qtmud_run'])
+      scripts=['bin/qtmud_run'],
+      install_requires=['clint'])
