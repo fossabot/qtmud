@@ -3,11 +3,15 @@ Developing with qtMUD
 #####################
 
 qtMUD is meant to be used as a framework for developing your own MUD. This
-document contains an explanation of how qtMUD works, and some tutorials for
-using it to create your own MUD.
+document contains an explanation of how qtMUD works, as well as detailed
+explanations of our development process and some tutorials on how to expand
+the library.
+
 
 Getting Started
 ###############
+
+
 
 Download Source
 ===============
@@ -18,6 +22,7 @@ The easiest way to get the source code for qtMUD is by cloning the
     $ git clone https://github.com/emsenn/qtmud.git
 
 This will create a new folder with
+
 
 How it Works
 ============
@@ -58,10 +63,12 @@ This section is intended to be an outline of the steps that I take to bring a
 part of qtMUD from idea to release. Each section is, roughly, broken up by
 the console command used to handle the task.
 
+
 GitHub Issues
 =============
 
 .. todo:: Coming by 0.1.0!
+
 
 Flow Feature Start
 ==================
@@ -80,6 +87,7 @@ Even though I haven't written any test cases for my code (yet), it's still a
 good idea to check and make sure your changes didn't inadvertently break
 something existing. Once you're sure your code doesn't hurt existing
 functionality, you can go ahead and commit the changes.
+
 
 Git Commit
 ==========
@@ -134,6 +142,7 @@ like this::
 
 Once you've committed the functional code, it's time to test it.
 
+
 Unittests
 =========
 ::
@@ -164,6 +173,7 @@ another commit::
 
     $ git commit -m "new: test: Test Cases For qtmud.cmds.womble !wip"
 
+
 Pylint
 ======
 ::
@@ -173,8 +183,12 @@ Pylint
 Now that the ``womble`` command has been written, and we have tests to verify
 it works, it's time to make sure the addition follows good Python practices.
 
-Sphinx
-======
+
+Documentation
+=============
+
+D
+
 ::
 
     $ cd ./docs && make html

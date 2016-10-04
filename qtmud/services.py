@@ -27,6 +27,9 @@ class MUDSocket(object):
                 _socket = s
         return _socket
 
+    def replace_client_object(self, client, object):
+        self.clients[self.get_socket_by_thing(client)] = object
+
     def start(self, ip4_address=None, ip6_address=None):
         qtmud.log.info('start()ing MUDSocket')
         if not ip4_address:
@@ -109,6 +112,8 @@ class MUDSocket(object):
                                 line, client.recv_buffer = split
                             else:
                                 line, client.recv_buffer = split[0], ''
+                            qtmud.schedule('send', recipient=client,
+                                           text='> {}'.format(line))
                             qtmud.schedule('client_input_parser',
                                            client=client, line=line)
         if write:
