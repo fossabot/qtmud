@@ -4,7 +4,6 @@ import socket
 import qtmud
 
 
-
 class MUDSocket(object):
     """ Handles a socket service. """
     def __init__(self):
@@ -16,6 +15,11 @@ class MUDSocket(object):
         self.ip6_socket = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
         self.ip6_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
+    def close(self):
+        self.ip4_socket.close()
+        self.ip6_socket.close()
+        return True
+
     def get_socket_by_thing(self, thing):
         _socket = None
         for s in self.clients:
@@ -23,16 +27,19 @@ class MUDSocket(object):
                 _socket = s
         return _socket
 
+    def replace_client_object(self, client, object):
+        self.clients[self.get_socket_by_thing(client)] = object
+
     def start(self, ip4_address=None, ip6_address=None):
         qtmud.log.info('start()ing MUDSocket')
-        if not ip4_address and hasattr(qtmud, 'IP4_ADDRESS'):
+        if not ip4_address:
             ip4_address = (qtmud.IPv4_HOSTNAME, qtmud.IPv4_MUDPORT)
-        if not ip6_address and hasattr(qtmud, 'IP6_ADDRESS'):
+        if not ip6_address:
             ip6_address = (qtmud.IPv6_HOSTNAME, qtmud.IPv6_MUDPORT)
         if not ip4_address and not ip6_address:
-            qtmud.log.error('No address set, make sure either IP6_ADDRESS '
-                            'or IP4_ADDRESS is not None.')
-            return False
+            raise RuntimeWarning('qtmud.services.MUDSocket() didn\'t manage '
+                                 'to set an address. Is your configuration '
+                                 'file missing?')
         if ip4_address:
             qtmud.log.debug('trying to bind() MUDSocket to address %s',
                             ip4_address)
@@ -59,13 +66,6 @@ class MUDSocket(object):
         if len(self.connections) == 0:
             return False
         return True
-
-
-    def close(self):
-        self.ip4_socket.close()
-        self.ip6_socket.close()
-        return True
-
 
     def shutdown(self):
         qtmud.log.debug('shutdown() and close() MUDSocket.ip4_socket & '
@@ -112,6 +112,8 @@ class MUDSocket(object):
                                 line, client.recv_buffer = split
                             else:
                                 line, client.recv_buffer = split[0], ''
+                            qtmud.schedule('send', recipient=client,
+                                           text='> {}'.format(line))
                             qtmud.schedule('client_input_parser',
                                            client=client, line=line)
         if write:
@@ -124,24 +126,37 @@ class MUDSocket(object):
 class Talker(object):
     """ The Talker service handles the global chat channels. """
     def __init__(self):
-        self.channels = {'one': list()}
-        self.history = {'one': list()}
+        self.channels = dict()
+        self.history = dict()
+        for channel in ['one', 'debug', 'info', 'warning', 'error', 'critical']:
+            self.channels[channel] = list()
+            self.history[channel] = list()
+
+    def broadcast(self, channel, speaker, message):
+        for listener in self.channels[channel]:
+            qtmud.schedule('send',
+                           recipient=listener,
+                           text='`(`{}`)` {}: {}'.format(channel,
+                                                         speaker.name,
+                                                         message))
+        self.history[channel].append('{}: {}'.format(speaker.name, message))
 
     def new_channel(self, channel):
         self.channels[channel] = list()
         self.history[channel] = list()
         return True
 
-    def tune_in(self, client, channel):
-        self.channels[channel].append(client)
-        client.channels.append(channel)
-        return True
+    def tune_channel(self, client, channel):
+        if client not in self.channels[channel]:
+            self.channels[channel].append(client)
+            client.channels.append(channel)
 
-    def start(self):
-        return True
-
-    def shutdown(self):
-        return True
-
-    def tick(self):
-        return
+    def drop_channel(self, client, channel):
+        try:
+            self.channels[channel].remove(client)
+        except Exception as err:
+            qtmud.log.warning('Talker.tune_out() failed: %s', err)
+        try:
+            client.channels.remove(channel)
+        except Exception as err:
+            qtmud.log.warning('Talker.tune_out() failed: %s', err)
