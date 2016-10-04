@@ -4,7 +4,51 @@ Changelog
 %%version%% (unreleased)
 ------------------------
 
+- Merge branch 'release/0.0.9' into develop. [emsenn]
+
+0.0.9 (2016-10-04)
+------------------
+
+New
+~~~
+
+- Talker -t And talker -d To Tune & Drop Talker Channels. [emsenn]
+
+- Whatami Command, Tells Client Their Class. [emsenn]
+
+- Added qtmud.services.Talker.replace_client_object(client, object)
+  [emsenn]
+
+- Connected Clients Informed Of New Connections. [emsenn]
+
+- Addition Of `tell` Client Command. [emsenn]
+
+Changes
+~~~~~~~
+
+- Documentation & Linting of ./qtmud/__init__.py. [emsenn]
+
+Fix
+~~~
+
+- Fixed Issue #30. [emsenn]
+
+  Clients are now added to ``qtmud.connected_clients`` after they get their password right.
+
+- Fixed Issue #31, Multiword Tells Now Work. [emsenn]
+
+- Fixed Clients Tuning In Repeatedly To Talker Channels. [emsenn]
+
+  Also bolded some output and stopped making log directories if one wasn't given.
+
+Other
+~~~~~
+
+- Merge branch 'feature/mudlib-support' into develop. [emsenn]
+
 - Merge branch 'release/0.0.8' into develop. [emsenn]
+
+- Merge branch 'release/0.0.8' [emsenn]
 
 0.0.8 (2016-10-02)
 ------------------
