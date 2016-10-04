@@ -226,6 +226,18 @@ def quit(client, *, H=False, h=False):
     return True
 
 
+def whatami(client, *, H=False, h=False):
+    output = ''
+    brief = ('syntax: whatami [-Hh]\n\n'
+             'Shows what sort of object you are.')
+    if H:
+        output += who.__doc__
+    elif h:
+        output = brief
+    else:
+        output += ('{}'.format(client.__class__.__name__))
+    qtmud.schedule('send', recipient=client, text=output)
+
 def who(client, *, H=False, h=False):
     """ Command to check your name
 

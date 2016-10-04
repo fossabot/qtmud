@@ -113,7 +113,8 @@ def client_login_parser(client, line):
             client.input_parser = 'client_mudlib_login_parser'
         else:
             client.input_parser = 'client_command_parser'
-        qtmud.active_services['talker'].tune_in(channel='one', client=client)
+        qtmud.active_services['talker'].tune_in(client=client,
+                                                channel='one')
         qtmud.connected_clients.append(client)
         for c in qtmud.connected_clients:
             qtmud.schedule('send', recipient=c,
