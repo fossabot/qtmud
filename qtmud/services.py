@@ -97,9 +97,17 @@ class MUDSocket(object):
                                    recipient=client,
                                    text=qtmud.SPLASH)
                 else:
-                    data = conn.recv(1024)
+                    try:
+                        data = conn.recv(1024)
+                    except ConnectionResetError as err:
+                        qtmud.log.debug('lost connection from: {}:\n'
+                                        '{}'.format(self.clients[conn].addr,
+                                                    err), exc_info=True)
+                        qtmud.schedule('client_disconnect',
+                                       client=self.clients[conn])
+                        return
                     if data == b'':
-                        qtmud.log.debug('lost connection from %s',
+                        qtmud.log.debug('disconnected from %s',
                                         format(self.clients[conn].addr))
                         qtmud.schedule('client_disconnect',
                                        client=self.clients[conn])
@@ -120,7 +128,6 @@ class MUDSocket(object):
             for conn in write:
                 conn.send(self.clients[conn].send_buffer.encode('utf8'))
                 self.clients[conn].send_buffer = ''
-        return True
 
 
 class Talker(object):
@@ -136,10 +143,9 @@ class Talker(object):
         for listener in self.channels[channel]:
             qtmud.schedule('send',
                            recipient=listener,
-                           text='`(`{}`)` {}: {}'.format(channel,
-                                                         speaker.name,
+                           text='`(`{}`)` {}: {}'.format(channel, speaker,
                                                          message))
-        self.history[channel].append('{}: {}'.format(speaker.name, message))
+        self.history[channel].append('{}: {}'.format(speaker, message))
 
     def new_channel(self, channel):
         self.channels[channel] = list()
@@ -147,9 +153,12 @@ class Talker(object):
         return True
 
     def tune_channel(self, client, channel):
-        if client not in self.channels[channel]:
-            self.channels[channel].append(client)
-            client.channels.append(channel)
+        if channel not in self.channels:
+            self.new_channel(channel)
+        self.channels[channel].append(client)
+        client.channels.append(channel)
+        qtmud.schedule('send', recipient=client,
+                       text='You tune into the {} channel'.format(channel))
 
     def drop_channel(self, client, channel):
         try:

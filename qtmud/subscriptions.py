@@ -19,7 +19,7 @@ def broadcast(channel, speaker, message):
                             ''.format(channel))
     else:
         qtmud.active_services['talker'].broadcast(channel=channel,
-                                                  speaker=speaker,
+                                                  speaker=speaker.name,
                                                   message=message)
     return True
 
@@ -182,8 +182,8 @@ def client_command_parser(client, line):
                                text='{} command failed: {}'
                                     ''.format(command, err))
                 client.commands[command](h=True)
-                qtmud.log.warning('%s\'s %s command failed: %s',
-                                  client.name, command, err)
+                qtmud.log.warning('%s\'s %s command failed: %s', client.name,
+                                  command, err, exc_info=True)
         elif command in client.channels:
             message = ' '.join(spl[1:])
             qtmud.schedule('broadcast', channel=command,

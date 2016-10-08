@@ -152,25 +152,22 @@ def talker(client, channel=None, *, H=False, h=False, l=False, t=False,
             output += ('you\'re listening to {}'
                        ''.format([c for c in client.channels]))
         else:
-            if channel in client.channels:
-                if d:
-                    talker_service.drop_channel(client, channel)
-                elif l:
-                    output += ('({}) channel log:\n{}'
-                               ''.format(channel,
-                                         '\n'.join(m for m in
-                                                   qtmud.active_services[
-                                                       'talker'].history[
-                                                           channel])))
-                else:
-                    # TODO output += talker_service.summarize(channel)
-                    output += 'This will show you output about that channel ' \
-                              'and its listeners, in the future.'
-            elif channel in talker_service.channels:
-                if t:
-                    talker_service.tune_channel(client=client, channel=channel)
-                else:
-                    output += 'This will show you output about that channel.'
+            if d:
+                for _channel in channel.split(','):
+                    talker_service.drop_channel(client, _channel)
+            elif t:
+                for _channel in channel.split(','):
+                    talker_service.tune_channel(client=client, channel=_channel)
+            elif l:
+                output += ('({}) channel log:\n{}'
+                           ''.format(channel, '\n'.join(m for m in
+                                                        qtmud.active_services[
+                                                            'talker'].history[
+                                                            channel])))
+            else:
+                # TODO output += talker_service.summarize(channel)
+                output += ('This will show you output about that channel '
+                           'and its listeners, in the future.')
 
     if output:
         qtmud.schedule('send', recipient=client, text=output)

@@ -8,6 +8,7 @@ import pickle
 import types
 import uuid
 from inspect import getmembers, isfunction, isclass
+from logging.config import dictConfig
 
 from clint.textui import colored
 
@@ -55,21 +56,29 @@ active_services = dict()
 the classes in :mod:`qtmud.services` referenced by class name. """
 connected_clients = list()
 
-console = logging.StreamHandler()
-console.setLevel(logging.INFO)
-console.setFormatter(logging.Formatter('%(levelname)-8s %(message)s'))
-try:
-    logging.basicConfig(filename=LOG_DIR+'debug.log', filemode='w',
-                        format=('%(asctime)s %(name)-12s %(levelname)-8s '
-                                '%(message)s'),
-                        datefmt='%m-%d %H:%M',
-                        level=logging.DEBUG)
-except FileNotFoundError as err:
-    print('%s so all logs will go to terminal', err)
-log = logging.getLogger(NAME)
-""" An instance of :class:`logging.Logger`, intended to be used as the main
-logger for qtmud and the mudlib, called through `qtmud.logs`."""
-log.addHandler(console)
+
+class TalkerHandler(logging.Handler):
+    def __init__(self):
+        super(TalkerHandler, self).__init__()
+        self.talker = active_services['talker']
+
+    def emit(self, record):
+        self.talker.broadcast(channel=record.levelname, speaker=record.name,
+                              message=record.msg)
+
+
+logging_config = dict(version=1,
+                      formatters={'f': {'format': ('%(asctime)s %(name)-12s '
+                                                   '%(levelname)-8s '
+                                                   '%(message)s')}}, handlers={
+        'stream': {'class': 'logging.StreamHandler', 'formatter': 'f',
+                   'level': logging.DEBUG},
+        'file': {'class': 'logging.FileHandler', 'filename': './debug.log',
+                 'formatter': 'f', 'level': logging.DEBUG}},
+                      root={'handlers': ['stream', 'file'],
+                            'level': logging.DEBUG})
+logging.config.dictConfig(logging_config)
+log = logging.getLogger(__name__)
 
 
 def load():
@@ -91,6 +100,10 @@ def load():
     log.info('adding qtmud.services to qtmud.active_services')
     active_services = {t[1].__name__.lower(): t[1]() for
                        t in getmembers(services) if isclass(t[1])}
+    if 'talker' in active_services:
+        log.addHandler(TalkerHandler())
+        for level in ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']:
+            active_services['talker'].new_channel(level)
     if load_client_accounts():
         log.debug('qtmud.client_accounts populated from '
                   'qtmud.load_client_accounts()')
@@ -248,7 +261,7 @@ def start():
             active_services[service].start()
             log.info('%s start()ed', service)
         except AttributeError:
-            pass
+            log.info('%s has no start()', service)
         except RuntimeWarning as warning:
             log.warning('%s failed to start: %s', service, warning)
     return True
@@ -269,7 +282,7 @@ def tick():
                 try:
                     event(**call)
                 except Exception as err:
-                    print(err)
+                    log.warning(err, exc_info=True)
     for service in active_services:
         try:
             active_services[service].tick()
