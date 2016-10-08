@@ -56,7 +56,7 @@ def foo(client, *, H=False, h=False, p=False):
                                                  qtmud.pinkfish_parse(
                                                      line)))
     else:
-        output = 'You foo, to no effect.'
+        output = 'You foo, to no effect. (`this is a development command`)'
     if output:
         qtmud.schedule('send', recipient=client, text=output)
     return True
@@ -120,6 +120,62 @@ def help(client, topic='', *, H=False, h=False, domain=''):
         output = 'No help found. Try looking at https://qtmud.rtfd.io'
     qtmud.schedule('send', recipient=client, text=output)
     return output
+
+
+def options(client, value, *, H=False, h=False, attr=None):
+    """ Command to set client options.
+
+        :param client:      The client issuing the command. (That'd be you.)
+                            **This isn't part of the command you enter.**
+        :param H:           Shows the client this docstring.
+        :param h:           Shows the client a brief help.
+
+    """
+    output = ''
+    brief = ('syntax: options [-Hh]\n\n'
+             'Sets options for the client. `This command is a work in '
+             'progress.`')
+    if H:
+        output += options.__doc__
+    elif h:
+        output += brief
+    elif attr:
+        try:
+            setattr(client, attr, value)
+            output += 'You set your `{attr}` to `{value}`.'.format(**locals())
+        except AttributeError as err:
+            output += 'You don\'t have a `{attr}` attribute.'.format(**locals())
+            qtmud.log.warning('{client.name} failed to set {attr}: {err}'
+                              ''.format(**locals()), exc_info=True)
+    else:
+        output += ('This command is for setting options about your player '
+                   'account. Since it isn\'t really intended for you to use if '
+                   'you don\'t know what you\'re doing, I\'m not going to '
+                   'explain it further.')
+    qtmud.schedule('send', recipiennt=client, text=output)
+
+
+def quit(client, *, H=False, h=False):
+    """ Command to quit qtMUD
+
+        :param client:      The client issuing the quit command. (That'd be
+                            you.) **This isn't part of the command you enter.**
+        :param H:           Shows the client this docstring.
+        :param h:           Shows the client a brief help.
+    """
+    output = ''
+    brief = ('syntax: help [-Hh]\n\n'
+             'Causes the client to leave the game.')
+    if H:
+        output += quit.__doc__
+    elif h:
+        output = brief
+    else:
+        qtmud.schedule('send', recipient=client, text='you quit goodbye')
+        qtmud.schedule('client_disconnect', client=client)
+    if output:
+        qtmud.schedule('send', recipient=client, text=output)
+    return True
 
 
 def talker(client, channel=None, *, H=False, h=False, l=False, t=False,
@@ -213,28 +269,6 @@ def tell(client, *payload, H=False, h=False):
     if not output:
         output += brief
     qtmud.schedule('send', recipient=client, text=output)
-
-def quit(client, *, H=False, h=False):
-    """ Command to quit qtMUD
-
-        :param client:      The client issuing the quit command. (That'd be
-                            you.) **This isn't part of the command you enter.**
-        :param H:           Shows the client this docstring.
-        :param h:           Shows the client a brief help.
-    """
-    output = ''
-    brief = ('syntax: help [-Hh]\n\n'
-             'Causes the client to leave the game.')
-    if H:
-        output += quit.__doc__
-    elif h:
-        output = brief
-    else:
-        qtmud.schedule('send', recipient=client, text='you quit goodbye')
-        qtmud.schedule('client_disconnect', client=client)
-    if output:
-        qtmud.schedule('send', recipient=client, text=output)
-    return True
 
 
 def whatami(client, *, H=False, h=False):
