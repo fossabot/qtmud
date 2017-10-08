@@ -16,19 +16,23 @@ from qtmud import cmds, services, subscriptions, txt
 # GLOBAL REFERENCES
 NAME = 'qtMUD'
 """ Name of the MUD engine. """
-__version__ = '0.0.9'
+__version__ = '0.0.11'
 """ MUD engine version """
 __url__ = 'https://qtmud.readthedocs.io/en/latest/'
 
 
 
+DATA_DIR = './data/'
+LOG_DIR = './logs/'
 
-IPv4_HOSTNAME = '0.0.0.0'
+IPv4_HOSTNAME = 'localhost'
 IPv4_MUDPORT = 5787
 IPv6_HOSTNAME = 'localhost'
 IPv6_MUDPORT = 5788
-DATA_DIR = './data/'
-LOG_DIR = './logs/'
+
+SLACK_TOKEN = 'xoxb-254236470455-cuhtW6L8fbGRBGaZhKfY7oS6'
+
+CLIENT_ACCOUNTS_PICKLE = './client_accounts.p'
 
 
 

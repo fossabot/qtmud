@@ -28,7 +28,7 @@ def commands(client, *, H=False, h=False):
 
 
 # pylint: disable=blacklisted-name
-def foo(client, *, H=False, h=False, p=False):
+def foo(client, *, H=False, h=False, p=False, s=False):
     """ The dedicated test command
 
         :param client:      The client issuing the foo command. (That'd be
@@ -54,6 +54,10 @@ def foo(client, *, H=False, h=False, p=False):
                    '{}\n\nIt returns: {}'.format(line,
                                                  qtmud.pinkfish_parse(
                                                      line)))
+    elif s:
+        slackbot = qtmud.active_services['slack']
+        slackbot.post_message(channel='#general', text='test message')
+        output += ('check your slack?')
     else:
         output = 'You foo, to no effect.'
     if output:

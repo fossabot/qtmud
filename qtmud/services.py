@@ -1,8 +1,36 @@
 import select
 import socket
+import slackclient
 
 import qtmud
 
+class Slack(object):
+    def __init__(self):
+        self.team = dict()
+        self.usergroups = dict()
+        return
+        
+    def start(self, bot_token=None):
+        qtmud.log.debug('slackservice loading API token')
+        if not bot_token:
+            bot_token = qtmud.SLACK_TOKEN
+        self.bot_connection = slackclient.SlackClient(bot_token)
+        qtmud.log.debug('slackservice API & auth test data:')
+        # qtmud.log.debug(self.bot_connection.api_call('api.test'))
+        # qtmud.log.debug(self.bot_connection.api_call('auth.test'))
+        self.team['info'] = self.bot_connection.api_call('team.info', token=self.bot_token)
+        self.team['profile'] = self.bot_connection.api_call('team.profile.get')
+        qtmud.log.debug(self.team)
+        self.usergroups = self.bot_connection.api_call('usergroups.list', token=self.bot_token)
+        qtmud.log.debug(self.usergroups)
+
+    def shutdown(self):
+        qtmud.log.debug('shutting down slack client connectionn')
+        return True
+
+    def post_message(self, channel, text):
+        return self.bot_connection.api_call("chat.postMessage", channel=channel, text=text)
+        
 
 class MUDSocket(object):
     """ Handles a socket service. """
