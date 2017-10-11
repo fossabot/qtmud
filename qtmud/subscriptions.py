@@ -24,7 +24,7 @@ def broadcast(channel, speaker, message):
     return True
 
 
-def client_disconnect(client):
+def mudsocket_client_disconnect(client):
     """ Handle removing a client from qtMUD
 
         .. warning:: This is likely buggy and going to change
@@ -46,7 +46,7 @@ def client_disconnect(client):
     return True
 
 
-def client_login_parser(client, line):
+def mudsocket_login_parser(client, line):
     """ Handle logs-in for arriving players - right now, just a basic check
     against qtmud.client_accounts to see if the client is there already.
     """
@@ -78,13 +78,15 @@ def client_login_parser(client, line):
             output = ('Your client name can\'t be blank. Input what name '
                       'you\'d like to use and press <enter>.')
         client.name = line
+        client.usernames[line] = 'mudsocket'
     #####
     #
     # register new client
     #
     #####
     elif client.login_stage == 1:
-        qtmud.client_accounts[client.name] = {'password': line}
+        qtmud.new_client_account(name=client.name, password=line,
+                                 usernames={client.name:'mudsocket'})
         qtmud.save_client_accounts()
         client.login_stage = 9
         output = ('Client account registered with name {}, press '
@@ -107,7 +109,7 @@ def client_login_parser(client, line):
         if qtmud.MUDLIB:
             client.input_parser = 'client_mudlib_login_parser'
         else:
-            client.input_parser = 'client_command_parser'
+            client.input_parser = 'simple_command_parser'
         qtmud.active_services['talker'].tune_channel(client=client,
                                                      channel='one')
         qtmud.connected_clients.append(client)
@@ -123,7 +125,7 @@ def shutdown():
     """ Handles qtMUD shutting down. """
     qtmud.log.debug('shutdown() occurring')
     for client in qtmud.connected_clients:
-        qtmud.schedule('client_disconnect', client=client)
+        qtmud.schedule('mudsocket_client_disconnect', client=client)
     while True:
         if qtmud.events:
             qtmud.log.debug('processing final events %s', qtmud.events)
@@ -144,14 +146,14 @@ def shutdown():
     raise SystemExit
 
 
-def client_input_parser(client, line):
+def client_input_decider(client, line):
     """ Pushes a client's input to their designated parser subscription.
     """
     qtmud.schedule('{}'.format(client.input_parser), client=client, line=line)
     return True
 
 
-def client_command_parser(client, line):
+def simple_command_parser(client, line):
     """ Once a client has logged in, this method handles parsing their input.
     """
     if line:
@@ -184,7 +186,7 @@ def client_command_parser(client, line):
                 client.commands[command](h=True)
                 qtmud.log.warning('%s\'s %s command failed: %s',
                                   client.name, command, err)
-        elif command in client.channels:
+        elif command in client.talker['channels']:
             message = ' '.join(spl[1:])
             qtmud.schedule('broadcast', channel=command,
                            speaker=client,

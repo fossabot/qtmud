@@ -4,34 +4,6 @@ import slackclient
 
 import qtmud
 
-class Slack(object):
-    def __init__(self):
-        self.team = dict()
-        self.usergroups = dict()
-        return
-        
-    def start(self, bot_token=None):
-        qtmud.log.debug('slackservice loading API token')
-        if not bot_token:
-            bot_token = qtmud.SLACK_TOKEN
-        self.bot_connection = slackclient.SlackClient(bot_token)
-        qtmud.log.debug('slackservice API & auth test data:')
-        # qtmud.log.debug(self.bot_connection.api_call('api.test'))
-        # qtmud.log.debug(self.bot_connection.api_call('auth.test'))
-        self.team['info'] = self.bot_connection.api_call('team.info', token=self.bot_token)
-        self.team['profile'] = self.bot_connection.api_call('team.profile.get')
-        qtmud.log.debug(self.team)
-        self.usergroups = self.bot_connection.api_call('usergroups.list', token=self.bot_token)
-        qtmud.log.debug(self.usergroups)
-
-    def shutdown(self):
-        qtmud.log.debug('shutting down slack client connectionn')
-        return True
-
-    def post_message(self, channel, text):
-        return self.bot_connection.api_call("chat.postMessage", channel=channel, text=text)
-        
-
 class MUDSocket(object):
     """ Handles a socket service. """
     def __init__(self):
@@ -60,6 +32,7 @@ class MUDSocket(object):
 
     def start(self, ip4_address=None, ip6_address=None):
         qtmud.log.info('start()ing MUDSocket')
+        qtmud.channels['mudsocket'] = self
         if not ip4_address:
             ip4_address = (qtmud.IPv4_HOSTNAME, qtmud.IPv4_MUDPORT)
         if not ip6_address:
@@ -69,13 +42,11 @@ class MUDSocket(object):
                                  'to set an address. Is your configuration '
                                  'file missing?')
         if ip4_address:
-            qtmud.log.debug('trying to bind() MUDSocket to address %s',
-                            ip4_address)
             try:
                 self.ip4_socket.bind(ip4_address)
                 self.ip4_socket.listen(5)
                 self.connections.append(self.ip4_socket)
-                qtmud.log.info('MUDSocket successfully bound to %s', ip4_address)
+                qtmud.log.info('MUDSocket successfully bound to {}'.format(ip4_address))
             except OSError as err:
                 qtmud.log.error('MUDSocket failed to bind to %s, error: %s',
                                 ip4_address, err)
@@ -115,12 +86,14 @@ class MUDSocket(object):
                     new_conn, addr = conn.accept()
                     qtmud.log.debug('new connection accepted from %s', format(addr))
                     client = qtmud.Client()
-                    client.update({'addr': addr,
+                    client.update({'channel': {'type':'mudserver',
+                                               'object' : self,
+                                               'address' : addr},
                                    'send_buffer': '',
                                    'recv_buffer': ''})
                     self.connections.append(new_conn)
                     self.clients[new_conn] = client
-                    client.input_parser = 'client_login_parser'
+                    client.input_parser = 'mudsocket_login_parser'
                     qtmud.schedule('send',
                                    recipient=client,
                                    text=qtmud.SPLASH)
@@ -128,8 +101,8 @@ class MUDSocket(object):
                     data = conn.recv(1024)
                     if data == b'':
                         qtmud.log.debug('lost connection from %s',
-                                        format(self.clients[conn].addr))
-                        qtmud.schedule('client_disconnect',
+                                        format(self.clients[conn]['channel']['address']))
+                        qtmud.schedule('mudsocket_client_disconnect',
                                        client=self.clients[conn])
                     else:
                         client = self.clients[conn]
@@ -142,7 +115,7 @@ class MUDSocket(object):
                                 line, client.recv_buffer = split[0], ''
                             qtmud.schedule('send', recipient=client,
                                            text='> {}'.format(line))
-                            qtmud.schedule('client_input_parser',
+                            qtmud.schedule('client_input_decider',
                                            client=client, line=line)
         if write:
             for conn in write:
@@ -168,8 +141,10 @@ class Talker(object):
                                                          speaker.name,
                                                          message))
         self.history[channel].append('{}: {}'.format(speaker.name, message))
+        qtmud.log.debug('Talker broadcast the following: {}: {}'.format(speaker.name, message))
 
     def new_channel(self, channel):
+        qtmud.log.debug('Creating new talker channel %s', channel)
         self.channels[channel] = list()
         self.history[channel] = list()
         return True
@@ -177,7 +152,7 @@ class Talker(object):
     def tune_channel(self, client, channel):
         if client not in self.channels[channel]:
             self.channels[channel].append(client)
-            client.channels.append(channel)
+            client.talker['channels'].append(channel)
 
     def drop_channel(self, client, channel):
         try:
@@ -185,6 +160,6 @@ class Talker(object):
         except Exception as err:
             qtmud.log.warning('Talker.tune_out() failed: %s', err)
         try:
-            client.channels.remove(channel)
+            client.talker['channels'].remove(channel)
         except Exception as err:
             qtmud.log.warning('Talker.tune_out() failed: %s', err)
