@@ -1,0 +1,15 @@
+#+TITLE: emsenn's qtMUD development log
+This file is my personal writing about developing qtMUD.
+
+* <2018-12-15 Sat 12:01>: Getting Back Into It
+It's been a few years since I've looked at this project, but I think
+my life is getting back to a point where I'd like to give it some more
+thought.  And, luckily, it seems like I'll be able to get started
+relatively easily: the code seems to work, and has at least /some/
+documentiation, even if it isn't as well-written as I'd prefer these
+days.
+
+I'm taking my first order of business to be refamiliarizing myself
+with the project's layout, reading the documentation, and learning how
+to rebuild the documentation.
+

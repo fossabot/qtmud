@@ -1,0 +1,478 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>qtmud.subscriptions &mdash; qtMUD 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> qtMUD
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Using qtMUD</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#quickstart">Quickstart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#id1">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#client-features">Client Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage.html#pinkfish-parser">Pinkfish Parser</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../development.html">Developing with qtMUD</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../development.html#getting-started">Getting Started</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#download-source">Download Source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#how-it-works">How it Works</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../development.html#development-flow">Development Flow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#github-issues">GitHub Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#flow-feature-start">Flow Feature Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#git-commit">Git Commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#unittests">Unittests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#pylint">Pylint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#documentation">Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#flow-feature-finish">Flow Feature Finish</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#flow-release-start">Flow Release Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#flow-release-finish">Flow Release Finish</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../development.html#making-using-things">Making &amp; Using Things</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../development.html#making-using-subscriptions">Making &amp; Using Subscriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../development.html#making-using-services">Making &amp; Using Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../development.html#changelog">Changelog</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../changelog.html">Changelog</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../changelog.html#version-unreleased">%%version%% (unreleased)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../changelog.html#id1">0.0.9 (2016-10-04)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../changelog.html#id2">0.0.8 (2016-10-02)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../changelog.html#id5">0.0.7 (2016-10-01)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../changelog.html#id6">0.0.6 (2016-10-01)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../changelog.html#id7">0.0.4 (2016-09-26)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../changelog.html#id8">0.0.3 (2016-09-16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../changelog.html#id9">0.0.2 (2016-09-10)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../changelog.html#id10">0.0.1 (2016-09-07)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">qtMUD API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#module-qtmud">qtmud module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#module-qtmud.cmds">qtmud.cmds module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#module-qtmud.services">qtmud.services module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#module-qtmud.subscriptions">qtmud.subscriptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#module-qtmud.txt">qtmud.txt module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#glossary">Glossary</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">qtMUD</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../qtmud.html">qtmud</a> &raquo;</li>
+        
+      <li>qtmud.subscriptions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for qtmud.subscriptions</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot; Subscriptions are methods which handle the interaction and manipulation</span>
+<span class="sd">of :class:`things &lt;qtmud.Thing&gt;`.</span>
+
+<span class="sd">Every method in this module is added to :attr:`qtmud.subscribers` when</span>
+<span class="sd">:func:`qtmud.start`. Calls to these methods which have been :func:`scheduled</span>
+<span class="sd">&lt;qtmud.schedule&gt;` as :attr:`events &lt;qtmud.events&gt;` will be called when</span>
+<span class="sd">:func:`qtmud.tick` is called.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">qtmud</span>
+
+
+<div class="viewcode-block" id="broadcast"><a class="viewcode-back" href="../../api.html#qtmud.subscriptions.broadcast">[docs]</a><span class="k">def</span> <span class="nf">broadcast</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">speaker</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Send a message from speaker to everyone on the channel. &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">message</span><span class="p">:</span>
+        <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">,</span> <span class="n">recipient</span><span class="o">=</span><span class="n">speaker</span><span class="p">,</span>
+                       <span class="n">text</span><span class="o">=</span><span class="s1">&#39;syntax: </span><span class="si">{0}</span><span class="s1"> &lt;message&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+                            <span class="s1">&#39;Sends `message` to everyone tuned into `</span><span class="si">{0}</span><span class="s1">`&#39;</span>
+                            <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">qtmud</span><span class="o">.</span><span class="n">active_services</span><span class="p">[</span><span class="s1">&#39;talker&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">broadcast</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="n">channel</span><span class="p">,</span>
+                                                  <span class="n">speaker</span><span class="o">=</span><span class="n">speaker</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                                  <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="client_disconnect"><a class="viewcode-back" href="../../api.html#qtmud.subscriptions.client_disconnect">[docs]</a><span class="k">def</span> <span class="nf">client_disconnect</span><span class="p">(</span><span class="n">client</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Handle removing a client from qtMUD</span>
+
+<span class="sd">        .. warning:: This is likely buggy and going to change</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mudsocket</span> <span class="o">=</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">active_services</span><span class="p">[</span><span class="s1">&#39;mudsocket&#39;</span><span class="p">]</span>
+    <span class="n">qtmud</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;disconnecting </span><span class="si">%s</span><span class="s1"> from qtmud.&#39;</span><span class="p">,</span> <span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">other</span> <span class="ow">in</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">connected_clients</span><span class="p">:</span>
+        <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">,</span>
+                       <span class="n">recipient</span><span class="o">=</span><span class="n">other</span><span class="p">,</span>
+                       <span class="n">text</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> disconnected.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">qtmud</span><span class="o">.</span><span class="n">connected_clients</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="n">socket</span> <span class="o">=</span> <span class="n">mudsocket</span><span class="o">.</span><span class="n">get_socket_by_thing</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">socket</span><span class="p">:</span>
+        <span class="n">mudsocket</span><span class="o">.</span><span class="n">clients</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
+        <span class="n">mudsocket</span><span class="o">.</span><span class="n">connections</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">socket</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="client_login_parser"><a class="viewcode-back" href="../../api.html#qtmud.subscriptions.client_login_parser">[docs]</a><span class="k">def</span> <span class="nf">client_login_parser</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Handle logs-in for arriving players - right now, just a basic check</span>
+<span class="sd">    against qtmud.client_accounts to see if the client is there already.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="c1">#####</span>
+    <span class="c1">#</span>
+    <span class="c1"># start login process</span>
+    <span class="c1">#</span>
+    <span class="c1">#####</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;login_stage&#39;</span><span class="p">):</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">login_stage</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;Input [desired] client name and press &lt;enter&gt;.&#39;</span>
+    <span class="c1">#####</span>
+    <span class="c1">#</span>
+    <span class="c1"># check if client exits</span>
+    <span class="c1">#</span>
+    <span class="c1">#####</span>
+    <span class="k">elif</span> <span class="n">client</span><span class="o">.</span><span class="n">login_stage</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">client_accounts</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;There</span><span class="se">\&#39;</span><span class="s1">s a client named </span><span class="si">{}</span><span class="s1">, if you</span><span class="se">\&#39;</span><span class="s1">re them, type your &#39;</span>
+                      <span class="s1">&#39;password and press &lt;enter&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">login_stage</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="k">elif</span> <span class="n">line</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;No client named </span><span class="si">{}</span><span class="s1">, going to make an account with that &#39;</span>
+                      <span class="s1">&#39;name. Type your desired password and press &lt;enter&gt;.&#39;</span>
+                      <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">login_stage</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Your client name can</span><span class="se">\&#39;</span><span class="s1">t be blank. Input what name &#39;</span>
+                      <span class="s1">&#39;you</span><span class="se">\&#39;</span><span class="s1">d like to use and press &lt;enter&gt;.&#39;</span><span class="p">)</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">line</span>
+    <span class="c1">#####</span>
+    <span class="c1">#</span>
+    <span class="c1"># register new client</span>
+    <span class="c1">#</span>
+    <span class="c1">#####</span>
+    <span class="k">elif</span> <span class="n">client</span><span class="o">.</span><span class="n">login_stage</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">qtmud</span><span class="o">.</span><span class="n">client_accounts</span><span class="p">[</span><span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="n">line</span><span class="p">}</span>
+        <span class="n">qtmud</span><span class="o">.</span><span class="n">save_client_accounts</span><span class="p">()</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">login_stage</span> <span class="o">=</span> <span class="mi">9</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Client account registered with name </span><span class="si">{}</span><span class="s1">, press &#39;</span>
+                  <span class="s1">&#39;&lt;enter&gt; to finish logging in.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+    <span class="c1">#####</span>
+    <span class="c1">#</span>
+    <span class="c1"># login existing account</span>
+    <span class="c1">#</span>
+    <span class="c1">#####</span>
+    <span class="k">elif</span> <span class="n">client</span><span class="o">.</span><span class="n">login_stage</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">client_accounts</span><span class="p">[</span><span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="s1">&#39;password&#39;</span><span class="p">]:</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">login_stage</span> <span class="o">=</span> <span class="mi">9</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;That</span><span class="se">\&#39;</span><span class="s1">s the correct password, press &lt;enter&gt; to finish &#39;</span>
+                      <span class="s1">&#39;logging in.&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">login_stage</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;That</span><span class="se">\&#39;</span><span class="s1">s not the right password for that account - &#39;</span>
+                      <span class="s1">&#39;type your [desired] client name and press &lt;enter&gt;.&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">client</span><span class="o">.</span><span class="n">login_stage</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">MUDLIB</span><span class="p">:</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">input_parser</span> <span class="o">=</span> <span class="s1">&#39;client_mudlib_login_parser&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">input_parser</span> <span class="o">=</span> <span class="s1">&#39;client_command_parser&#39;</span>
+        <span class="n">qtmud</span><span class="o">.</span><span class="n">active_services</span><span class="p">[</span><span class="s1">&#39;talker&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tune_channel</span><span class="p">(</span><span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+                                                     <span class="n">channel</span><span class="o">=</span><span class="s1">&#39;one&#39;</span><span class="p">)</span>
+        <span class="n">qtmud</span><span class="o">.</span><span class="n">connected_clients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">connected_clients</span><span class="p">:</span>
+            <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">,</span> <span class="n">recipient</span><span class="o">=</span><span class="n">c</span><span class="p">,</span>
+                           <span class="n">text</span><span class="o">=</span><span class="s1">&#39;`</span><span class="si">{}</span><span class="s1">` has connected&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
+        <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">,</span> <span class="n">recipient</span><span class="o">=</span><span class="n">client</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">output</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="shutdown"><a class="viewcode-back" href="../../api.html#qtmud.subscriptions.shutdown">[docs]</a><span class="k">def</span> <span class="nf">shutdown</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot; Handles qtMUD shutting down. &quot;&quot;&quot;</span>
+    <span class="n">qtmud</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;shutdown() occurring&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">client</span> <span class="ow">in</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">connected_clients</span><span class="p">:</span>
+        <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;client_disconnect&#39;</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">events</span><span class="p">:</span>
+            <span class="n">qtmud</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;processing final events </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">events</span><span class="p">)</span>
+            <span class="n">qtmud</span><span class="o">.</span><span class="n">tick</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="k">for</span> <span class="n">service</span> <span class="ow">in</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">active_services</span><span class="p">:</span>
+        <span class="n">service</span> <span class="o">=</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">active_services</span><span class="p">[</span><span class="n">service</span><span class="p">]</span>
+        <span class="n">qtmud</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;shutdown()ing </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">service</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">service</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+            <span class="n">qtmud</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;shutdown() </span><span class="si">%s</span><span class="s1"> successfully&#39;</span><span class="p">,</span>
+                            <span class="n">service</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">qtmud</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> failed to shutdown: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                              <span class="n">service</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+    <span class="n">qtmud</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;shutdown() finished, raising SystemExit&#39;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">SystemExit</span></div>
+
+
+<div class="viewcode-block" id="client_input_parser"><a class="viewcode-back" href="../../api.html#qtmud.subscriptions.client_input_parser">[docs]</a><span class="k">def</span> <span class="nf">client_input_parser</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Pushes a client&#39;s input to their designated parser subscription.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">client</span><span class="o">.</span><span class="n">input_parser</span><span class="p">),</span> <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="client_command_parser"><a class="viewcode-back" href="../../api.html#qtmud.subscriptions.client_command_parser">[docs]</a><span class="k">def</span> <span class="nf">client_command_parser</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Once a client has logged in, this method handles parsing their input.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">line</span><span class="p">:</span>
+        <span class="n">spl</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">spl</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">client</span><span class="o">.</span><span class="n">commands</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">spl</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">targs</span> <span class="o">=</span> <span class="n">spl</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">targs</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">targs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;--&#39;</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="s1">&#39;=&#39;</span> <span class="ow">in</span> <span class="n">arg</span><span class="p">:</span>
+                        <span class="n">targ</span> <span class="o">=</span> <span class="n">arg</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">targ</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                            <span class="n">kwargs</span><span class="p">[</span><span class="n">targ</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">targ</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="n">arg</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">):</span>
+                    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">arg</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+                        <span class="n">kwargs</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">client</span><span class="o">.</span><span class="n">commands</span><span class="p">[</span><span class="n">command</span><span class="p">](</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">SyntaxWarning</span><span class="p">,</span> <span class="ne">SyntaxError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+                <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">,</span> <span class="n">recipient</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+                               <span class="n">text</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> command failed: </span><span class="si">{}</span><span class="s1">&#39;</span>
+                                    <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">err</span><span class="p">))</span>
+                <span class="n">client</span><span class="o">.</span><span class="n">commands</span><span class="p">[</span><span class="n">command</span><span class="p">](</span><span class="n">h</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">qtmud</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="se">\&#39;</span><span class="s1">s </span><span class="si">%s</span><span class="s1"> command failed: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">client</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                  <span class="n">command</span><span class="p">,</span> <span class="n">err</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">client</span><span class="o">.</span><span class="n">channels</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">spl</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;broadcast&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="n">command</span><span class="p">,</span>
+                           <span class="n">speaker</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+                           <span class="n">message</span><span class="o">=</span><span class="n">message</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">,</span>
+                           <span class="n">recipient</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+                           <span class="n">text</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> is not a valid command; check &#39;</span>
+                                 <span class="s1">&#39;&quot;commands&quot; for your commands.&#39;</span>
+                                 <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="send"><a class="viewcode-back" href="../../api.html#qtmud.subscriptions.send">[docs]</a><span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="n">recipient</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Prepares text to be sent to the recipient</span>
+
+<span class="sd">    :param recipient: expected to be a :class:`thing &lt;qtmud.Thing&gt;`,</span>
+<span class="sd">                      specifically one with a send_buffer. (In qtmud, this</span>
+<span class="sd">                      is only clients, though mudlibs may have more things</span>
+<span class="sd">                      with send_buffers.</span>
+<span class="sd">    :param text: the text to be appended to the recipient&#39;s send_buffer</span>
+<span class="sd">    :return: True if text is added to recipient&#39;s send_buffer, otherwise False.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">recipient</span><span class="p">,</span> <span class="s1">&#39;send_buffer&#39;</span><span class="p">):</span>
+        <span class="n">recipient</span><span class="o">.</span><span class="n">send_buffer</span> <span class="o">+=</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">pinkfish_parse</span><span class="p">((</span><span class="s1">&#39;</span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">text</span><span class="p">)))</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, emsenn.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

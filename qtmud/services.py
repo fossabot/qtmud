@@ -31,7 +31,6 @@ class MUDSocket(object):
         self.clients[self.get_socket_by_thing(client)] = object
 
     def start(self, ip4_address=None, ip6_address=None):
-        qtmud.log.info('start()ing MUDSocket')
         if not ip4_address:
             ip4_address = (qtmud.IPv4_HOSTNAME, qtmud.IPv4_MUDPORT)
         if not ip6_address:

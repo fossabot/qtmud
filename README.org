@@ -1,0 +1,87 @@
+#+TITLE: qtMUD
+#+DESCRIPTION: A server for hosting a text-based multiplayer game.
+#+AUTHOR: emsenn
+qtMUD is a Python3 package for developing and hosting multi-user
+dimensions, or MUDs.
+
+The user and administrator manual is available in the [[./manual]] folder,
+or online at [[https://qtmud.readthedocs.io/en/latest]].  The development
+and project documentation is available in the [[./docs]] folder.
+
+Please note that qtMUD is the engine for a game, and has no gameplay
+features itself.  There is a [[*MUD Libraries][list of MUD libraries]] below.
+** Project Governance
+This project is currently maintained by [[emsenn][https://emsenn.net]] who
+operates it under the terms in [[./docs/qtmud-operations.org]].
+
+Contributions are welcome as long as they follow those same guidelines.
+** Language
+This project's operations are conducted in English.
+
+The qtMUD package, in the [[./qtmud]] directory, is written to adhere to
+Python 3.7.  Files in the [[./docs]] directory are written in ReStructured
+Text format, to be compatiable with Sphinx 1.8.1.  Files in the [[./docs]]
+directory are written to be compatible with Org-mode 9.1.9.
+** Project History
+I, [[https://emsenn.net][emsenn]], have had an interest in MUDs ever since I discovered them
+when I was a little kid.  I've always wanted to make my own, and have
+given it many shots over the years.  qtMUD is the basis of the engine
+I think I'm going to stick with.  I only work on the project in
+weekend binges, but I think I'm slowly making progress despite that.
+
+The project is in early development, which means creating the basic
+framework and making sure I'm pleased with the implications it
+creates.  A lot of my focus - hopefully not just in early
+development - is going to be on the theory and philosophy of MUDs.
+** Getting Started
+/(These instructions are very brief.  A more detailed explanation is
+provided with the manual.)/
+*** Running the Server
+These instructions assume you already have a local copy of the qtMUD
+repository.  If you do not, it is available through PyPi or Gitlab.com.
+
+qtMUD comes with the script ~qtmud_run~ (in the [[./bin]] folder) which,
+when executed, loads, starts, and runs the qtMUD engine.
+
+To stop, shutdown, and unload the qtMUD server, trigger a
+~KeyboardInterrupt~ with ~Ctrl-c~.
+*** Connecting as a Client
+To connect to the qtMUD server, it is sufficient to use telnet to
+connect to the running socket server.
+
+** Contributing
+This project is open to contributions. For complete instructions on how to 
+do so, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+For a list of things to be done, see [TODO.md](TODO.md).
+
+** Financing
+This is a personal project that at the moment has no costs and
+requires no funding.  See [[emsenn.net/contributing]] if you'd like to
+contribute to the maintainer.
+** Versioning
+This project follows [semantic versioning](http://semver.org/)
+conventions.
+** License
+This project uses the [[LICENSE][Unlicense]].
+** MUD Libraries
+Since this project is in early development, I don't recommend anyone
+else try and make a MUD library yet.  But if you do, [[mailto:emsenn@emsenn.net][send me an email]]
+about it and I'll consider adding it to this list.  /(I might not add
+it or respond to you for any number of reasons I don't have to
+share.)/
+*** Fyreside
+Created as a test library for qtMUD, [[https://fyreside.readthedocs.io/en/latest/][Fyreside]] is a "talker-style" MUD,
+where the game doesn't really extend past the in-game chat channels.
+
+Every player has health, armor, and mana, and draws cards from a
+central deck.  Cards do different things to other players.  The goal
+is to get the highest score.
+
+*** The Okaga
+The Okaga is the first role-playing game written using qtMUD.  In it,
+players are the crew of the /C.S.S. Okaga/, an interstellar ship.
+
+** Credits
+- This project is maintained by [emsenn](https://emsenn.gitlab.io).
+- The [[https://discworld.starturtle.net][Discworld MUD]], which I consider the best MUD.

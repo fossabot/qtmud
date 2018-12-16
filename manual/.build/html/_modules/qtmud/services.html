@@ -1,0 +1,437 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>qtmud.services &mdash; qtMUD 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> qtMUD
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Using qtMUD</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#quickstart">Quickstart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#id1">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../usage.html#client-features">Client Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../usage.html#pinkfish-parser">Pinkfish Parser</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../development.html">Developing with qtMUD</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../development.html#getting-started">Getting Started</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#download-source">Download Source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#how-it-works">How it Works</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../development.html#development-flow">Development Flow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#github-issues">GitHub Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#flow-feature-start">Flow Feature Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#git-commit">Git Commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#unittests">Unittests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#pylint">Pylint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#documentation">Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#flow-feature-finish">Flow Feature Finish</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#flow-release-start">Flow Release Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../development.html#flow-release-finish">Flow Release Finish</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../development.html#making-using-things">Making &amp; Using Things</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../development.html#making-using-subscriptions">Making &amp; Using Subscriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../development.html#making-using-services">Making &amp; Using Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../development.html#changelog">Changelog</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../changelog.html">Changelog</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../changelog.html#version-unreleased">%%version%% (unreleased)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../changelog.html#id1">0.0.9 (2016-10-04)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../changelog.html#id2">0.0.8 (2016-10-02)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../changelog.html#id5">0.0.7 (2016-10-01)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../changelog.html#id6">0.0.6 (2016-10-01)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../changelog.html#id7">0.0.4 (2016-09-26)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../changelog.html#id8">0.0.3 (2016-09-16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../changelog.html#id9">0.0.2 (2016-09-10)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../changelog.html#id10">0.0.1 (2016-09-07)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">qtMUD API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#module-qtmud">qtmud module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#module-qtmud.cmds">qtmud.cmds module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#module-qtmud.services">qtmud.services module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#module-qtmud.subscriptions">qtmud.subscriptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api.html#module-qtmud.txt">qtmud.txt module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api.html#glossary">Glossary</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">qtMUD</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../qtmud.html">qtmud</a> &raquo;</li>
+        
+      <li>qtmud.services</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for qtmud.services</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">select</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="kn">import</span> <span class="nn">qtmud</span>
+
+
+<div class="viewcode-block" id="MUDSocket"><a class="viewcode-back" href="../../api.html#qtmud.services.MUDSocket">[docs]</a><span class="k">class</span> <span class="nc">MUDSocket</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Handles a socket service. &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logging_in</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clients</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connections</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ip4_socket</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ip4_socket</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">SOL_SOCKET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SO_REUSEADDR</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ip6_socket</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET6</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ip6_socket</span><span class="o">.</span><span class="n">setsockopt</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">SOL_SOCKET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SO_REUSEADDR</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MUDSocket.close"><a class="viewcode-back" href="../../api.html#qtmud.services.MUDSocket.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ip4_socket</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ip6_socket</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="MUDSocket.get_socket_by_thing"><a class="viewcode-back" href="../../api.html#qtmud.services.MUDSocket.get_socket_by_thing">[docs]</a>    <span class="k">def</span> <span class="nf">get_socket_by_thing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">thing</span><span class="p">):</span>
+        <span class="n">_socket</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">==</span> <span class="n">thing</span><span class="p">:</span>
+                <span class="n">_socket</span> <span class="o">=</span> <span class="n">s</span>
+        <span class="k">return</span> <span class="n">_socket</span></div>
+
+<div class="viewcode-block" id="MUDSocket.replace_client_object"><a class="viewcode-back" href="../../api.html#qtmud.services.MUDSocket.replace_client_object">[docs]</a>    <span class="k">def</span> <span class="nf">replace_client_object</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="nb">object</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_socket_by_thing</span><span class="p">(</span><span class="n">client</span><span class="p">)]</span> <span class="o">=</span> <span class="nb">object</span></div>
+
+<div class="viewcode-block" id="MUDSocket.start"><a class="viewcode-back" href="../../api.html#qtmud.services.MUDSocket.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip4_address</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ip6_address</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">qtmud</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;start()ing MUDSocket&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ip4_address</span><span class="p">:</span>
+            <span class="n">ip4_address</span> <span class="o">=</span> <span class="p">(</span><span class="n">qtmud</span><span class="o">.</span><span class="n">IPv4_HOSTNAME</span><span class="p">,</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">IPv4_MUDPORT</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ip6_address</span><span class="p">:</span>
+            <span class="n">ip6_address</span> <span class="o">=</span> <span class="p">(</span><span class="n">qtmud</span><span class="o">.</span><span class="n">IPv6_HOSTNAME</span><span class="p">,</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">IPv6_MUDPORT</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ip4_address</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">ip6_address</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeWarning</span><span class="p">(</span><span class="s1">&#39;qtmud.services.MUDSocket() didn</span><span class="se">\&#39;</span><span class="s1">t manage &#39;</span>
+                                 <span class="s1">&#39;to set an address. Is your configuration &#39;</span>
+                                 <span class="s1">&#39;file missing?&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ip4_address</span><span class="p">:</span>
+            <span class="n">qtmud</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;trying to bind() MUDSocket to address </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                            <span class="n">ip4_address</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ip4_socket</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">ip4_address</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ip4_socket</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">connections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ip4_socket</span><span class="p">)</span>
+                <span class="n">qtmud</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MUDSocket successfully bound to </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ip4_address</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+                <span class="n">qtmud</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;MUDSocket failed to bind to </span><span class="si">%s</span><span class="s1">, error: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                                <span class="n">ip4_address</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ip6_address</span><span class="p">:</span>
+            <span class="n">qtmud</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;trying to bind() MUDSocket to address </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                           <span class="n">ip6_address</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ip6_socket</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">ip6_address</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ip6_socket</span><span class="o">.</span><span class="n">listen</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">connections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ip6_socket</span><span class="p">)</span>
+                <span class="n">qtmud</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MUDSocket successfully bound to </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                               <span class="n">ip6_address</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+                <span class="n">qtmud</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;MUDSocket failed to bind to </span><span class="si">%s</span><span class="s1">, error: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                                <span class="n">ip6_address</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connections</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="MUDSocket.shutdown"><a class="viewcode-back" href="../../api.html#qtmud.services.MUDSocket.shutdown">[docs]</a>    <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">qtmud</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;shutdown() and close() MUDSocket.ip4_socket &amp; &#39;</span>
+                        <span class="s1">&#39;MUDSocket.ip6_socket&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ip4_socket</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">SHUT_RDWR</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ip6_socket</span><span class="o">.</span><span class="n">shutdown</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">SHUT_RDWR</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="MUDSocket.tick"><a class="viewcode-back" href="../../api.html#qtmud.services.MUDSocket.tick">[docs]</a>    <span class="k">def</span> <span class="nf">tick</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">read</span><span class="p">,</span> <span class="n">write</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="n">select</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connections</span><span class="p">,</span>
+                                           <span class="p">[</span><span class="n">conn</span> <span class="k">for</span> <span class="n">conn</span><span class="p">,</span>
+                                            <span class="n">client</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span>
+                                            <span class="n">client</span><span class="o">.</span><span class="n">send_buffer</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">],</span>
+                                           <span class="p">[],</span>
+                                           <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">read</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">conn</span> <span class="ow">in</span> <span class="n">read</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">conn</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">ip4_socket</span> <span class="ow">or</span> <span class="n">conn</span> <span class="ow">is</span> <span class="bp">self</span><span class="o">.</span><span class="n">ip6_socket</span><span class="p">:</span>
+                    <span class="n">new_conn</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+                    <span class="n">qtmud</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;new connection accepted from </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="p">(</span><span class="n">addr</span><span class="p">))</span>
+                    <span class="n">client</span> <span class="o">=</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
+                    <span class="n">client</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;addr&#39;</span><span class="p">:</span> <span class="n">addr</span><span class="p">,</span>
+                                   <span class="s1">&#39;send_buffer&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;recv_buffer&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">})</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">connections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_conn</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">[</span><span class="n">new_conn</span><span class="p">]</span> <span class="o">=</span> <span class="n">client</span>
+                    <span class="n">client</span><span class="o">.</span><span class="n">input_parser</span> <span class="o">=</span> <span class="s1">&#39;client_login_parser&#39;</span>
+                    <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">,</span>
+                                   <span class="n">recipient</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+                                   <span class="n">text</span><span class="o">=</span><span class="n">qtmud</span><span class="o">.</span><span class="n">SPLASH</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">ConnectionResetError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+                        <span class="n">qtmud</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;lost connection from: </span><span class="si">{}</span><span class="s1">:</span><span class="se">\n</span><span class="s1">&#39;</span>
+                                        <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">[</span><span class="n">conn</span><span class="p">]</span><span class="o">.</span><span class="n">addr</span><span class="p">,</span>
+                                                    <span class="n">err</span><span class="p">),</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                        <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;client_disconnect&#39;</span><span class="p">,</span>
+                                       <span class="n">client</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">[</span><span class="n">conn</span><span class="p">])</span>
+                        <span class="k">return</span>
+                    <span class="k">if</span> <span class="n">data</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">:</span>
+                        <span class="n">qtmud</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;disconnected from </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span>
+                                        <span class="nb">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">[</span><span class="n">conn</span><span class="p">]</span><span class="o">.</span><span class="n">addr</span><span class="p">))</span>
+                        <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;client_disconnect&#39;</span><span class="p">,</span>
+                                       <span class="n">client</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">[</span><span class="n">conn</span><span class="p">])</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">client</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">[</span><span class="n">conn</span><span class="p">]</span>
+                        <span class="n">client</span><span class="o">.</span><span class="n">recv_buffer</span> <span class="o">+=</span> <span class="n">data</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">,</span> <span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="n">client</span><span class="o">.</span><span class="n">recv_buffer</span><span class="p">:</span>
+                            <span class="n">split</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">recv_buffer</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">split</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                                <span class="n">line</span><span class="p">,</span> <span class="n">client</span><span class="o">.</span><span class="n">recv_buffer</span> <span class="o">=</span> <span class="n">split</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">line</span><span class="p">,</span> <span class="n">client</span><span class="o">.</span><span class="n">recv_buffer</span> <span class="o">=</span> <span class="n">split</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;&#39;</span>
+                            <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">,</span> <span class="n">recipient</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+                                           <span class="n">text</span><span class="o">=</span><span class="s1">&#39;&gt; </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+                            <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;client_input_parser&#39;</span><span class="p">,</span>
+                                           <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">write</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">conn</span> <span class="ow">in</span> <span class="n">write</span><span class="p">:</span>
+                <span class="n">conn</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">[</span><span class="n">conn</span><span class="p">]</span><span class="o">.</span><span class="n">send_buffer</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">[</span><span class="n">conn</span><span class="p">]</span><span class="o">.</span><span class="n">send_buffer</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span></div></div>
+
+
+<div class="viewcode-block" id="Talker"><a class="viewcode-back" href="../../api.html#qtmud.services.Talker">[docs]</a><span class="k">class</span> <span class="nc">Talker</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; The Talker service handles the global chat channels. &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channels</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;debug&#39;</span><span class="p">,</span> <span class="s1">&#39;info&#39;</span><span class="p">,</span> <span class="s1">&#39;warning&#39;</span><span class="p">,</span> <span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s1">&#39;critical&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Talker.broadcast"><a class="viewcode-back" href="../../api.html#qtmud.services.Talker.broadcast">[docs]</a>    <span class="k">def</span> <span class="nf">broadcast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">,</span> <span class="n">speaker</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">listener</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">[</span><span class="n">channel</span><span class="p">]:</span>
+            <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">,</span>
+                           <span class="n">recipient</span><span class="o">=</span><span class="n">listener</span><span class="p">,</span>
+                           <span class="n">text</span><span class="o">=</span><span class="s1">&#39;`(`</span><span class="si">{}</span><span class="s1">`)` </span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">,</span> <span class="n">speaker</span><span class="p">,</span>
+                                                         <span class="n">message</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">speaker</span><span class="p">,</span> <span class="n">message</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Talker.new_channel"><a class="viewcode-back" href="../../api.html#qtmud.services.Talker.new_channel">[docs]</a>    <span class="k">def</span> <span class="nf">new_channel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="Talker.tune_channel"><a class="viewcode-back" href="../../api.html#qtmud.services.Talker.tune_channel">[docs]</a>    <span class="k">def</span> <span class="nf">tune_channel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">channel</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">new_channel</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+        <span class="n">qtmud</span><span class="o">.</span><span class="n">schedule</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">,</span> <span class="n">recipient</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
+                       <span class="n">text</span><span class="o">=</span><span class="s1">&#39;You tune into the </span><span class="si">{}</span><span class="s1"> channel&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">channel</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Talker.drop_channel"><a class="viewcode-back" href="../../api.html#qtmud.services.Talker.drop_channel">[docs]</a>    <span class="k">def</span> <span class="nf">drop_channel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">qtmud</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Talker.tune_out() failed: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">channel</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+            <span class="n">qtmud</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Talker.tune_out() failed: </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, emsenn.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,563 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Developing with qtMUD &mdash; qtMUD 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Changelog" href="changelog.html" />
+    <link rel="prev" title="Using qtMUD" href="usage.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> qtMUD
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Using qtMUD</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#quickstart">Quickstart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#id1">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#client-features">Client Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#pinkfish-parser">Pinkfish Parser</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Developing with qtMUD</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#download-source">Download Source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-it-works">How it Works</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#development-flow">Development Flow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#github-issues">GitHub Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flow-feature-start">Flow Feature Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#git-commit">Git Commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#unittests">Unittests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pylint">Pylint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#documentation">Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flow-feature-finish">Flow Feature Finish</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flow-release-start">Flow Release Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flow-release-finish">Flow Release Finish</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#making-using-things">Making &amp; Using Things</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#making-using-subscriptions">Making &amp; Using Subscriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#making-using-services">Making &amp; Using Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#changelog">Changelog</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html">Changelog</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="changelog.html#version-unreleased">%%version%% (unreleased)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="changelog.html#id1">0.0.9 (2016-10-04)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="changelog.html#id2">0.0.8 (2016-10-02)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="changelog.html#id5">0.0.7 (2016-10-01)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="changelog.html#id6">0.0.6 (2016-10-01)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="changelog.html#id7">0.0.4 (2016-09-26)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="changelog.html#id8">0.0.3 (2016-09-16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="changelog.html#id9">0.0.2 (2016-09-10)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="changelog.html#id10">0.0.1 (2016-09-07)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">qtMUD API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-qtmud">qtmud module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#module-qtmud.cmds">qtmud.cmds module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#module-qtmud.services">qtmud.services module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#module-qtmud.subscriptions">qtmud.subscriptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#module-qtmud.txt">qtmud.txt module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#glossary">Glossary</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">qtMUD</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Developing with qtMUD</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/development.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="developing-with-qtmud">
+<h1>Developing with qtMUD<a class="headerlink" href="#developing-with-qtmud" title="Permalink to this headline">¶</a></h1>
+<p>qtMUD is meant to be used as a framework for developing your own MUD. This
+document contains an explanation of how qtMUD works, as well as detailed
+explanations of our development process and some tutorials on how to expand
+the library.</p>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="download-source">
+<h3>Download Source<a class="headerlink" href="#download-source" title="Permalink to this headline">¶</a></h3>
+<p>The easiest way to get the source code for qtMUD is by cloning the
+<a class="reference external" href="https://github.com/emsenn/qtmud">GitHub repository</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/emsenn/qtmud.git
+</pre></div>
+</div>
+<p>This will create a new folder with</p>
+</div>
+<div class="section" id="how-it-works">
+<h3>How it Works<a class="headerlink" href="#how-it-works" title="Permalink to this headline">¶</a></h3>
+<p>The best way to explain how qtMUD functions is probably by looking, in
+detail, at what happens when you execute <code class="docutils literal notranslate"><span class="pre">./bin/qtmud_run</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qtmud_run</span> <span class="n">preparing</span> <span class="n">to</span> <span class="n">start</span> <span class="n">qtmud</span> <span class="mf">0.0</span><span class="o">.</span><span class="mi">6</span>
+<span class="n">qtmud</span>        <span class="n">WARNING</span>  <span class="n">No</span> <span class="n">valid</span> <span class="n">config</span> <span class="n">found</span><span class="p">,</span> <span class="n">using</span> <span class="n">default</span> <span class="n">values</span>
+</pre></div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">qtmud_run</span></code> isn’t passed the <code class="docutils literal notranslate"><span class="pre">--conf</span></code> argument
+(<code class="docutils literal notranslate"><span class="pre">qtmud_run</span> <span class="pre">--conf</span> <span class="pre">./fireside.conf</span></code>), it will look in <em>./qtmud.conf</em>,
+<em>./.qtmud.conf</em>, <em>~/qtmud.conf</em>, and <em>~/.qtmud.conf</em>, in that order. If it
+can’t find one there, it will rely on defaults set in the
+<a class="reference internal" href="api.html#module-qtmud" title="qtmud"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qtmud</span></code></a> module.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">qtmud</span><span class="o">.</span><span class="n">load</span><span class="p">()</span> <span class="n">called</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">adding</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">subscriptions</span> <span class="n">to</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">subscribers</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">adding</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">services</span> <span class="n">to</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">active_services</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">qtmud</span><span class="o">.</span><span class="n">load</span><span class="p">()</span><span class="n">ed</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="api.html#qtmud.load" title="qtmud.load"><code class="xref py py-func docutils literal notranslate"><span class="pre">qtmud.load()</span></code></a> populates:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">filling</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">client_accounts</span> <span class="kn">from</span> <span class="nn">.</span><span class="o">/</span><span class="n">qtmud_client_accounts</span><span class="o">.</span><span class="n">p</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">start</span><span class="p">()</span><span class="n">ing</span> <span class="n">active_services</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">talker</span> <span class="n">start</span><span class="p">()</span><span class="n">ed</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">start</span><span class="p">()</span><span class="n">ing</span> <span class="n">MUDSocket</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">MUDSocket</span> <span class="n">successfully</span> <span class="n">bound</span> <span class="n">to</span> <span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5787</span><span class="p">)</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">MUDSocket</span> <span class="n">successfully</span> <span class="n">bound</span> <span class="n">to</span> <span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5788</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">mudsocket</span> <span class="n">start</span><span class="p">()</span><span class="n">ed</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">qtmud</span><span class="o">.</span><span class="n">run</span><span class="p">()</span><span class="n">ning</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="development-flow">
+<h2>Development Flow<a class="headerlink" href="#development-flow" title="Permalink to this headline">¶</a></h2>
+<p>This section is intended to be an outline of the steps that I take to bring a
+part of qtMUD from idea to release. Each section is, roughly, broken up by
+the console command used to handle the task.</p>
+<div class="section" id="github-issues">
+<h3>GitHub Issues<a class="headerlink" href="#github-issues" title="Permalink to this headline">¶</a></h3>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">Coming by 0.1.0!</p>
+</div>
+</div>
+<div class="section" id="flow-feature-start">
+<h3>Flow Feature Start<a class="headerlink" href="#flow-feature-start" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git flow feature start womble
+</pre></div>
+</div>
+<p>This creates a new git branch, <code class="docutils literal notranslate"><span class="pre">feature/womble</span></code>, based on the <code class="docutils literal notranslate"><span class="pre">develop</span></code>
+branch. Once you’re on the feature branch, you can make whatever changes to
+the code you want. Let’s pretend I added a womble method to
+<a class="reference internal" href="api.html#module-qtmud.cmds" title="qtmud.cmds"><code class="xref py py-mod docutils literal notranslate"><span class="pre">qtmud.cmds</span></code></a>. Once I’m done writing it, I’ll want to go ahead and run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python setup.py test
+</pre></div>
+</div>
+<p>Even though I haven’t written any test cases for my code (yet), it’s still a
+good idea to check and make sure your changes didn’t inadvertently break
+something existing. Once you’re sure your code doesn’t hurt existing
+functionality, you can go ahead and commit the changes.</p>
+</div>
+<div class="section" id="git-commit">
+<h3>Git Commit<a class="headerlink" href="#git-commit" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>action: [audience:] Summary Of Commit [!tag]
+</pre></div>
+</div>
+<p>In order to use <a class="reference external" href="https://github.com/vaab/gitchangelog">git-changelog</a> qtMUD
+commit messages have a specific format:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">action</span></code> represents what purpose the commit serves and is one of:</li>
+<li><ul class="first">
+<li><code class="docutils literal notranslate"><span class="pre">chg</span></code> - You’ve refactored existing code, removed technical debt, or
+expanded test coverage</li>
+</ul>
+</li>
+<li><ul class="first">
+<li><code class="docutils literal notranslate"><span class="pre">fix</span></code> - You’ve fixed an issue. Ideally, prove the GitHub Issue # in the
+summary.</li>
+</ul>
+</li>
+<li><ul class="first">
+<li><code class="docutils literal notranslate"><span class="pre">new</span></code> - You’ve added new features, documentation, or test cases.</li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">audience</span></code> represents who would care about the change</li>
+<li><ul class="first">
+<li><code class="docutils literal notranslate"><span class="pre">dev</span></code> - API revisions/additions, refactors</li>
+</ul>
+</li>
+<li><ul class="first">
+<li><code class="docutils literal notranslate"><span class="pre">usr</span></code> - Client experience revisions/additions</li>
+</ul>
+</li>
+<li><ul class="first">
+<li><code class="docutils literal notranslate"><span class="pre">pkg</span></code> - Packaging/metadata revisions/additions</li>
+</ul>
+</li>
+<li><ul class="first">
+<li><code class="docutils literal notranslate"><span class="pre">test</span></code> - Test case revisions/additions</li>
+</ul>
+</li>
+<li><ul class="first">
+<li><code class="docutils literal notranslate"><span class="pre">doc</span></code> - documentation revisions/additions</li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">Summary</span> <span class="pre">Of</span> <span class="pre">Commit</span></code> is a short (very short) summary of what the commit
+does. If you find yourself struggling to come up with this, you probably
+should be committing more frequently. Capitalize every word, unless it
+references a part of the code which is not capitalized.</li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li>Each <code class="docutils literal notranslate"><span class="pre">tag</span></code> should be prefixed with an exclamation point, and should be
+one of:</li>
+<li><ul class="first">
+<li><code class="docutils literal notranslate"><span class="pre">!refactor</span></code> marks that the commit deals with existing code.</li>
+</ul>
+</li>
+<li><ul class="first">
+<li><code class="docutils literal notranslate"><span class="pre">!minor</span></code> marks that the commit has a very minor change - adding a
+one-line comment or fixing a typo.</li>
+</ul>
+</li>
+<li><ul class="first">
+<li><code class="docutils literal notranslate"><span class="pre">!cosmetic</span></code> marks a commit as dealing with code practice adhesion -
+fixing pep8 violations or other small stuff</li>
+</ul>
+</li>
+<li><ul class="first">
+<li><code class="docutils literal notranslate"><span class="pre">!wip</span></code> marks a commit as being a work-in-progress - the committed code is
+functional, but doesn’t contain all of the eventual changes the function
+will require.</li>
+</ul>
+</li>
+</ul>
+<p>If it wasn’t clear from the tags, commits should have a single thing that
+they deal with.  My commit for my new <code class="docutils literal notranslate"><span class="pre">womble</span></code> command might look something
+like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git commit -m &quot;new: usr: Addition Of womble To qtmud.cmds !wip&quot;
+</pre></div>
+</div>
+<p>Once you’ve committed the functional code, it’s time to test it.</p>
+</div>
+<div class="section" id="unittests">
+<h3>Unittests<a class="headerlink" href="#unittests" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">unittest</span> <span class="k">import</span> <span class="n">TestCase</span>
+<span class="kn">import</span> <span class="nn">qtmud</span>
+
+<span class="k">class</span> <span class="nc">TestWomble</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">test_Womble</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="n">cmds</span><span class="o">.</span><span class="n">womble</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">cmd</span><span class="p">(</span><span class="n">client</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>qtMUD uses <a class="reference external" href="https://docs.python.org/3/library/unittest.html">unittest</a> for
+testing. For a more comprehensive guide on how to write qtMUD unittests,
+check the respective tutorials for commands, subscriptions, and services.</p>
+<p>I use <a class="reference external" href="https://pypi.python.org/pypi/coverage">coverage</a> to make sure my test
+cases are comprehensive, and strongly suggest you do the same:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ coverage run setup.py test
+$ coverage report
+$ coverage annotate qtmud/cmds.py
+</pre></div>
+</div>
+<p>I change and expand my test cases until the things I changed in this feature
+are properly covered. Once my test cases are built, I’ll want to go ahead and do
+another commit:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git commit -m &quot;new: test: Test Cases For qtmud.cmds.womble !wip&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="pylint">
+<h3>Pylint<a class="headerlink" href="#pylint" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pylint -rn ./qtmud/cmds.py ./tests/test_cmds.py
+</pre></div>
+</div>
+<p>Now that the <code class="docutils literal notranslate"><span class="pre">womble</span></code> command has been written, and we have tests to verify
+it works, it’s time to make sure the addition follows good Python practices.</p>
+</div>
+<div class="section" id="documentation">
+<h3>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h3>
+<p>D</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd ./docs &amp;&amp; make html
+</pre></div>
+</div>
+<p>After you’ve linted your code, build the html documentation (goes into
+./docs/build/html by default) and look for any errors caused by your docstrings.</p>
+</div>
+<div class="section" id="flow-feature-finish">
+<h3>Flow Feature Finish<a class="headerlink" href="#flow-feature-finish" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git flow feature finish womble
+</pre></div>
+</div>
+</div>
+<div class="section" id="flow-release-start">
+<h3>Flow Release Start<a class="headerlink" href="#flow-release-start" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git flow release start 0.0.4
+$ gitchangelog &gt; ./docs/source/changelog.rst
+$ cd ./docs &amp;&amp; make html &amp;&amp; cd ..
+</pre></div>
+</div>
+<p>Also, manually (for now) change the version in these three locations:
+* <code class="docutils literal notranslate"><span class="pre">docs/conf.py</span></code>
+* <code class="docutils literal notranslate"><span class="pre">qtmud/__init__.py</span></code>
+* <code class="docutils literal notranslate"><span class="pre">setup.py</span></code></p>
+</div>
+<div class="section" id="flow-release-finish">
+<h3>Flow Release Finish<a class="headerlink" href="#flow-release-finish" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git flow release finish 0.0.4
+$ python setup.py sdist bdist_wheel upload
+$ git push --all
+</pre></div>
+</div>
+<p>The end!</p>
+</div>
+</div>
+<div class="section" id="making-using-things">
+<h2>Making &amp; Using Things<a class="headerlink" href="#making-using-things" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-todo admonition" id="index-1">
+<p class="first admonition-title">Todo</p>
+<p class="last">Coming by version 0.1.0!</p>
+</div>
+</div>
+<div class="section" id="making-using-subscriptions">
+<h2>Making &amp; Using Subscriptions<a class="headerlink" href="#making-using-subscriptions" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-todo admonition" id="index-2">
+<p class="first admonition-title">Todo</p>
+<p class="last">Coming by version 0.1.0!</p>
+</div>
+</div>
+<div class="section" id="making-using-services">
+<h2>Making &amp; Using Services<a class="headerlink" href="#making-using-services" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="changelog">
+<h2>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#version-unreleased">%%version%% (unreleased)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id1">0.0.9 (2016-10-04)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#new">New</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#changes">Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#fix">Fix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#other">Other</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id2">0.0.8 (2016-10-02)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id3">Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html#id4">Other</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id5">0.0.7 (2016-10-01)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id6">0.0.6 (2016-10-01)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id7">0.0.4 (2016-09-26)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id8">0.0.3 (2016-09-16)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id9">0.0.2 (2016-09-10)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id10">0.0.1 (2016-09-07)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="usage.html" class="btn btn-neutral" title="Using qtMUD" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, emsenn.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

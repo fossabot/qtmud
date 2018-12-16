@@ -1,0 +1,377 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using qtMUD &mdash; qtMUD 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Developing with qtMUD" href="development.html" />
+    <link rel="prev" title="qtMUD" href="index.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> qtMUD
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using qtMUD</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#quickstart">Quickstart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#client-features">Client Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pinkfish-parser">Pinkfish Parser</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Developing with qtMUD</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="development.html#getting-started">Getting Started</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="development.html#download-source">Download Source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="development.html#how-it-works">How it Works</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="development.html#development-flow">Development Flow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="development.html#github-issues">GitHub Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="development.html#flow-feature-start">Flow Feature Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="development.html#git-commit">Git Commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="development.html#unittests">Unittests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="development.html#pylint">Pylint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="development.html#documentation">Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="development.html#flow-feature-finish">Flow Feature Finish</a></li>
+<li class="toctree-l3"><a class="reference internal" href="development.html#flow-release-start">Flow Release Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="development.html#flow-release-finish">Flow Release Finish</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="development.html#making-using-things">Making &amp; Using Things</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development.html#making-using-subscriptions">Making &amp; Using Subscriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development.html#making-using-services">Making &amp; Using Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development.html#changelog">Changelog</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="changelog.html">Changelog</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="changelog.html#version-unreleased">%%version%% (unreleased)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="changelog.html#id1">0.0.9 (2016-10-04)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="changelog.html#id2">0.0.8 (2016-10-02)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="changelog.html#id5">0.0.7 (2016-10-01)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="changelog.html#id6">0.0.6 (2016-10-01)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="changelog.html#id7">0.0.4 (2016-09-26)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="changelog.html#id8">0.0.3 (2016-09-16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="changelog.html#id9">0.0.2 (2016-09-10)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="changelog.html#id10">0.0.1 (2016-09-07)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">qtMUD API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-qtmud">qtmud module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#module-qtmud.cmds">qtmud.cmds module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#module-qtmud.services">qtmud.services module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#module-qtmud.subscriptions">qtmud.subscriptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#module-qtmud.txt">qtmud.txt module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#glossary">Glossary</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">qtMUD</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Using qtMUD</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/usage.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-qtmud">
+<h1>Using qtMUD<a class="headerlink" href="#using-qtmud" title="Permalink to this headline">¶</a></h1>
+<p>On its own, qtMUD is a talker-style MUD. This means it provides basic user
+accounts and the ability for them to communicate with each other, along with
+some utility functions.</p>
+<p>While this is intended to be a framework for more complex MUDs,</p>
+<div class="section" id="quickstart">
+<h2>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h2>
+<p>The easiest way to get started with qtMUD is by installing the
+<a class="reference external" href="https://pypi.python.org/pypi/qtMUD/">PyPi package</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install qtmud
+</pre></div>
+</div>
+<p>If this fails for any reason, check the <a class="reference external" href="#installation">Installation</a>
+seciton for help. If it works:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ qtmud_run
+</pre></div>
+</div>
+<p>should produce output like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qtmud_run</span> <span class="n">preparing</span> <span class="n">to</span> <span class="n">start</span> <span class="n">qtmud</span> <span class="mf">0.0</span><span class="o">.</span><span class="mi">6</span>
+<span class="n">qtmud</span>        <span class="n">WARNING</span>  <span class="n">No</span> <span class="n">valid</span> <span class="n">config</span> <span class="n">found</span><span class="p">,</span> <span class="n">using</span> <span class="n">default</span> <span class="n">values</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">qtmud</span><span class="o">.</span><span class="n">load</span><span class="p">()</span> <span class="n">called</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">adding</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">subscriptions</span> <span class="n">to</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">subscribers</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">adding</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">services</span> <span class="n">to</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">active_services</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">qtmud</span><span class="o">.</span><span class="n">load</span><span class="p">()</span><span class="n">ed</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">filling</span> <span class="n">qtmud</span><span class="o">.</span><span class="n">client_accounts</span> <span class="kn">from</span> <span class="nn">.</span><span class="o">/</span><span class="n">qtmud_client_accounts</span><span class="o">.</span><span class="n">p</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">start</span><span class="p">()</span><span class="n">ing</span> <span class="n">active_services</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">talker</span> <span class="n">start</span><span class="p">()</span><span class="n">ed</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">start</span><span class="p">()</span><span class="n">ing</span> <span class="n">MUDSocket</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">MUDSocket</span> <span class="n">successfully</span> <span class="n">bound</span> <span class="n">to</span> <span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5787</span><span class="p">)</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">MUDSocket</span> <span class="n">successfully</span> <span class="n">bound</span> <span class="n">to</span> <span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">5788</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">mudsocket</span> <span class="n">start</span><span class="p">()</span><span class="n">ed</span>
+<span class="n">qtmud</span>        <span class="n">INFO</span>     <span class="n">qtmud</span><span class="o">.</span><span class="n">run</span><span class="p">()</span><span class="n">ning</span>
+</pre></div>
+</div>
+<p>This means that qtMUD is up and running and you can connect to it as a
+client. The easiest way to do this is with telnet:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ telnet localhost 5787
+</pre></div>
+</div>
+<p>If everything is working, you should see output similar to this::</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Trying</span> <span class="p">::</span><span class="mf">1.</span><span class="o">..</span>
+<span class="n">Connection</span> <span class="n">failed</span><span class="p">:</span> <span class="n">Connection</span> <span class="n">refused</span>
+<span class="n">Trying</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="o">...</span>
+<span class="n">Connected</span> <span class="n">to</span> <span class="n">localhost</span><span class="o">.</span>
+<span class="n">Escape</span> <span class="n">character</span> <span class="ow">is</span> <span class="s1">&#39;^]&#39;</span><span class="o">.</span>
+
+<span class="n">qtmud</span>               <span class="mf">0.0</span><span class="o">.</span><span class="mi">6</span>
+
+<span class="n">Successfully</span> <span class="n">connected</span> <span class="n">to</span> <span class="n">qtmud</span><span class="p">,</span> <span class="n">press</span> <span class="n">enter</span> <span class="n">to</span> <span class="k">continue</span> <span class="n">login</span><span class="o">...</span>
+</pre></div>
+</div>
+<p>From there, you can log in (qtMUD has <em>very</em> basic user accounts) and play
+around with the default commands.</p>
+</div>
+<div class="section" id="id1">
+<h2>Installation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-todo admonition" id="index-0">
+<p class="first admonition-title">Todo</p>
+<p class="last">in-depth explanation of installation procedure for non-developers.</p>
+</div>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SERVERS</span><span class="p">]</span>
+<span class="n">IPv4_HOSTNAME</span> <span class="o">=</span> <span class="n">localhost</span>
+<span class="n">IPv6_HOSTNAME</span> <span class="o">=</span> <span class="n">localhost</span>
+<span class="n">IPv4_MUDPORT</span> <span class="o">=</span> <span class="mi">5787</span>
+<span class="n">IPv6_MUDPORT</span> <span class="o">=</span> <span class="mi">5788</span>
+
+<span class="p">[</span><span class="n">PICKLES</span><span class="p">]</span>
+<span class="n">CLIENT_ACCOUNTS_PICKLE</span> <span class="o">=</span> <span class="s1">&#39;./client_accounts.p&#39;</span>
+</pre></div>
+</div>
+<div class="admonition-todo admonition" id="index-1">
+<p class="first admonition-title">Todo</p>
+<p class="last">verbose explanation of the qtmud.conf file</p>
+</div>
+</div>
+<div class="section" id="client-features">
+<h2>Client Features<a class="headerlink" href="#client-features" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-todo admonition" id="index-2">
+<p class="first admonition-title">Todo</p>
+<p class="last">explanation of what clients can do, and how they’re represented on
+the backend.</p>
+</div>
+<div class="section" id="pinkfish-parser">
+<h3>Pinkfish Parser<a class="headerlink" href="#pinkfish-parser" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><div class="versionadded">
+<p><span class="versionmodified">New in version 0.0.10.</span></p>
+</div>
+</div></blockquote>
+<p>Players (and developers) can use Pinkfish-style tags to make up their text.
+Not too much to explain here. Enjoy abusing it on the talker.</p>
+<blockquote>
+<div><img alt="_images/pinkfish_example.png" src="_images/pinkfish_example.png" />
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="development.html" class="btn btn-neutral float-right" title="Developing with qtMUD" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="qtMUD" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, emsenn.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

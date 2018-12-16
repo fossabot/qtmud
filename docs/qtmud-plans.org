@@ -1,0 +1,39 @@
+* 0.1
+** [1/11] 0.1.0
+For version ~0.1.0~, I plan on polishing the existing features and
+increasing their functionality.  Any /new/ features should be
+delayed to version [[0.2.0]].
+*** TODO Rewrite documentation as manual
+*** TODO Define development method
+*** TODO Write test coverage
+*** DONE Re-write service script
+So it looks like since the last time I worked on qtMUD, CLINT stopped
+being maintained.  (It was the library I was using for command
+parsing.)  I had planned to re-write the qtmud_run script to use CLINT
+instead of argparser, but now I'm going to replace it - and CLINT's
+use in the engine proper - with "click", which seems to be more robust
+in some ways, though not as featureful in others.
+*** TODO Write test for service start/stop
+*** TODO Create talker channel for login notifications
+*** TODO Create process for gaining admin rights
+Player can enter a command, ~admin request~, and the console log
+will print a token, which can then be used by that player to claim
+admin rights.
+*** TODO Update in-game help command
+Create a global constant for HELP_URI or something similar, and then
+change the help command to output the first two paragraphs (the
+blurb and either in-game syntax or brief overview)
+
+  Global constant qtmud.HELP_URI Within cmds.help parse out the
+  first two paragraphs First two paragraphs should be blurb & either
+  syntax or non-marked up overview. Add this to docs/development.rst
+  How detailed should help be? Right now it's limited to the
+  commands the player has, active services, and subscribers. Should
+  the user be able to look deeper?
+*** TODO Clients without names show up in ~who~
+*** TODO Write username validator
+*** TODO Rewrite qtmud_run to use CLINT
+* 0.2
+** [0/0] 0.2.0
+* [0/1] The Future
+** TODO Support Powerline Fonts

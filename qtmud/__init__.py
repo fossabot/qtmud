@@ -1,8 +1,10 @@
-""" The main qtmud module houses some constants, the Thing class, and methods
-    for start()ing and tick()ing the MUD engine.
+""" This module is the core of the qtMUD game engine.
+
+    .. versionadded:: 0.0.1
 """
 
-#
+import click
+import importlib
 import logging
 import pickle
 import types
@@ -10,14 +12,12 @@ import uuid
 from inspect import getmembers, isfunction, isclass
 from logging.config import dictConfig
 
-from clint.textui import colored
-
 from qtmud import cmds, services, subscriptions, txt
 
 # GLOBAL REFERENCES
 NAME = 'qtMUD'
 """ Name of the MUD engine. """
-__version__ = '0.0.11'
+__version__ = '0.1.0'
 """ MUD engine version """
 __url__ = 'https://qtmud.readthedocs.io/en/latest/'
 
@@ -54,7 +54,16 @@ active_services = dict()
 """ Services which will have their tick() function called by
 :func:`qtmud.tick`. Populated by :func:`qtmud.load` to contain instances of
 the classes in :mod:`qtmud.services` referenced by class name. """
+mudlib = None
 connected_clients = list()
+
+feature_list = {
+    'coloredOutput' : 'termcolor'
+}
+features = {
+    'coloredOutput' : False,
+}
+
 
 
 class TalkerHandler(logging.Handler):
@@ -68,21 +77,22 @@ class TalkerHandler(logging.Handler):
 
 
 logging_config = dict(version=1,
-                      formatters={'f': {'format': ('%(asctime)s %(name)-12s '
-                                                   '%(levelname)-8s '
-                                                   '%(message)s')}}, handlers={
+                      formatters={'f': {'format': ('%(asctime)s '
+                                                   '%(levelname)-7s '
+                                                   '\033[1m%(message)s\033[0m'),
+                                        'datefmt': ('%Y%m%d %I%M:%S')}}, handlers={
         'stream': {'class': 'logging.StreamHandler', 'formatter': 'f',
                    'level': logging.DEBUG},
         'file': {'class': 'logging.FileHandler', 'filename': './debug.log',
-                 'formatter': 'f', 'level': logging.DEBUG}},
+                 'formatter': 'f', 'level': logging.INFO}},
                       root={'handlers': ['stream', 'file'],
-                            'level': logging.DEBUG})
+                            'level': logging.INFO})
 logging.config.dictConfig(logging_config)
 log = logging.getLogger(__name__)
 
 
-def load():
-    """ Most importantly, puts every function from
+def load(features=None,mudlib_name=None):
+    """ This Most importantly, puts every function from
     :mod:`qtmud.subscriptions` and every class from :mod:`qtmud.services`
     into :attr:`subscribers` and :attr:`active_services`, respectively.
 
@@ -93,24 +103,41 @@ def load():
     """
     global active_services
     global subscribers
-    log.info('qtmud.load() called')
-    log.info('adding qtmud.subscriptions to qtmud.subscribers')
+    global mudlib
+    log.debug('Enabling optional features.')
+    for feature in features:
+        if features[feature] is True:
+            try:
+                importlib.import_module(feature_list[feature])
+                features[feature] = True
+                log.debug('"{}" was turned on.'.format(feature))
+            except ImportError as err:
+                log.debug('"{}" was left off.'.format(feature))
+    log.info('The following optional features were enabled: {}'.format(', '.join([f for f in features if features[f] is True])))
+    log.debug('Adding qtmud.subscriptions to qtmud.subscribers.')
     subscribers = {s[1].__name__: [s[1]] for
                    s in getmembers(subscriptions) if isfunction(s[1])}
-    log.info('adding qtmud.services to qtmud.active_services')
+    log.debug('Adding qtmud.services to qtmud.active_services.')
     active_services = {t[1].__name__.lower(): t[1]() for
                        t in getmembers(services) if isclass(t[1])}
     if 'talker' in active_services:
         log.addHandler(TalkerHandler())
         for level in ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']:
             active_services['talker'].new_channel(level)
+    if mudlib_name:
+        log.debug('Loading the {} library.'.format(mudlib_name))
+        try:
+            mudlib = importlib.import_module(mudlib_name)
+            log.info('Imported {} version {}.'.format(mudlib_name, mudlib.__version__))
+            try:
+                mudlib.load()
+            except Exception as err:
+                log.error('{}'.format(err))
+        except Exception as err:
+            log.error('Failed to import {}: {}.'.format(mudlib_name, err))
     if load_client_accounts():
-        log.debug('qtmud.client_accounts populated from '
-                  'qtmud.load_client_accounts()')
-    log.info('qtmud.load()ed')
-    log.debug('subscribers are: %s', ', '.join(subscribers))
-    log.debug('active_services are: %s',
-              ', '.join([s for s in active_services]))
+        pass
+    log.info('qtMUD has loaded {} subscribers {} and active_services.'.format(len(subscribers), len(active_services)))
     return True
 
 
@@ -118,14 +145,16 @@ def load_client_accounts(file=(DATA_DIR + 'qtmud_client_accounts.p')):
     """ Populates :attr:`qtmud.client_accounts` with the pickle file
     specified. """
     global client_accounts
-    log.info('filling qtmud.client_accounts from %s', file)
     try:
         client_accounts = pickle.load(open(file, 'rb'))
         log.debug('qtmud.client_accounts filled from %s', file)
         return True
     except FileNotFoundError:
-        log.debug('no save file found, making one at %s', file)
-        save_client_accounts()
+        log.warning('No save file found, attempting to make one at %s', file)
+        try:
+            save_client_accounts()
+        except Exception as err:
+            log.error('Failed to create a save file.  All changes will be lost.')
         return False
 
 
@@ -254,14 +283,12 @@ def start():
     """ Calls the start() function in every service in
     :attr:`active_services`.
     """
-    log.info('start()ing active_services')
+    log.debug('Starting the each service in qtmud.active_services.')
     for service in active_services:
-        log.info('%s start()ing', service)
         try:
             active_services[service].start()
-            log.info('%s start()ed', service)
         except AttributeError:
-            log.info('%s has no start()', service)
+            log.debug('%s has no start method', service)
         except RuntimeWarning as warning:
             log.warning('%s failed to start: %s', service, warning)
     return True
@@ -289,6 +316,7 @@ def tick():
         except AttributeError:
             pass
     return True
+
 
 
 class Thing(object):

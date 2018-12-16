@@ -1,0 +1,11 @@
+#!/usr/bin/python3
+""" This file is a Python 3 script for starting a qtMUD server.
+"""
+import click
+import logging
+
+
+
+
+if __name__ == '__main__':
+    qtmud_load_start_run()

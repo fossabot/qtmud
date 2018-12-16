@@ -1,0 +1,798 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Changelog &mdash; qtMUD 0.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="qtMUD API" href="api.html" />
+    <link rel="prev" title="Developing with qtMUD" href="development.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> qtMUD
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Using qtMUD</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#quickstart">Quickstart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#id1">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#client-features">Client Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#pinkfish-parser">Pinkfish Parser</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="development.html">Developing with qtMUD</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="development.html#getting-started">Getting Started</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="development.html#download-source">Download Source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="development.html#how-it-works">How it Works</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="development.html#development-flow">Development Flow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="development.html#github-issues">GitHub Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="development.html#flow-feature-start">Flow Feature Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="development.html#git-commit">Git Commit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="development.html#unittests">Unittests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="development.html#pylint">Pylint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="development.html#documentation">Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="development.html#flow-feature-finish">Flow Feature Finish</a></li>
+<li class="toctree-l3"><a class="reference internal" href="development.html#flow-release-start">Flow Release Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="development.html#flow-release-finish">Flow Release Finish</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="development.html#making-using-things">Making &amp; Using Things</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development.html#making-using-subscriptions">Making &amp; Using Subscriptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="development.html#making-using-services">Making &amp; Using Services</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="development.html#changelog">Changelog</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Changelog</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#version-unreleased">%%version%% (unreleased)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">0.0.9 (2016-10-04)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">0.0.8 (2016-10-02)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">0.0.7 (2016-10-01)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">0.0.6 (2016-10-01)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">0.0.4 (2016-09-26)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">0.0.3 (2016-09-16)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">0.0.2 (2016-09-10)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">0.0.1 (2016-09-07)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">qtMUD API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#module-qtmud">qtmud module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#module-qtmud.cmds">qtmud.cmds module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#module-qtmud.services">qtmud.services module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#module-qtmud.subscriptions">qtmud.subscriptions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#module-qtmud.txt">qtmud.txt module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#glossary">Glossary</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">qtMUD</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="development.html">Developing with qtMUD</a> &raquo;</li>
+        
+      <li>Changelog</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/changelog.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="version-unreleased">
+<h2>%%version%% (unreleased)<a class="headerlink" href="#version-unreleased" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Merge branch ‘release/0.0.9’ into develop. [emsenn]</li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h2>0.0.9 (2016-10-04)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="new">
+<h3>New<a class="headerlink" href="#new" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Talker -t And talker -d To Tune &amp; Drop Talker Channels. [emsenn]</li>
+<li>Whatami Command, Tells Client Their Class. [emsenn]</li>
+<li>Added qtmud.services.Talker.replace_client_object(client, object)
+[emsenn]</li>
+<li>Connected Clients Informed Of New Connections. [emsenn]</li>
+<li>Addition Of <cite>tell</cite> Client Command. [emsenn]</li>
+</ul>
+</div>
+<div class="section" id="changes">
+<h3>Changes<a class="headerlink" href="#changes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Documentation &amp; Linting of ./qtmud/__init__.py. [emsenn]</li>
+</ul>
+</div>
+<div class="section" id="fix">
+<h3>Fix<a class="headerlink" href="#fix" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">Fixed Issue #30. [emsenn]</p>
+<p>Clients are now added to <code class="docutils literal notranslate"><span class="pre">qtmud.connected_clients</span></code> after they get their password right.</p>
+</li>
+<li><p class="first">Fixed Issue #31, Multiword Tells Now Work. [emsenn]</p>
+</li>
+<li><p class="first">Fixed Clients Tuning In Repeatedly To Talker Channels. [emsenn]</p>
+<p>Also bolded some output and stopped making log directories if one wasn’t given.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="other">
+<h3>Other<a class="headerlink" href="#other" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Merge branch ‘feature/mudlib-support’ into develop. [emsenn]</li>
+<li>Merge branch ‘release/0.0.8’ into develop. [emsenn]</li>
+<li>Merge branch ‘release/0.0.8’ [emsenn]</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>0.0.8 (2016-10-02)<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3>Changes<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">Added Development Flow to Development Docs. [emsenn]</p>
+</li>
+<li><p class="first">Documented Parameters in <code class="docutils literal notranslate"><span class="pre">qtmud.cmds</span></code> [emsenn]</p>
+</li>
+<li><p class="first">Added Tests for qtmud.cmds. [emsenn]</p>
+<p>Also preparing to use gitchangelog to aid with versioning moving
+forward.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>Other<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">Merge branch ‘master’ into develop. [emsenn]</p>
+</li>
+<li><p class="first">Cleaner Shutdown/Startup. [emsenn]</p>
+<p>Added –logdir and –datadir options to <cite>./bin/qtmud_run</cite></p>
+<p>Also fixed bugs #21 and #23</p>
+</li>
+<li><p class="first">Codecov YML Addition. [emsenn]</p>
+</li>
+<li><p class="first">Merge branch ‘master’ of github.com:emsenn/qtmud. [emsenn]</p>
+</li>
+<li><p class="first">Update .travis.yml. [emsenn]</p>
+</li>
+<li><p class="first">Update .travis.yml. [emsenn]</p>
+</li>
+<li><p class="first">Start of qtmud.cmds Test Cases. [emsenn]</p>
+</li>
+<li><p class="first">Added Code Climate Integration to Travis CI. [emsenn]</p>
+</li>
+<li><p class="first">Merge branch ‘master’ of github.com:emsenn/qtmud. [emsenn]</p>
+</li>
+<li><p class="first">Delete environment.pickle. [emsenn]</p>
+</li>
+<li><p class="first">Merge branch ‘release/0.0.7’ [emsenn]</p>
+</li>
+<li><p class="first">Merge branch ‘release/0.0.6’ [emsenn]</p>
+<p>First real package, I think? I hope. I’m sorry to anyone reading this
+from the future, I am a newbie.</p>
+</li>
+<li><p class="first">Merge branch ‘release/0.0.7’ into develop. [emsenn]</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>0.0.7 (2016-10-01)<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>V0.0.7: Doc Refactor &amp; client_disconnect Fix. [emsenn]</li>
+<li>Doc Refactoring, Fixed client_disconnect Bug. [emsenn]</li>
+<li>Merge branch ‘release/0.0.6’ into develop. [emsenn]</li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h2>0.0.6 (2016-10-01)<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">First “Good” Packaging Release. [emsenn]</p>
+</li>
+<li><p class="first">Merge branch ‘master’ into release/0.0.6. [emsenn]</p>
+<p>I messed up the git flow whoops</p>
+</li>
+<li><p class="first">Some random cleanups. [emsenn]</p>
+</li>
+<li><p class="first">Documentation Update - Removed mudlib docs. [emsenn]</p>
+</li>
+<li><p class="first">Fixed Broken MUDSocket Test. [emsenn]</p>
+</li>
+<li><p class="first">Update README.md. [emsenn]</p>
+</li>
+<li><p class="first">Update README.md. [emsenn]</p>
+</li>
+<li><p class="first">Update README.md. [emsenn]</p>
+</li>
+<li><p class="first">Update README.md. [emsenn]</p>
+</li>
+<li><p class="first">Update README.md. [emsenn]</p>
+</li>
+<li><p class="first">Update README.md. [emsenn]</p>
+</li>
+<li><p class="first">Added CodeClimate Badge to README.md. [emsenn]</p>
+</li>
+<li><p class="first">Transition to Package. [emsenn]</p>
+<p>Shifting qtMUD into being an acceptable Python package.</p>
+</li>
+<li><p class="first">Code Coverage? [emsenn]</p>
+</li>
+<li><p class="first">Fixed ./data/ not being in git. [emsenn]</p>
+</li>
+<li><p class="first">More Cards. [emsenn]</p>
+<p>And a few other trivial changes.</p>
+</li>
+<li><p class="first">More Fireside Cards. [emsenn]</p>
+<p>Cleaning up of Fireside code, too</p>
+</li>
+<li><p class="first">Require sudo in Travis CI. [emsenn]</p>
+<p>Travis-CI doesn’t like that we require brlapi, and while I could just
+remove the requirement, we are going to need it eventually.</p>
+</li>
+<li><p class="first">Added requirements.txt. [emsenn]</p>
+</li>
+<li><p class="first">Merge branch ‘master’ of github.com:emsenn/qtmud. [emsenn]</p>
+</li>
+<li><p class="first">Update README.md. [emsenn]</p>
+</li>
+<li><p class="first">Travis CI Scripts. [emsenn]</p>
+<p>Simple tests for Travis CI? Maybe? I don’t get how it works.</p>
+</li>
+<li><p class="first">Fireside Documentation. [emsenn]</p>
+<p>Built and added Fireside documentation.</p>
+</li>
+<li><p class="first">Attempted Fix for ReadTheDocs error. [emsenn]</p>
+<p>error was Could not import extension sphinx.ext.githubpages (exception:
+No module named githubpages)</p>
+<p>this is what google said would help</p>
+</li>
+<li><p class="first">PEP8 Updates &amp; Fireside Cards. [emsenn]</p>
+</li>
+<li><p class="first">Fireside Mudlib. [emsenn]</p>
+<p>Simple cardgame mudlib and some edits to qtmud methods</p>
+</li>
+<li><p class="first">Basic Talker Service. [emsenn]</p>
+<p>A really basic and lazy implementation of a talker service.</p>
+</li>
+<li><p class="first">Reduction of Dependence on Starhopper. [emsenn]</p>
+<p>qtMUD, through refactoring, became dependent on Starhopper methods.</p>
+<p>This fixes some of that./</p>
+</li>
+<li><p class="first">Documentation Hotfix Part Three. [emsenn]</p>
+</li>
+<li><p class="first">Merge branch ‘master’ of github.com:emsenn/qtmud. [emsenn]</p>
+</li>
+<li><p class="first">Merge pull request #16 from emsenn/develop. [emsenn]</p>
+<p>Develop</p>
+</li>
+<li><p class="first">Merge pull request #14 from emsenn/develop. [emsenn]</p>
+<p>Develop</p>
+</li>
+<li><p class="first">Merge branch ‘release/0.0.4’ [emsenn]</p>
+</li>
+<li><p class="first">Merge branch ‘release/0.0.3’ [emsenn]</p>
+<p>Release of version 0.0.3 to master woooo</p>
+</li>
+<li><p class="first">Merge branch ‘release/0.0.4’ into develop. [emsenn]</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h2>0.0.4 (2016-09-26)<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Bump to version 0.0.4. [emsenn]</p>
+</li>
+<li><p class="first">.gitignore hotfix. [emsenn]</p>
+</li>
+<li><p class="first">Documentation Hotfix. [emsenn]</p>
+</li>
+<li><p class="first">Documentation Cleanup, Separating Client and Ship in Starhopper.
+[emsenn]</p>
+<p>Title about says it all.</p>
+</li>
+<li><p class="first">Mirrored Starhopper Structure in Qtmud. [emsenn]</p>
+<p>Updated qtmud to use a package structure more in line with the updated
+starhopper structure.</p>
+</li>
+<li><p class="first">Bringing Back Documentation. [emsenn]</p>
+<p>It’s back! and less messy than ever!</p>
+</li>
+<li><p class="first">Deleted Broken Documentation, Refactored Starhopper. [emsenn]</p>
+<p>The documentation wasn’t rendering right so I just got rid of it.</p>
+<p>also, refactored starhopper. Need to shuffle qtmud to match,
+unfortunately. New system is way better, though.</p>
+</li>
+<li><p class="first">Merge branch ‘feature/diceroller’ into develop. [emsenn]</p>
+<p>Got a little carried away with this feature</p>
+</li>
+<li><p class="first">Starhopper Update. [emsenn]</p>
+<p>Got frustrated with trying to buy a full MMORPG in one go so made a
+dinky little space adventure game.</p>
+</li>
+<li><p class="first">Migration to Game Library. [emsenn]</p>
+<p>I realized a lot of stuff was in qtmud that was better suited for the
+specific libraries - not every game that gets built is going to want a
+“say” command, for instance.</p>
+</li>
+<li><p class="first">Refactor. [emsenn]</p>
+<p>It finally clicked with me what people were saying about organizing the
+engine differently, so this is me shuffling around toward doing that.</p>
+<p>A lot of functionality is broken but I like the new direction.</p>
+</li>
+<li><p class="first">Changed Thing’s search methods, restructured lib. [emsenn]</p>
+<p>I know it looks like a lot of changes but it’s really not much.</p>
+</li>
+<li><p class="first">Swordsmanship, Healthful, Acting Qualities in Lib. [emsenn]</p>
+<p>A few qualities to make use of the diceroller.</p>
+<p>Not pleased with any of this code but it’s better than nothing.</p>
+</li>
+<li><p class="first">Merge branch ‘feature/noise’ into develop. [emsenn]</p>
+<p>Noises basically work, even if their trigger mechanism is a bit simple.</p>
+</li>
+<li><p class="first">Failed to add changes to last commit. [emsenn]</p>
+<p>Whooops!</p>
+</li>
+<li><p class="first">Fixed Issue #9 &amp; Added Documentation Theme. [emsenn]</p>
+<p>Fixed Issue #9, where clients weren’t removed from their location
+when they disconnect.</p>
+<p>Also, added cute little Tumblebeasts to the documentation!</p>
+</li>
+<li><p class="first">Additions to Library: Ye Olde Tavern. [emsenn]</p>
+<p>made ye olde tavern less of a filler thing and more of a real thing.</p>
+</li>
+<li><p class="first">Documentation for Noisemaker. [emsenn]</p>
+</li>
+<li><p class="first">Noisy quality, Noisemaker service. [emsenn]</p>
+<p>Noisy things randomly send messages to things in their environment
+through the Noisemaker service.</p>
+<p>This is a rough draft and probably hella buggy, and also has like NO
+documentation, but hey, it’s progress.</p>
+</li>
+<li><p class="first">Learning, Teaching Qualities. [emsenn]</p>
+<p>Learning quality which lets things use learn from qualities with the</p>
+<p>Teaching quality which adds qualities in the teacher’s
+teachable_qualities to the learner.</p>
+</li>
+<li><p class="first">Merge branch ‘release/0.0.3’ into develop. [emsenn]</p>
+<p>NLTK-based parser, Prehensile, Hearing Qualities, Sender service</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h2>0.0.3 (2016-09-16)<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Missed adding updated __init__.py. [emsenn]</p>
+<p>Forgot to add this to the last commit ffs</p>
+</li>
+<li><p class="first">Bumping things up to version 0.0.3. [emsenn]</p>
+<p>Note to self: remember to rebuild documentation during <em>this</em> part of
+the release process, not when closing a feature branch.</p>
+</li>
+<li><p class="first">Merge branch ‘feature/textblob’ into develop. [emsenn]</p>
+<p>Fancier parsing, more qualities, expanded library.</p>
+</li>
+<li><p class="first">Documentation Update. [emsenn]</p>
+<p>Rebuilt the Sphinx autodocumentation.</p>
+</li>
+<li><p class="first">Prehensile Quality, Hearing Quality. [emsenn]</p>
+<p>Fixed adjectives, added a Prehensile quality that lets Things with it
+‘take’ objects, which moves them from where they are into the contents
+of the prehensile thing.</p>
+<p>Also added the Hearing quality, which lets things listen. Added the
+sounds string to Renderable quality.</p>
+</li>
+<li><p class="first">Sender Service, Fixing Commands. [emsenn]</p>
+<p>A lot of commands broke when I set up the new parser, this fixes a fair
+chunk of them, but certainly not all.</p>
+<p>I also created the Sender service, which does basically what the
+Renderer service does. Leaving the Renderer service for now, because it
+will probably be used to format scenes (which maybe should be called
+frames lol) for users.</p>
+</li>
+<li><p class="first">Implementing Natural Language Toolkit. [emsenn]</p>
+<p>Changed qtmud.services.Parser to have the parse_line() function, which
+uses the TextBlob package to do some basic parts of speech tagging on
+player lines, to try and suss out what things the player might be
+talking about.</p>
+<p>It’s functional in this commit, but uncommented and not fully
+implemented. Check the Sighted quality’s look() method for an example
+usage.</p>
+</li>
+<li><p class="first">Merge branch ‘feature/nametags’ into develop. [emsenn]</p>
+<p>The basic nametags code is finished. There’s probably some parts of the
+code which don’t use it, though, so be careful.</p>
+</li>
+<li><p class="first">Applicative Fix. [emsenn]</p>
+<p>After talking with a friend and having the difference between
+applicative and imperative methods explained, made some changes to
+make the applicative methods more, well, applicative. Also fixed some
+older lines that were outdated but not throwing errors.</p>
+</li>
+<li><p class="first">Thing.search(‘target’) method. [emsenn]</p>
+<p>Added a simple method for looking around a thing’s potential environment
+to find a match for ‘target’, intended to be a nametag’</p>
+</li>
+<li><p class="first">Library Expansion. [emsenn]</p>
+<p>Lots of MUDs let you ‘look at &lt;thing in room&gt;’, even if that thing isn’t a
+real “item”, something you can interact with. A cobblestone road might let
+you ‘look cobbles’, for example, even though you can’t do anything beside
+look at the cobbles. Normally this requires a weird archaic syntax to work.</p>
+<p>because of the granular nature of qualities, these fake-but-still-observable
+items are easy to make, by making a new item and applying the “Renderable”
+quality to it.</p>
+<p>The downside is that this means a new thing is instanced for every lookable
+thing in every room, which could cause memory problems down the line.</p>
+<p>However, I think the extensibility and power this gives the engine is way
+worth that potential cost. Normally it’s a big commitment in MUD development
+to move a thing from a lookable to a genuine item - normally a complete
+rewrite. In this case, however, it’s as simple as
+lookable.add_quality(Physical).</p>
+</li>
+<li><p class="first">Better Nametags Documentation. [emsenn]</p>
+<p>Added some notes on how to use nametags</p>
+</li>
+<li><p class="first">Implemented Nametags. [emsenn]</p>
+<p>Nametags are a new thing-level attribute, and are used to find a
+thing if you only have some names it might respond to. (For example
+a client has the nametags ‘client’, ‘player’, ‘thing’, and their name
+(if they’ve set one).</p>
+<p>I also added a __setattr__ function to qtmud.Thing, so that
+qtmud.qualities.Renderable. Essentially, if a thing has a
+set_attr() function, the thing will use that when attr is being
+set, rather than the type default.</p>
+</li>
+<li><p class="first">“inventory” Command &amp; Method in Container Quality. [emsenn]</p>
+<p>Added the inventory() method to the Container quality, and changed
+its apply() method to add the ‘inventory’ command to that container
+if it is also Commandable.</p>
+</li>
+<li><p class="first">Never Forget Holiday Update. [emsenn]</p>
+<p>qtmud’s first holiday update! Added a memorial to commemorate September
+11th. Also modified the look command so that people can actually look
+at the memorial.</p>
+</li>
+<li><p class="first">Merge branch ‘master’ of github.com:emsenn/qtmud into develop.
+[emsenn]</p>
+</li>
+<li><p class="first">Merge branch ‘develop’ [emsenn]</p>
+<p>Documentation hotfix</p>
+</li>
+<li><p class="first">Merge branch ‘release/0.0.2’ [emsenn]</p>
+<p>continued shifting of core functions, establishment of real
+documentation using Sphinx, and starting to solidify library-building
+API.</p>
+</li>
+<li><p class="first">Merge branch ‘release/0.0.1’ [emsenn]</p>
+<p>First release version, though I use that term very loosely. It should
+run, and the documentation should explain what the code does, but don’t
+expect anything close to gameplay.</p>
+</li>
+<li><p class="first">Merge branch ‘feature/renderer’ into develop. [emsenn]</p>
+<p>Set up a renderer service, among other small changes</p>
+</li>
+<li><p class="first">Documentation Update. [emsenn]</p>
+<p>Just some documentation expansion before bed.</p>
+</li>
+<li><p class="first">Cleaning up Qualities. [emsenn]</p>
+<p>The last commit rolled out changes to the command backend pretty
+quickly. This commit cleans a lot of that up, and expands the new
+Sphinx-friendly docstrings through more of the code.</p>
+</li>
+<li><p class="first">Added Scene Rendering. [emsenn]</p>
+<p>Created a new service at qtmud.services.renderer to handle scheduled
+events for sending information to clients. This makes sure clients
+aren’t getting messages too soon - such as building a room description
+with ‘look’ for a room the player just left.</p>
+<p>Currently, only the ‘look’ function in the Sighted quality makes use
+of render. Other places where things are currently being sent through
+the Client’s send() function will be fixed in later commits.</p>
+</li>
+<li><p class="first">Documentation Hotfix. [emsenn]</p>
+<p>Documentation wasn’t linking to source properly, reworked the
+configuration files so it would.</p>
+</li>
+<li><p class="first">Merge branch ‘release/0.0.2’ into develop. [emsenn]</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id9">
+<h2>0.0.2 (2016-09-10)<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Bump to Version 0.0.2. [emsenn]</p>
+<p>bumped version number everywhere it occurs. (i think)</p>
+</li>
+<li><p class="first">Addition of Sphinx-Generated Documentation. [emsenn]</p>
+<p>shuffled documentation around, in part so the repo should (I think)
+work with Github Pages. Even if it doesn’t, it’s a better presentation
+of the information within the repo.</p>
+</li>
+<li><p class="first">Parser &amp; Breaking Up Qualities. [emsenn]</p>
+<p>rewrote qtmud.services.parser.Parser to look for commands in a
+thing’s commands attribute, and for the command’s functions to
+live in the quality that gives them.</p>
+<p>This meant breaking up the qualities from qualities/__init__.py into
+individual files.</p>
+<p>I also started documenting things using Sphinx markup. The configuration
+files and such have been added to the repo. Going to try and build it
+as our github pages after this commit.</p>
+</li>
+<li><p class="first">Merge branch ‘feature/environments’ into develop. [emsenn]</p>
+<p>A super-simple way of handling things having locations.</p>
+</li>
+<li><p class="first">Just Some Comments. [emsenn]</p>
+</li>
+<li><p class="first">Rough Environments. [emsenn]</p>
+<p>Clients can now ‘look’ and ‘go’ between rooms. Everything is real rough
+but I’m probably taking a break from this code binge so wanted to get it
+committed. It’s functional, at least if you don’t try to do anything
+outside of documented syntax.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id10">
+<h2>0.0.1 (2016-09-07)<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Merge branch ‘feature/organizing’ into develop. [emsenn]</p>
+<p>Finished writing a base I think can be built up from, so closing this
+feature to open ones for specific additions.</p>
+</li>
+<li><p class="first">Updated Documentation &amp; Mild Cleanup. [emsenn]</p>
+<p>Mostly just added documentation and cleaned up a few lines, to take
+it from “rough idea” to “workable base”.</p>
+<p>Also to play with git flow a bit tbh</p>
+</li>
+<li><p class="first">Start of Environments &amp; Movement. [emsenn]</p>
+<p>There is now a Mover service which listens for ‘move’ events.</p>
+<p>It works against the Room, Container, and Physical Qualities:</p>
+<p>Container - Give a thing contents, a list
+Room - If a thing doesn’t have contents, give it contents</p>
+<blockquote>
+<div><p>(this’ll probably be fleshed out more to have code for in-built
+exits/entrances, which is why I went ahead and did it separate
+from Container.)</p>
+</div></blockquote>
+<p>Physical - gives attributes for name, description, and location.</p>
+<p>Now when a client logs in, their associated thing is given the Client
+and Physical qualities, leaving them with connection information, a
+name (for now a synonym for their identity), and moved into
+qtmud.manager.back_room, a lazy little hack to give incoming clients
+someplace to be until there’s proper login.</p>
+<p>I also added the whereami command so users can find the name of their
+location.</p>
+</li>
+<li><p class="first">Start of Documentation &amp; Say Command. [emsenn]</p>
+<p>Added some linese of documentation in case I put the project down
+for a couple years and don’t want to be completely lost when I
+come back.</p>
+<p>Also added a super basic say command, mostly so there’s something to
+play with during the next step, adding physical and container qualities</p>
+</li>
+<li><p class="first">Basic Schedule Service. [emsenn]</p>
+<p>I haven’t fully tested it but qtmud.manager.tick() should call to
+every service, and pass on any ‘events’ that the service ‘subscribed’
+to.</p>
+<p>All I’ve tested was gettinng it so the Parser service could intercept
+incoming client commands and, well, parse them. Seems to work, but I’m
+sure there’s at least a dozen things awfully wrong in it.</p>
+</li>
+<li><p class="first">Basic MUDSocket Server. [emsenn]</p>
+<p>a super-basic attempt at a socket server for mud clients (telnet).</p>
+<p>also a few jabs toward implementing a basic schedule caller. doesn’t
+do anything yet, but doesn’t get in the way.</p>
+<p>next is writing a basic parser and tying it into the scheduler</p>
+</li>
+<li><p class="first">Rough Outline. [emsenn]</p>
+<p>This is more of a rough outline of how the engine might be structured.</p>
+<p>It’s going to build up Things() with Qualities(), and those will be the
+user and objects around them.</p>
+<p>Going to set up a subscription-based central manager for issuing game
+updates.</p>
+</li>
+<li><p class="first">Initial Commit. [emsenn]</p>
+<p>First commit just to set up the git repository.</p>
+</li>
+<li><p class="first">Initial commit. [emsenn]</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="api.html" class="btn btn-neutral float-right" title="qtMUD API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="development.html" class="btn btn-neutral" title="Developing with qtMUD" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, emsenn.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
