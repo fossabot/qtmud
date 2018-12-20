@@ -1,13 +1,11 @@
-""" Subscriptions are methods which handle the interaction and manipulation
-of :class:`things <qtmud.Thing>`.
+"""This module contains qtMUD's subscriptions: functions which are
+triggers as "events" by the game engine.
 
-Every method in this module is added to :attr:`qtmud.subscribers` when
-:func:`qtmud.start`. Calls to these methods which have been :func:`scheduled
-<qtmud.schedule>` as :attr:`events <qtmud.events>` will be called when
-:func:`qtmud.tick` is called.
+    .. versionadded: 0.0.5
+
 """
 
-import qtmud
+import click
 
 
 def broadcast(channel, speaker, message):
@@ -119,29 +117,9 @@ def client_login_parser(client, line):
     return True
 
 
-def shutdown():
+def shutdown(qtmud):
     """ Handles qtMUD shutting down. """
-    qtmud.log.debug('shutdown() occurring')
-    for client in qtmud.connected_clients:
-        qtmud.schedule('client_disconnect', client=client)
-    while True:
-        if qtmud.events:
-            qtmud.log.debug('processing final events %s', qtmud.events)
-            qtmud.tick()
-        else:
-            break
-    for service in qtmud.active_services:
-        service = qtmud.active_services[service]
-        qtmud.log.debug('shutdown()ing %s', service.__class__.__name__)
-        try:
-            service.shutdown()
-            qtmud.log.debug('shutdown() %s successfully',
-                            service.__class__.__name__)
-        except Exception as err:
-            qtmud.log.warning('%s failed to shutdown: %s',
-                              service.__class__.__name__, err)
-    qtmud.log.info('shutdown() finished, raising SystemExit')
-    raise SystemExit
+    qtmud.shutdown()
 
 
 def client_input_parser(client, line):
@@ -198,7 +176,7 @@ def client_command_parser(client, line):
     return True
 
 
-def send(recipient, text):
+def send(qtmud, recipient, text):
     """ Prepares text to be sent to the recipient
 
     :param recipient: expected to be a :class:`thing <qtmud.Thing>`,
@@ -208,5 +186,9 @@ def send(recipient, text):
     :param text: the text to be appended to the recipient's send_buffer
     :return: True if text is added to recipient's send_buffer, otherwise False.
     """
-    if hasattr(recipient, 'send_buffer'):
-        recipient.send_buffer += qtmud.pinkfish_parse(('{}\n'.format(text)))
+    log = qtmud.log.getChild('send()')
+    log.debug('Sending %s to %s', text, recipient)
+    try:
+        recipient.send_buffer += text
+    except Exception as err:
+        log.warning('Failed to send %s to %s: %s', text, recipient, err, exc_info=True)

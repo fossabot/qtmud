@@ -1,0 +1,28 @@
+* qtMUD
+** Getting Started
+*** Installation
+qtMUD should be installed from PyPi.  A lot of its features are
+optional, but turned on by default, so its recommended you use the
+following line to install qtMUD, to enable all those on-by-default
+optional settings.  Or you can configure them off.
+#+BEGIN_EXAMPLE bash
+pip install --user -e qtmud[termcolor]
+#+END_EXAMPLE
+*** Configuration
+qtMUD accepts configuration through its command-line script
+([[./qtmud/scripts/qtmud_service.py]]) or environment values, with
+command-line options taking precedence.
+
+You can configure:
+- the MUD library to use, with ~--mudlib <mudlib>~ or ~export
+  QTMUD_MUDLIB <mudlib>~, where ~<mudlib>~ is the name of the
+  library's main Python module.  See [[Using a Mudlib]] for details.
+- The services to enable, with ~--services comma,separated,services~
+  or ~$QTMUD_SERVICES~.  
+- optional features to use:
+  - These features are turned on by default:
+    - Colored output (through the MUDSocket service) is toggled with
+      ~--colored_output~ or ~--no_colored_output~, or by setting
+      ~$QTMUD_COLORED_OUTPUT~ to ~True~ or ~False~.  This feature is
+      on by default.  Colored output requires the ~termcolor~ package
+      be installed.
