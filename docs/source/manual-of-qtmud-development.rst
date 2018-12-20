@@ -56,14 +56,6 @@ it does: it creates an instance of :class:`qtmud.Driver`, and calls
 :func:`qtmud.Driver.load`, :func:`qtmud.Driver.start`, and
 :func:`qtmud.Driver.run`.
 
-Since this part of the manual is ultimately about learning to work
-with the codebase, I'll let the documentation of those functions -
-hopefully - speak for itself.  You should get used to reading this
-type of documentation: you'll be encouraged to write it for any code
-you write.
-
-.. autofunction:: qtmud.Driver.load
-
 The MUD Library
 ---------------
 
@@ -77,34 +69,29 @@ The MUD driver - and its library - are most often accessed through the `qtmud` c
 
 
 
-********************
-Source Documentation
-********************
+**********************
+Development Operations
+**********************
 
-This section contains the documentation written into the qtMUD source code.
-
-.. _qtmud-command:
-
-``qtmud`` Command
-=================
-
-.. click:: qtmud.scripts.qtmud_service:qtmud
-   :prog: qtmud
-   :show-nested:
-
-
-``qtmud`` module
+Development Flow
 ================
 
-.. automodule:: qtmud
-    :members:
-    :undoc-members:
-    :show-inheritance:
+Whitelabeling
+=============
 
-``qtmud.thing`` module
-======================
-       
-.. automodule:: qtmud.thing
-    :members:
-    :undoc-members:
-    :show-inheritance:
+This section contains a step-by-step for changing qtMUD's name to
+something else, across the codebase.
+
+.. warning:: These instructions are incomplete and following them may
+             leave you with a non-functioning codebase.
+
+1) Change the name of the ``./qtmud`` folder.
+2) Change the name of the modules imported near the top of ``./qtmud/__init__.py``
+3) Change the name in setup.py
+4) ``./docs/conf.py``
+
+.. warning:: These instructions are incomplete.  Even if they were
+             complete, they wouldn't capture the numerous instances
+             where qtMUD is mentioned by-name in the documentation:
+             replacing that text is left as an exercise between you
+             and your text editor.

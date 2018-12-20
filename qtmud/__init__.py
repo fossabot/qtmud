@@ -6,31 +6,28 @@ This module contains the qtmudEngine class and establishes some core
 configuration.
 """
 
-import click
-import importlib
 import logging
-import pickle
-import os
 import sys
-import types
-import uuid
-from inspect import getmembers, isfunction, isclass
 from logging.config import dictConfig
 
-import qtmud.subscriptions
-import qtmud.services
 import qtmud.thing
-from qtmud import cmds, txt
 
 __version__ = '0.1.0'
-"""int: the engine's version.
+"""int: The engine's version.
 
     .. versionadded:: 0.0.1
+
+This variable is usually used with the builtin ``__name__`` to provide
+information about the codebase.  An instanced :class:`Driver` will
+also set its own ``__name__`` and ``__verison__`` equal to the
+``qtmud`` modules'.
+
 """
 __url__ = 'https://qtmud.readthedocs.io/en/latest/'
 """ The engine's main website.
 
     .. versionadded:: 0.0.2
+
 """
 feature_data = {
     'colored_output' : { 'requirements' : ['termcolor'] },
@@ -58,7 +55,7 @@ logging_config = dict(version=1,
 
 This dictionary is used to set :class:`qtmudEngine`'s logging
 configuration when its initialized.  For more information on the
-format, see :func:`python:logging.config.DictConfig` for more
+format, see :func:`logging.config.DictConfig` for more
 information.
 
 """

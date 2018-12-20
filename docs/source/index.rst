@@ -2,8 +2,6 @@
 qtMUD
 #####
 
-----
-
 qtMUD is a Python package containing a *MUD driver* written by `emsenn
 <https://github.com/emsenn/>`_ and released under the `MIT License
 <https://opensource.org/licenses/MIT>`_.
@@ -26,6 +24,8 @@ To learn more about developing a MUD library, read the :doc:`manual-of-qtmud-lib
 
 To learn more about developing qtMUD, read the :doc:`manual-of-qtmud-development`.
 
+To learn about the qtMUD source code, read the :doc:`source-documentation`.
+
 Or, see the more complete Table of Contents below:
 
 .. toctree::
@@ -36,6 +36,7 @@ Or, see the more complete Table of Contents below:
     list-of-qtmud-libraries
     manual-of-qtmud-library-development
     manual-of-qtmud-development
+    source-documentation
     changelog
 
 References:
