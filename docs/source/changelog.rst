@@ -26,6 +26,7 @@ Changes
 
 Fix
 ~~~
+- Update gitchangelog config & generated changelog.rst. [emsenn]
 - Fixed Issue #30. [emsenn]
 
   Clients are now added to ``qtmud.connected_clients`` after they get their password right.
