@@ -6,7 +6,7 @@
 *~
 
 # Documentation Builds
-docs/.build/
+docs/build/
 
 # qtMUD Pickles
 data/*.p
