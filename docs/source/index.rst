@@ -2,12 +2,6 @@
 qtMUD
 #####
 
-References:
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
 ----
 
 qtMUD is a Python package containing a *MUD driver* written by `emsenn
@@ -42,3 +36,11 @@ Or, see the more complete Table of Contents below:
     list-of-qtmud-libraries
     manual-of-qtmud-library-development
     manual-of-qtmud-development
+    changelog
+
+References:
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+
