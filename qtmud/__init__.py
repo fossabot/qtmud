@@ -6,6 +6,7 @@ This module contains the qtmudEngine class and establishes some core
 configuration.
 """
 
+import importlib
 import logging
 import sys
 from logging.config import dictConfig
@@ -77,6 +78,8 @@ class Driver():
         The engine's logger object.
     thing_template : :class:`qtmud.thing.Thing`
         The template Thing that'll be instanced and returned by :func:`new_thing`
+    loaded_subscriptions : dict
+        Subscriptions that will be passed events when the driver :func:`ticks <tick>`.
     """
     def __init__(self):
         self.__name__ = __name__
@@ -85,19 +88,17 @@ class Driver():
         logging.config.dictConfig(self.logging_config)
         self.log = logging.getLogger(__name__)
         self.thing_template = qtmud.thing.Thing
+        self.loaded_subscriptions = dict()
+        self.loaded_services = list()
         return
     
-    def load(self, optional_features=[], mudlibs=[], services=[]):
-        """Load optional features, mud libraries, services, and subscriptions.
+    def load(self, services=[]):
+        """Load the driver.
 
             .. versionadded:: 0.1.0        
 
         Parameters
         ----------
-        optional_features : list
-            The names (as strings) of the optional features to load.  Strings should match :attr:`qtmud.feature_data` keys.
-        mudlib : list
-            The names (as strings) of the modules to be imported as MUD libraries.
         services : list
             The names (as strings) of the classes to instanced as driver services.
 
@@ -106,8 +107,80 @@ class Driver():
         bool
             True unless there is a critical exception.
 
-
-
         """
         log = self.log.getChild('load()')
         log.debug('Driver is loading.')
+        for service in services:
+            service = self.create_service_instance_by_name(service)
+            self.load_service(service) if service else None
+
+    def create_service_instance_by_name(self, service_name):
+        """Returns an instance of a service class, given a name.
+
+            .. versionadded:: 0.1.0
+
+        Parameters
+        ----------
+        service_name : str
+            The service name to be looked for.  Should be a module
+            and class path, like qtmud.services.ClientUtilities
+
+        Returns
+        -------
+        obj
+            Returns an instance of the found service, or None.
+
+        """
+        log = self.log.getChild('get_service_instance_by_name()')
+        log.debug('Instancing %s.', service_name)
+        fail_msg = 'Failed to instance %s' % service_name
+        m_name = '.'.join(service_name.split('.')[0:-1])
+        c_name = service_name.split('.')[-1]
+        try:
+            return getattr(importlib.import_module(m_name), c_name)(self)
+        except ImportError:
+            log.warning('%s: no module named %s', fail_msg, m_name)
+        except AttributeError:
+            log.warning('%s: no class named %s', fail_msg, c_name)
+        except Exception as err:
+            log.warning('%s: %s', fail_msg, err, exc_info=True)
+
+    def load_service(self, service):
+        """Loads a service into the driver.
+
+            .. versionadded:: 0.1.0
+
+        This function loads a service into the qtMUD driver,
+        which means adding its specified subscriptions to the
+        driver's record of loaded subscriptions.
+
+        Parameters
+        ----------
+        service : string
+            The class to be loaded into the driver, such as ``qtmud.services.ClientUtilities``
+
+        """
+        log = self.log.getChild('load_service()')
+        log.debug('Loading %s', service.__name__)
+        fail_msg = 'Failed to load %s' % service.__name__
+        try:
+            for sub in service.subscriptions:
+                self.load_subscription(service, (sub, service.subscriptions[sub]))
+            self.loaded_services.append(service)
+        except Exception as err:
+            log.warning('%s: %s', fail_msg, err, exc_info=True)
+
+    def load_subscription(self, service, subscription):
+        """Loads a subscription into the driver.
+
+            .. versionadded:: 0.1.0
+        
+        """
+        log = self.log.getChild('load_subscription()')
+        log.debug('Loading %s subscription from %s', subscription[0], service.__name__)
+        fail_msg = 'Failed to load %s' % subscription[0]
+        try:
+            pass
+        except Exception as err:
+            log.warning('%s: %s', fail_msg, err, exc_info=True)
+        

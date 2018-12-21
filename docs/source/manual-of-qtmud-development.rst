@@ -89,7 +89,7 @@ something else, across the codebase.
 2) Change the name of the modules imported near the top of ``./qtmud/__init__.py``
 3) Change the name in setup.py
 4) ``./docs/conf.py``
-
+5) ``./qtmud/scripts/``
 .. warning:: These instructions are incomplete.  Even if they were
              complete, they wouldn't capture the numerous instances
              where qtMUD is mentioned by-name in the documentation:

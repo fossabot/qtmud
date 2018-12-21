@@ -2,7 +2,7 @@
 Source Documentation
 ####################
 
-This section documents the qtMUD codebase.  This documentation is built automatically from the source code.
+This section documents the qtMUD codebase.  This documentation is built automatically from the source code.  This documentation assumes you are familiar with the Python programming language and the :doc:`manual-of-qtmud-development`.
 
 *****************
 Module: ``qtmud``
@@ -25,11 +25,11 @@ Class: ``qtmud.Driver``
 Module: ``qtmud.scripts``
 *************************
 
-..automodule:: qtmud.scripts
+.. automodule:: qtmud.scripts
+    :members: log
 
 .. _qtmud-command:
 
-Function: ``qtmud.scripts.qtmud_service.qtmud``
-===============================================
-
-.. autofunction:: qtmud.scripts.qtmud_service.qtmud
+.. click:: qtmud.scripts:qtmud
+   :prog: qtmud
+   :show-nested:

@@ -1,9 +1,11 @@
 from setuptools import setup
 
 setup(name='qtMUD', version='0.1.0',
-      description='framework for building and running MUDs',
-      long_description='qtMUD is a framework for developing and hosting MUDs, '
-                       'or Multi-User Dungeons; text-based MMORPGs.',
+      description='A driver for running a MUD server.',
+      long_description=('qtMUD is a driver for running a multi-user '
+                        'dungeon, or MUD: a server for hosting a '
+                        '(typically) text-driver multi-client '
+                        'service, usually a game.'),
       classifiers=['Development Status :: 3 - Alpha',
                    'Environment :: No Input/Output (Daemon)',
                    'Intended Audience :: Developers',
@@ -29,6 +31,6 @@ setup(name='qtMUD', version='0.1.0',
       test_suite='tests',
       entry_points='''
         [console_scripts]
-        qtmud=qtmud.scripts.qtmud_service:qtmud
+        qtmud=qtmud.scripts:qtmud
       ''')
 
