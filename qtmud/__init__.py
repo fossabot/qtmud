@@ -11,10 +11,13 @@ import logging
 import sys
 from logging.config import dictConfig
 
-import qtmud.thing
+__name__ = 'qtMUD'
+"""str: The engine's name.
+
+"""
 
 __version__ = '0.1.0'
-"""int: The engine's version.
+"""str: The engine's version.
 
     .. versionadded:: 0.0.1
 
@@ -71,9 +74,9 @@ class Driver():
     Attributes
     ----------
     __name__ : str
-        The engine's name.  Set to the module's ``__name__``. 
+        The engine's name.  Set to :attr:`qtmud.__name__`. 
     __version__: str
-        The engine's version.  Set to the module's ``__version__``.
+        The engine's version.  Set to :attr:`qtmud.__version__`.
     log : :class:`logging.Logger`
         The engine's logger object.
     thing_template : :class:`qtmud.thing.Thing`
@@ -87,7 +90,6 @@ class Driver():
         self.logging_config = logging_config
         logging.config.dictConfig(self.logging_config)
         self.log = logging.getLogger(__name__)
-        self.thing_template = qtmud.thing.Thing
         self.loaded_subscriptions = dict()
         self.loaded_services = list()
         return
@@ -96,6 +98,11 @@ class Driver():
         """Load the driver.
 
             .. versionadded:: 0.1.0        
+
+        This function ultimately has the goal of populating
+        :attr:`loaded_services` and attr:`loaded_functions`.
+        It does that by, for each ``service`` in ``services``,
+        calling :func:`create_service_instance_by_name` and :func:`load_service`.
 
         Parameters
         ----------
@@ -114,36 +121,33 @@ class Driver():
             service = self.create_service_instance_by_name(service)
             self.load_service(service) if service else None
 
-    def create_service_instance_by_name(self, service_name):
-        """Returns an instance of a service class, given a name.
+    def create_class_instance_by_name(self, class_name):
+        """Returns an instance of a class, given a name.
 
             .. versionadded:: 0.1.0
 
         Parameters
         ----------
-        service_name : str
-            The service name to be looked for.  Should be a module
+        class_name : str
+            The class to be looked for.  Should be a module
             and class path, like qtmud.services.ClientUtilities
 
         Returns
         -------
         obj
-            Returns an instance of the found service, or None.
+            Returns an instance of the found class, or None.
 
         """
-        log = self.log.getChild('get_service_instance_by_name()')
+        log = self.log.getChild('create_class_instance_by_name()')
         log.debug('Instancing %s.', service_name)
-        fail_msg = 'Failed to instance %s' % service_name
         m_name = '.'.join(service_name.split('.')[0:-1])
         c_name = service_name.split('.')[-1]
         try:
             return getattr(importlib.import_module(m_name), c_name)(self)
-        except ImportError:
-            log.warning('%s: no module named %s', fail_msg, m_name)
-        except AttributeError:
-            log.warning('%s: no class named %s', fail_msg, c_name)
+        except (ImportError, AttributeError):
+            log.error('%s does not exist', fail_msg, class_name)
         except Exception as err:
-            log.warning('%s: %s', fail_msg, err, exc_info=True)
+            log.error('%s', fail_msg, err, exc_info=True)
 
     def load_service(self, service):
         """Loads a service into the driver.
@@ -178,7 +182,7 @@ class Driver():
         """
         log = self.log.getChild('load_subscription()')
         log.debug('Loading %s subscription from %s', subscription[0], service.__name__)
-        fail_msg = 'Failed to load %s' % subscription[0]
+        fail_msg = 'Failed to load %s subscription from %s' % subscription[0], service.__name__
         try:
             pass
         except Exception as err:

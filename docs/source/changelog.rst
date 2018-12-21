@@ -7,6 +7,10 @@ Changelog
 
 New
 ~~~
+- Add Project Information doc. [emsenn]
+
+  Added docs/project-information.rst, which is mostly just a README but
+  with some of the more concrete info about the repository stripped out.
 - Talker -t And talker -d To Tune & Drop Talker Channels. [emsenn]
 - Whatami Command, Tells Client Their Class. [emsenn]
 - Added qtmud.services.Talker.replace_client_object(client, object)

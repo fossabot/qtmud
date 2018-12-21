@@ -1,9 +1,13 @@
+.. _manual-of-qtmud-development:
+
 ###########################
 Manual of qtMUD Development
 ###########################
 
 This manual is intended as a comprehensive reference for the
-maintainance and development of qtMUD, as a codebase and as a project.
+maintainance and development of qtMUD, as a codebase and as a
+project.  It does not assume familiarity with Python, but does
+assume you're familiar with :ref:`project-information`.
 
 ***************************
 Introduction to the Project
@@ -67,7 +71,22 @@ The `qtmud` Command
 
 The MUD driver - and its library - are most often accessed through the `qtmud` command.
 
+********************************
+Server Administration Operations
+********************************
 
+.. _manual-of-qtmud-development#install-the-codebase-locally:
+
+Install the Codebase Locally
+============================
+
+To install the latest stable version::
+  pip install qtmud
+
+To install the current development version::
+  pip install --user git+ssh://git@github.com/emsenn/qtmud.git@development
+
+.. todo:: Write real instructions for installing qtMUD.  
 
 **********************
 Development Operations
@@ -90,6 +109,7 @@ something else, across the codebase.
 3) Change the name in setup.py
 4) ``./docs/conf.py``
 5) ``./qtmud/scripts/``
+
 .. warning:: These instructions are incomplete.  Even if they were
              complete, they wouldn't capture the numerous instances
              where qtMUD is mentioned by-name in the documentation:

@@ -1,3 +1,5 @@
+.. _project-information:
+
 #########################
 qtMUD Project Information
 #########################
