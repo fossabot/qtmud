@@ -1,4 +1,4 @@
-"""This module is the core of the qtMUD game engine.
+g"""This module is the core of the qtMUD game engine.
 
     .. versionadded:: 0.0.1
 
@@ -82,7 +82,7 @@ class Driver():
     thing_template : :class:`qtmud.thing.Thing`
         The template Thing that'll be instanced and returned by :func:`new_thing`
     loaded_subscriptions : dict
-        Subscriptions that will be passed events when the driver :func:`ticks <tick>`.
+        subscriptions that will be passed events when the driver :func:`ticks <tick>`.
     """
     def __init__(self):
         self.__name__ = __name__

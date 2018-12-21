@@ -2,7 +2,7 @@
 qtMUD Package
 #############
 
-The qtMUD package - ``qtMUD`` - is what qtMUD *is*: it's how
+The qtMUD package - ``qtmud`` - is what qtMUD *is*: it's how
 it's implemented.
 
 .. note:: To learn how to install the qtMUD package on your
@@ -11,6 +11,14 @@ it's implemented.
 	  section of the
 	  :ref:`manual-of-qtmud-development`.)
 
+The qtMUD package contains the main qtMUD module, documented
+below, and the following subpackages:
+
+.. toctree::
+   :maxdepth: 1
+		
+   qtmud.services
+	       
 qtMUD Module
 ============
 
@@ -25,13 +33,10 @@ The Driver
 also known as...
 
 .. autoclass:: qtmud.Driver
+   :members: __name__, __version__, log, thing_template
 
-.. _qtmud-subpackages:
+Driver.load Function
+^^^^^^^^^^^^^^^^^^^^
 
-qtMUD Subpackages
-=================
-
-.. toctree::
-   :maxdepth: 1
-		
-   qtmud.services
+.. automethod:: qtmud.Driver.load
+   

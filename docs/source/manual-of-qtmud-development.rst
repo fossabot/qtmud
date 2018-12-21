@@ -6,70 +6,38 @@ Manual of qtMUD Development
 
 This manual is intended as a comprehensive reference for the
 maintainance and development of qtMUD, as a codebase and as a
-project.  It does not assume familiarity with Python, but does
-assume you're familiar with :ref:`project-information`.
+project.  It assumes you're familiar with
+:ref:`project-information`.
 
-***************************
-Introduction to the Project
-***************************
+It does *not* assume that you're familiar with Python, the
+programming language the codebase is written in.
 
-qtMUD is a hobby project created by - `emsenn <https://emsenn.net>`_.
+************
+Introduction
+************
 
-Background
-==========
+This section hopes to explain some of the concepts that are
+important to understanding the qtMUD driver - such as what a
+"driver" is:
 
-qtMUD's first commit was on September 3rd, 2016, with rapid
-development happening until October 8th, 2016.  A basic notion of how
-to handle things was sketched out, but then real life happened and the
-project stopped being updated.
+The qtMUD **driver** is the "engine" that lets a MUD happen.
+In qtMUD, the driver's main responsibility is maintaining
+four records:
 
-On December 17th, 2018, I had the time and interest in working qtMUD
-again, and so began to overhaul it.  While a lot of the idea of the
-existing code seemes solid, I'm unhappy with the implementation.
-
-****************************
-Introduction to the Codebase
-****************************
-
-Concepts
-========
-
-The MUD Driver
---------------
-
-The MUD driver is the "engine" that makes a MUD happen.  In qtMUD, the
-driver's main responsibility is maintaining a list of
-subscriptions and events.  Subscriptions are functions that will be
-called when an event is scheduled.
-
-qtMUD provides very few subscriptions itself.  Most are added through
-services.  qtMUD comes with several services, but its expected that
-more will be added by a MUD library.
-
-The qtMUD driver is implemented in with the :class:`qtmud.Driver`
-class - though it's important to note, expects to be controlled by the
-:ref:`qtmud-command`.
-
-The best way of I can think of to explain how qtMUD works is by
-explaining how what happens when you run the command ``qtmud serve``,
-which according to its help text "loads, starts, and runs the qtMUD
-driver."
-
-Which, after handling all the options and arguments, is exactly what
-it does: it creates an instance of :class:`qtmud.Driver`, and calls
-:func:`qtmud.Driver.load`, :func:`qtmud.Driver.start`, and
-:func:`qtmud.Driver.run`.
-
-The MUD Library
----------------
-
-The MUD library is a bundle of services added to the driver, usually to add game features.
+- A record of **loaded services**, which can control on-going
+  driver operations.  Services are loaded when the driver is
+  :meth:`loaded <qtmud.Driver.load>`.
+- A record of **loaded subscriptions**, which do things when
+  called by a relevant *event*.  Services list their
+  subscriptions, and they're loaded when the service is.
+- A record of **events**, which are subscriptions to be called
+  each time the driver *ticks*.  Events are added by service
+  ticks or subscriptions.
+- A records of **instanced things**, which are in-game
+  objects: everything from player avatars to rooms to spells.
+  Things are instanced by service ticks or subscriptions.
 
 
-The `qtmud` Command
--------------------
-
-The MUD driver - and its library - are most often accessed through the `qtmud` command.
 
 ********************************
 Server Administration Operations
@@ -84,7 +52,8 @@ To install the latest stable version::
   pip install qtmud
 
 To install the current development version::
-  pip install --user git+ssh://git@github.com/emsenn/qtmud.git@development
+  pip install --user \
+  git+ssh://git@github.com/emsenn/qtmud.git@development
 
 .. todo:: Write real instructions for installing qtMUD.  
 

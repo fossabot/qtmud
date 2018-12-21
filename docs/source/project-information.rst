@@ -32,13 +32,14 @@ for Sphinx version somethingsomething.
 Project History
 ***************
 
-qtMUD is the hobby project of `emsenn <https://emsenn.net>`_.  Started
-in 2016, the project sat idle after a month of development for two
-years, but as of December 2018 is being developed again.
+qtMUD's first commit was on September 3rd, 2016, with rapid
+development happening until October 8th, 2016.  A basic notion of how
+to handle things was sketched out, but then real life happened and the
+project stopped being updated.
 
-************
-Installation
-************
+On December 17th, 2018, I had the time and interest in working qtMUD
+again, and so began to overhaul it.  While a lot of the idea of the
+existing code seemes solid, I'm unhappy with the implementation.
 
 ************
 Contributing
