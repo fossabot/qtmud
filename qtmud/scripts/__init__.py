@@ -55,7 +55,7 @@ def standard_params(func):
     @click.option('--quiet', is_flag=True,
                   help='When passed, the standard output will only show the important log messages it receives.')
     @click.option('--services',
-                  envvar='QTMUD_SERVICES', default='qtmud.services.ClientUtilities',
+                  envvar='QTMUD_SERVICES', default='qtmud.services.clientutilities.ClientUtilities',
                   help='A comma-separated list of driver services.', show_default=True)
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
@@ -143,8 +143,16 @@ def serve(ctx, verbose, quiet, services):
     log.debug('Pre-load configuration applied.  Beginning to load.')
     try:
         driver.load(services=services.split(','))
+        try:
+            driver.start()
+            try:
+                driver.run()
+            except Exception as err:
+                log.critical('Failed to run driver: %s', err, exc_info=True)
+        except Exception as err:
+            log.critical('Failed to start driver: %s', err, exc_info=True)    
     except Exception as err:
-        log.critical('Failed to load qtMUD: %s', err, exc_info=True)
+        log.critical('Failed to load driver: %s', err, exc_info=True)
 
 @qtmud.command()
 @standard_params

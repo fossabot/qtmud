@@ -35,8 +35,38 @@ also known as...
 .. autoclass:: qtmud.Driver
    :members: __name__, __version__, log, thing_template
 
-Driver.load Function
-^^^^^^^^^^^^^^^^^^^^
+``load``
+^^^^^^^^
 
 .. automethod:: qtmud.Driver.load
+
+``start``
+^^^^^^^^^
+
+.. automethod:: qtmud.Driver.start
+
+``run``
+^^^^^^^
+
+.. automethod:: qtmud.Driver.run
+
+``tick``
+^^^^^^^^
+
+.. automethod:: qtmud.Driver.tick
+
+``schedule``
+^^^^^^^^^^^^
+
+.. automethod:: qtmud.Driver.schedule
+		
+``load_service``
+^^^^^^^^^^^^^^^^
+
+.. automethod:: qtmud.Driver.load_service
    
+``create_class_instance_by_name()``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. automethod:: qtmud.Driver.create_class_instance_by_name
+

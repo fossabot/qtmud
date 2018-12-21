@@ -45,7 +45,10 @@ Or, see the more complete Table of Contents below:
     source-documentation/index
     changelog
     todo
-    
+
+.. todo:: The changelog for some reason doesn't recognize the
+          previous release versions?
+	       
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`

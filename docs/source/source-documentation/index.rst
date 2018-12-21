@@ -9,9 +9,7 @@ programming language and the
 :doc:`../manual-of-qtmud-development`.
 
 At the heart of the codebase is :doc:`qtmud`, which contains
-the :mod:`qtmud` module and :ref:`subpackages
-<qtmud-subpackages>` - at present there is just
-:doc:`qtmud.services`.
+the :mod:`qtmud` module and :doc:`qtmud.services`.
 
 Below is a complete table of codebase contents.  I've tried to
 arrange them in such a way that if you read them in order,

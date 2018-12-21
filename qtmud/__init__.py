@@ -1,4 +1,4 @@
-g"""This module is the core of the qtMUD game engine.
+"""This module is the core of the qtMUD game engine.
 
     .. versionadded:: 0.0.1
 
@@ -40,7 +40,9 @@ feature_data = {
 
     .. versionadded:: 0.1.0
 
-This dictionary contains information about qtMUD's various optional features, following the schema::
+This dictionary contains information about qtMUD's various
+optional features, following the schema::
+
     feature_name : { 'requirements' : feature_requirements }
 
 Where ``feature_name`` is a lowercase_underscore_spaced unique term
@@ -69,7 +71,8 @@ class Driver():
 
         .. versionadded:: 0.1.0
 
-    This class is the main MUD driver. 
+    This class is the main MUD **driver**: the engine that is
+    qtMUD.
 
     Attributes
     ----------
@@ -80,9 +83,14 @@ class Driver():
     log : :class:`logging.Logger`
         The engine's logger object.
     thing_template : :class:`qtmud.thing.Thing`
-        The template Thing that'll be instanced and returned by :func:`new_thing`
+        The template Thing that'll be instanced and returned by
+        :func:`new_thing`
+    loaded_services : dict
+        Services that have had their subscriptions loaded.
     loaded_subscriptions : dict
-        subscriptions that will be passed events when the driver :func:`ticks <tick>`.
+        Subscriptions that will be passed events when the driver
+        :func:`ticks <tick>`.
+
     """
     def __init__(self):
         self.__name__ = __name__
@@ -90,8 +98,10 @@ class Driver():
         self.logging_config = logging_config
         logging.config.dictConfig(self.logging_config)
         self.log = logging.getLogger(__name__)
-        self.loaded_subscriptions = dict()
         self.loaded_services = list()
+        self.loaded_subscriptions = dict()
+        self.started_services = list()
+        self.events = dict()
         return
     
     def load(self, services=[]):
@@ -102,24 +112,29 @@ class Driver():
         This function ultimately has the goal of populating
         :attr:`loaded_services` and attr:`loaded_functions`.
         It does that by, for each ``service`` in ``services``,
-        calling :func:`create_service_instance_by_name` and :func:`load_service`.
+        :meth:`creating a new instance
+        <qtmud.Driver.create_class_instance_by_name>` and
+        :meth:`loading it <qtmud.Driver.load_service>`.
 
         Parameters
         ----------
         services : list
-            The names (as strings) of the classes to instanced as driver services.
+            The names (as strings) of the classes to instanced as
+            driver services.
 
         Returns
         -------
-        bool
-            True unless there is a critical exception.
+        None
 
         """
         log = self.log.getChild('load()')
-        log.debug('Driver is loading.')
+        log.debug('Loading.')
+        self.load_subscription(service=self, subscription=('shutdown', {}))
         for service in services:
-            service = self.create_service_instance_by_name(service)
-            self.load_service(service) if service else None
+            self.load_service(service)
+        log.info('Loaded %s services and %s subscriptions.',
+                 (', '.join([s.__name__ for s in self.loaded_services]) if self.loaded_services else 'no'),
+                 (', '.join([s for s in self.loaded_subscriptions]) if self.loaded_subscriptions else 'no'))
 
     def create_class_instance_by_name(self, class_name):
         """Returns an instance of a class, given a name.
@@ -134,20 +149,20 @@ class Driver():
 
         Returns
         -------
-        obj
+        object
             Returns an instance of the found class, or None.
 
         """
         log = self.log.getChild('create_class_instance_by_name()')
-        log.debug('Instancing %s.', service_name)
-        m_name = '.'.join(service_name.split('.')[0:-1])
-        c_name = service_name.split('.')[-1]
+        log.debug('Instancing %s.', class_name)
+        m_name = '.'.join(class_name.split('.')[0:-1])
+        c_name = class_name.split('.')[-1]
         try:
             return getattr(importlib.import_module(m_name), c_name)(self)
         except (ImportError, AttributeError):
-            log.error('%s does not exist', fail_msg, class_name)
+            log.error('%s does not exist.', class_name)
         except Exception as err:
-            log.error('%s', fail_msg, err, exc_info=True)
+            log.error('Failed: %s', err, exc_info=True)
 
     def load_service(self, service):
         """Loads a service into the driver.
@@ -161,18 +176,20 @@ class Driver():
         Parameters
         ----------
         service : string
-            The class to be loaded into the driver, such as ``qtmud.services.ClientUtilities``
+            The class to be loaded into the driver, such as 
+            ``qtmud.services.ClientUtilities``
 
         """
         log = self.log.getChild('load_service()')
-        log.debug('Loading %s', service.__name__)
-        fail_msg = 'Failed to load %s' % service.__name__
+        log.debug('Loading service from %s', service)
+        service = self.create_class_instance_by_name(service)
+        log.debug('Loading %s version %s', service.__name__, service.__version__)
         try:
             for sub in service.subscriptions:
                 self.load_subscription(service, (sub, service.subscriptions[sub]))
             self.loaded_services.append(service)
         except Exception as err:
-            log.warning('%s: %s', fail_msg, err, exc_info=True)
+            log.warning('Failed: %s', err, exc_info=True)
 
     def load_subscription(self, service, subscription):
         """Loads a subscription into the driver.
@@ -182,9 +199,81 @@ class Driver():
         """
         log = self.log.getChild('load_subscription()')
         log.debug('Loading %s subscription from %s', subscription[0], service.__name__)
-        fail_msg = 'Failed to load %s subscription from %s' % subscription[0], service.__name__
         try:
-            pass
+            self.loaded_subscriptions[subscription[0]] = getattr(service, subscription[0])
         except Exception as err:
-            log.warning('%s: %s', fail_msg, err, exc_info=True)
+            log.warning('Failed: %s', err, exc_info=True)
         
+    def start(self):
+        """Starts the driver and its loaded services.
+
+            .. versionadded:: 0.1.0
+
+        """
+        log = self.log.getChild('start()')
+        log.debug('Starting.')
+        for service in self.loaded_services:
+            service.start()
+        log.info('Started %s services.',
+                 (', '.join([s.__name__ for s in self.started_services]) if self.started_services else 'no'))
+        return
+
+    def run(self):
+        """Runs the driver: ticks it until told otherwise.
+
+            .. versionadded:: 0.1.0
+
+        """
+        log = self.log.getChild('run()')
+        log.debug('Running.')
+        try:
+            while True:
+                self.tick()
+        except KeyboardInterrupt:
+            log.info('KeyboardInterrupt detected: scheduling shutdown event.')
+            self.schedule('shutdown')
+            self.tick()
+        return
+
+    def tick(self):
+        """Ticks every started service and passes events to subscriptions.
+
+        .. versionadded:: 0.1.0
+        
+        """
+        log = self.log.getChild('tick()')
+        if self.events:
+            current_events = self.events
+            log.debug('Events this tick: %s', current_events)
+            self.events = dict()
+            for event in current_events:
+                for call in current_events[event]:
+                    try:
+                        self.loaded_subscriptions[event](**call)
+                    except Exception as err:
+                        log.warning('Event %s failed: %s', event, err, exc_info=True)
+
+    def schedule(self, sub, **payload):
+        log = self.log.getChild('schedule()')
+        log.debug('Scheduling %s event.', sub)
+        if not self.loaded_subscriptions.get(sub):
+            log.warning('No subscription loaded for %s events', sub)
+        else:
+            if sub not in self.events:
+                self.events[sub] = []
+            self.events[sub].append(payload)
+
+
+
+    def shutdown(self):
+        log = self.log.getChild('shutdown()')
+        log.debug('Shutting down.')
+        while True:
+            if self.events:
+                log.debug('Processing events: %s', self.events)
+                tick()
+            else:
+                break
+        log.info('Shut down.  Raising SystemExit.')
+        raise SystemExit
+
