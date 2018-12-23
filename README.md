@@ -1,6 +1,7 @@
 # qtMUD
 
 [![Join the chat at https://gitter.im/qtmud/Lobby](https://badges.gitter.im/qtmud/Lobby.svg)](https://gitter.im/qtmud/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Femsenn%2Fqtmud.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Femsenn%2Fqtmud?ref=badge_shield)
 
 [![PyPI version](https://badge.fury.io/py/qtmud.svg)](https://badge.fury.io/py/qtmud)
 [![Documentation Status](https://readthedocs.org/projects/qtmud/badge/?version=latest)](http://qtmud.readthedocs.io/en/latest/?badge=latest)
@@ -69,3 +70,6 @@ Successfully connected to qtmud, press enter to continue login...
 ```
 While telnet is the easiest way to connect, we recommend the 
 [tiny-fugue](https://github.com/kruton/tinyfugue) MUD client.
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Femsenn%2Fqtmud.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Femsenn%2Fqtmud?ref=badge_large)
